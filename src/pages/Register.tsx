@@ -29,11 +29,15 @@ const Register = () => {
     }
   }, [province]);
 
+  const handleRegister = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
   return (
     <section className="h-full flex items-center justify-center">
       <div className="w-full min-h-[600px] flex items-center justify-between border rounded-2xl overflow-hidden">
-        <div className="w-full h-full py-8 px-6 sm:w-1/2">
-          <form className="flex flex-col gap-5">
+        <div className="w-full h-full py-8 px-6 ">
+          <form onSubmit={handleRegister} className="flex flex-col gap-5 mx-auto sm:w-1/2">
             <h1 className="text-3xl font-bold mb-2">عضویت</h1>
 
             <label htmlFor="username">نام کاربری</label>
@@ -43,6 +47,7 @@ const Register = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
+              autoFocus
             />
 
             <label htmlFor="firstname">نام</label>
@@ -111,6 +116,7 @@ const Register = () => {
 
             <label htmlFor="province">استان</label>
             <Select
+              inputId="province"
               value={province}
               onChange={(selectedOption) => setProvince(selectedOption)}
               placeholder="انتخاب استان"
@@ -134,7 +140,7 @@ const Register = () => {
 
             <label htmlFor="city">شهر</label>
             <Select
-              id="city"
+              inputId="city"
               value={city}
               onChange={(selectedOption) => setCity(selectedOption)}
               placeholder="انتخاب شهر"
@@ -166,7 +172,7 @@ const Register = () => {
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-28 p-2 duration-200 focus:border-gray-800"
             ></textarea>
 
-            <button className="w-full h-12 bg-green-600 rounded-2xl text-white">
+            <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
               عضویت
             </button>
           </form>
