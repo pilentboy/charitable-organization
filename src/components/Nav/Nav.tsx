@@ -5,7 +5,7 @@ const Nav = () => {
   return (
     <>
       <nav className="absolute top-4 left-1/2 translate-x-[-50%] w-[90%]  md:w-[700px] bg-white z-50 border nav-shadow h-20 rounded-2xl flex  p-4 items-center justify-between">
-        <ul className="flex items-center text-black gap-2">
+        <ul className="flex items-center justify-center text-black gap-2">
           <FaRegUser color="gray" />
           <li>
             <Link to="login" className="hover:text-gray-500">

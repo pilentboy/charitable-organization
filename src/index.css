@@ -10,13 +10,20 @@
   font-family: "vazir";
   src: url("./assets/fonts/Vazir.ttf");
 }
+@font-face {
+  font-family: "IranianSans";
+  src: url("./assets/fonts/IranianSans.ttf");
+}
+@font-face {
+  font-family: "Wtahoma";
+  src: url("./assets/fonts/Wtahoma.ttf");
+}
 
 body {
   font-family: "vazir";
   width: 100%;
   height: 100%;
 }
-
-.nav-shadow {
+Wtahoma .nav-shadow {
   box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
 }
