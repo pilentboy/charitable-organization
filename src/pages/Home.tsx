@@ -5,16 +5,16 @@ const Home = () => {
       <main className="w-full h-[500px]  rounded-lg">
         {/* title */}
         <div className="flex flex-col items-center gap-2">
-          <h1 className="text-[#007F3D] font-[900] text-[50px]">
+          <h1 className="text-[#007F3D] font-[900]  text-[50px]">
             قربانی آنلاین
           </h1>
-          <h2 className=" text-[22px] font-[900] ">
-            پرداخت نذورات{" "}
+          <div className="flex items-center text-[20px] flex-wrap  justify-center sm:text-[22px] font-[900] gap-[2px]">
+            <h2> پرداخت نذورات</h2>
             <span className="bg-[#ed1b35] rounded-tl-2xl rounded-br-2xl rounded-tr-sm rounded-bl-sm p-1 text-white">
               قربانی گوسفند
             </span>
-            ، بز و مرغ
-          </h2>
+            ،<h2> بز و مرغ</h2>
+          </div>
         </div>
       </main>
     </>
