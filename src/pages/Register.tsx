@@ -10,8 +10,8 @@ import { Link } from "react-router";
 const Register = () => {
   // States for form inputs
   const [username, setUsername] = useState("");
-  const [firstname, setFirstname] = useState("");
-  const [lastname, setLastname] = useState("");
+  const [firstName, setfirstname] = useState("");
+  const [lastName, setLastname] = useState("");
   const [password, setPassword] = useState("");
   const [phonenumber, setPhonenumber] = useState("");
   const [birthdate, setBirthdate] = useState<DateObject | null>(null);
@@ -54,20 +54,20 @@ const Register = () => {
               autoFocus
             />
 
-            <label htmlFor="firstname">نام</label>
+            <label htmlFor="first_name">نام</label>
             <input
-              name="firstname"
-              id="firstname"
-              value={firstname}
-              onChange={(e) => setFirstname(e.target.value)}
+              name="first_name"
+              id="first_name"
+              value={firstName}
+              onChange={(e) => setfirstname(e.target.value)}
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
 
             <label htmlFor="lastname">نام خانوادگی</label>
             <input
-              name="lastname"
+              name="last_name"
               id="lastname"
-              value={lastname}
+              value={lastName}
               onChange={(e) => setLastname(e.target.value)}
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
@@ -176,12 +176,9 @@ const Register = () => {
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-28 p-2 duration-200 focus:border-gray-800"
             ></textarea>
 
-
-
             <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
               عضویت
             </button>
-        
 
             <div className="flex gap-2 border-t pt-2">
               حساب کاربری دارید؟
