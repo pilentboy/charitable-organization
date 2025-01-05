@@ -1,5 +1,5 @@
-const Offering = () => {
+const Home = () => {
   return <h1>صفحه ثبت قربانی </h1>;
 };
 
-export default Offering;
+export default Home;
