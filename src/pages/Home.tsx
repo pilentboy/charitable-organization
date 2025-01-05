@@ -1,12 +1,5 @@
-import { Link } from "react-router";
-
 const Home = () => {
-  return (
-    <div className="gap-5 flex ">
-      <Link to={"login"}>login</Link>
-      <Link to={"register"}>register</Link>
-    </div>
-  );
+  return <div className="gap-5 flex ">صفحه اصلی</div>;
 };
 
 export default Home;

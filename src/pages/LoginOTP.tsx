@@ -11,8 +11,8 @@ const LoginOTP = () => {
   };
 
   return (
-    <section className="h-screen  flex items-center justify-center">
-      <div className="w-full h-[400px]  flex items-center justify-center border rounded-2xl overflow-hidden sm:h-[600px]">
+    <section className="h-screen sm:h-full flex justify-center items-center  ">
+      <div className="w-full h-[400px]  flex items-center justify-center border rounded-2xl overflow-hidden sm:h-[460px]">
         <form
           onSubmit={handleOTPLogin}
           className="w-full  py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5 "
@@ -22,6 +22,7 @@ const LoginOTP = () => {
           <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
             <input
               name="otp"
+              autoFocus
               id="otp"
               type={otpType}
               value={OTP}

@@ -7,30 +7,33 @@ import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import { AuthProvider } from "./context/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
-import Layout from "./components/Layout";
+import Container from "./components/Container";
 import LoginOTP from "./pages/LoginOTP";
+import Nav from "./components/Nav/Nav";
 
 const App = () => {
   return (
-    <Layout>
+    <Container>
       <BrowserRouter>
         <AuthProvider>
           <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="profile" element={<ProtectedRoute />}>
-              <Route index element={<Profile />} />
-            </Route>
-            <Route path="login" element={<Login />} />
-            <Route path="login-otp" element={<LoginOTP />} />
+            <Route path="/" element={<Nav />}>
+              <Route index element={<Home />} />
+              <Route path="profile" element={<ProtectedRoute />}>
+                <Route index element={<Profile />} />
+              </Route>
+              <Route path="login" element={<Login />} />
+              <Route path="login-otp" element={<LoginOTP />} />
 
-            <Route path="register" element={<Register />} />
-            <Route path="about-us" element={<AboutUs />} />
-            <Route path="contact-us" element={<ContactUs />} />
-            <Route path="*" element={<Home />} />
+              <Route path="register" element={<Register />} />
+              <Route path="about-us" element={<AboutUs />} />
+              <Route path="contact-us" element={<ContactUs />} />
+              <Route path="*" element={<Home />} />
+            </Route>
           </Routes>
         </AuthProvider>
       </BrowserRouter>
-    </Layout>
+    </Container>
   );
 };
 

@@ -10,10 +10,10 @@ const Login = () => {
   };
 
   return (
-    <section className="h-screen   flex items-center justify-center">
-      <div className="w-full min-h-[600px] flex items-center justify-between border rounded-2xl overflow-hidden">
+    <section className="h-screen sm:h-full flex justify-center items-center  ">
+      <div className="w-full min-h-[400px] flex items-center justify-between border rounded-2xl overflow-hidden">
         <div onSubmit={handleLogin} className="w-full h-full py-8 px-6 ">
-          <form className="flex flex-col  gap-5 mx-auto sm:w-1/2">
+          <form className="flex flex-col  gap-5 mx-auto md:w-1/2">
             <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
             <label htmlFor="username">نام کاربری</label>
             <input
@@ -37,7 +37,8 @@ const Login = () => {
             <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
               ورود
             </button>
-            <div className="flex items-center justify-between w-full border-t pt-2">
+
+            <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
               <Link to="/login-otp" className=" text-blue-700">
                 ورود با شماره تلفن
               </Link>
