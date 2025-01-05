@@ -5,6 +5,7 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import Select, { SingleValue } from "react-select";
 import { provinces, ProvinceType } from "../data/provinces";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
+import { Link } from "react-router";
 
 const Register = () => {
   // States for form inputs
@@ -37,8 +38,11 @@ const Register = () => {
     <section className="h-full flex items-center justify-center">
       <div className="w-full min-h-[600px] flex items-center justify-between border rounded-2xl overflow-hidden">
         <div className="w-full h-full py-8 px-6 ">
-          <form onSubmit={handleRegister} className="flex flex-col gap-5 mx-auto sm:w-1/2">
-            <h1 className="text-3xl font-bold mb-2">عضویت</h1>
+          <form
+            onSubmit={handleRegister}
+            className="flex flex-col gap-5 mx-auto sm:w-1/2"
+          >
+            <h1 className="text-3xl font-bold mb-2 text-center">عضویت</h1>
 
             <label htmlFor="username">نام کاربری</label>
             <input
@@ -175,6 +179,12 @@ const Register = () => {
             <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
               عضویت
             </button>
+            <div className="flex gap-2">
+              حساب کاربری دارید؟
+              <Link to="/login" className=" text-blue-700">
+                ورود
+              </Link>
+            </div>
           </form>
         </div>
       </div>
