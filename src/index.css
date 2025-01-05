@@ -2,4 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "yekan";
+  src: url("./assets/fonts/YekanBakh-Regular.ttf");
+}
 
+body {
+  font-family: "yekan";
+}
