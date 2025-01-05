@@ -6,7 +6,11 @@
   font-family: "yekan";
   src: url("./assets/fonts/YekanBakh-Regular.ttf");
 }
+@font-face {
+  font-family: "vazir";
+  src: url("./assets/fonts/Vazir.ttf");
+}
 
 body {
-  font-family: "yekan";
+  font-family: "vazir";
 }
