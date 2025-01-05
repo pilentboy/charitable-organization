@@ -8,6 +8,7 @@ import Profile from "./pages/Profile";
 import { AuthProvider } from "./context/AuthProvider";
 import ProtectedRoute from "./components/ProtectedRoute";
 import Layout from "./components/Layout";
+import LoginOTP from "./pages/LoginOTP";
 
 const App = () => {
   return (
@@ -20,6 +21,8 @@ const App = () => {
               <Route index element={<Profile />} />
             </Route>
             <Route path="login" element={<Login />} />
+            <Route path="login-otp" element={<LoginOTP />} />
+
             <Route path="register" element={<Register />} />
             <Route path="about-us" element={<AboutUs />} />
             <Route path="contact-us" element={<ContactUs />} />

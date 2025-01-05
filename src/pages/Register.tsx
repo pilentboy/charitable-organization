@@ -35,7 +35,7 @@ const Register = () => {
   };
 
   return (
-    <section className="h-full flex items-center justify-center">
+    <section className="min-h-screen flex items-center justify-center">
       <div className="w-full min-h-[600px] flex items-center justify-between border rounded-2xl overflow-hidden">
         <div className="w-full h-full py-8 px-6 ">
           <form
