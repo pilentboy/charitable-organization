@@ -1,17 +1,27 @@
+import { BrowserRouter, Routes, Route } from "react-router";
+import LoginOrRegister from "./pages/LoginOrRegister";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import AboutUs from "./pages/AboutUs";
+import ContactUs from "./pages/ContactUs";
+import Offering from "./pages/Offering";
+import Profile from "./pages/Profile";
 
-import {useState} from 'react'
-
-export default function App() {
-	const [count,setCount]=useState<number>(0)
+const App = () => {
   return (
-  <div className='w-screen flex-col gap-10 h-screen flex justify-center bg-slate-900 items-center text-lg'>
-  <button onClick={()=> setCount(pre => pre+1)} className="bg-purple-700 w-36 font-bold hover:scale-105 duration-150 cursor-pointer h-14 rounded-md text-white text-center ">
-      Click on me
-    </button>
-	
-	<h1 className='text-white text-2xl'> {count} </h1>
-  </div>
-  
-  )
-}
+    <BrowserRouter>
+      <Routes>
+        <Route index element={<LoginOrRegister />} />
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="offering" element={<Offering />} />
+        <Route path="profile" element={<Profile />} />
+        <Route path="about-us" element={<AboutUs />} />
+        <Route path="contact-us" element={<ContactUs />} />
+        <Route path="*" element={<LoginOrRegister />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
+export default App;
