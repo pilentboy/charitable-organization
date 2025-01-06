@@ -55,6 +55,16 @@ const LoginOTP = () => {
               تایید
             </button>
 
+            <button
+              className="w-full h-12 bg-gray-600 rounded-2xl duration-200 text-white hover:opacity-90"
+              onClick={() => {
+                setOTPSent(false);
+                phoneForm.reset();
+              }}
+            >
+              اصلاح شماره تلفن
+            </button>
+
             <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
               <Link to="/login" className=" text-blue-700">
                 ورود با نام کاربری
