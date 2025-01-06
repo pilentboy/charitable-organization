@@ -1,36 +1,36 @@
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const { register, handleSubmit } = useForm();
 
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (data: any) => {
+    console.log(data);
   };
 
   return (
-    <section className="h-screen sm:h-full flex justify-center items-center  ">
+    <section className="h-screen sm:h-full flex justify-center items-center">
       <div className="w-full min-h-[400px] flex items-center justify-between border rounded-2xl overflow-hidden">
-        <div onSubmit={handleLogin} className="w-full h-full py-8 px-6 ">
-          <form className="flex flex-col  gap-5 mx-auto md:w-1/2">
+        <div className="w-full h-full py-8 px-6">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-5 mx-auto md:w-1/2"
+          >
             <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
+
             <label htmlFor="username">نام کاربری</label>
             <input
-              name="username"
+              {...register("username")}
               id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
               autoFocus
             />
 
             <label htmlFor="password">رمز عبور</label>
             <input
-              name="password"
+              {...register("password")}
+              type="password"
               id="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
 
