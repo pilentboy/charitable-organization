@@ -52,7 +52,7 @@ const Login = () => {
               <div className="flex gap-2">
                 حساب کاربری ندارید؟
                 <Link to="/register" className=" text-blue-700">
-                  ثبت نام
+                عضویت
                 </Link>
               </div>
             </div>

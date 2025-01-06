@@ -29,12 +29,12 @@ const Nav = () => {
   }, []);
 
   useEffect(() => {
-    setDisplayMobileNav(false)
+    setDisplayMobileNav(false);
   }, [location]);
 
   return (
     <>
-      <nav className="w-[90%] absolute top-4 left-1/2 translate-x-[-50%] bg-white z-50 border nav-shadow h-20 rounded-2xl flex  p-4 items-center justify-between text-base">
+      <nav className="w-[90%] absolute top-4 left-1/2 translate-x-[-50%] bg-white z-50 border nav-shadow h-20 rounded-3xl flex  p-4 items-center justify-between text-base">
         <ul className="hidden sm:flex items-center  justify-center text-black gap-5">
           <li>
             <NavLink
@@ -87,14 +87,14 @@ const Nav = () => {
         <ul className="flex items-center justify-center text-black gap-2">
           <FaRegUser color="gray" />
           <li>
-            <Link to="login" className="hover:text-gray-500">
+            <Link to="login" className="duration-200 hover:text-[#007F3D]">
               ورود
             </Link>
           </li>
           |
           <li>
-            <Link to="register" className="hover:text-gray-500">
-              ثبت نام
+            <Link to="register" className="duration-200 hover:text-[#007F3D]">
+              عضویت
             </Link>
           </li>
         </ul>
