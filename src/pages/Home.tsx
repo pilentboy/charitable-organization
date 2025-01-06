@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import Slider from "../components/Home/Slider";
 
 const Home = () => {
   useEffect(() => {
@@ -7,7 +8,10 @@ const Home = () => {
   return (
     <>
       {/* <header></header> */}
-      <main className="w-full h-[500px]  rounded-lg">
+      <header className="mb-10 w-full">
+        <Slider />
+      </header>
+      <main className="w-full h-[500px]   rounded-lg">
         {/* title */}
         <div className="flex flex-col items-center gap-3 font-vazirBold sm:gap-6">
           <h1 className="text-[#007F3D] font-[900]  text-3xl sm:text-[50px]">
