@@ -8,12 +8,13 @@ const Home = () => {
   return (
     <>
       {/* <header></header> */}
-      <header className="mb-10 w-full">
+      {/* <header className="mb-10 w-full">
         <Slider />
-      </header>
+      </header> */}
+
       <main className="w-full h-[500px]   rounded-lg">
         {/* title */}
-        <div className="flex flex-col items-center gap-3 font-vazirBold sm:gap-6">
+        {/* <div className="flex flex-col items-center gap-3 font-vazirBold sm:gap-6">
           <h1 className="text-primary font-[900]  text-3xl sm:text-[50px]">
             قربانی آنلاین
           </h1>
@@ -23,6 +24,15 @@ const Home = () => {
               قربانی گوسفند
             </span>
             ،<h2> بز و مرغ</h2>
+          </div>
+        </div> */}
+
+        {/* offering form */}
+        <div className="w-full sm:w-[78%] mx-auto min-h-[450px] my-5  rounded-lg bg-gray-100 flex flex-col items-center p-6 ">
+          {/* form parts */}
+          <div className="text-sm gap-2 font-medium  w-full flex items-center border-b border-dotted pb-4 border-gray-300">
+            <span>1 نوع قربانی</span>
+            <span className="text-gray-400">2 مشخصات فردی</span>
           </div>
         </div>
       </main>
