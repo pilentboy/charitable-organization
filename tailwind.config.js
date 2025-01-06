@@ -13,6 +13,9 @@ export default {
         "2xl": "4rem",
       },
     },
+    fontFamily: {
+      vazirBold: ["Vazir-Bold"],
+    },
   },
   plugins: [],
 };

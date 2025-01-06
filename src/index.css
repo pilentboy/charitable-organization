@@ -18,6 +18,10 @@
   font-family: "Wtahoma";
   src: url("./assets/fonts/Wtahoma.ttf");
 }
+@font-face {
+  font-family: "Vazir-Bold";
+  src: url("./assets/fonts/Vazir-Bold.ttf");
+}
 
 body {
   font-family: "vazir";

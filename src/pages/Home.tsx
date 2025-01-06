@@ -4,7 +4,7 @@ const Home = () => {
       {/* <header></header> */}
       <main className="w-full h-[500px]  rounded-lg">
         {/* title */}
-        <div className="flex flex-col items-center gap-3 sm:gap-6">
+        <div className="flex flex-col items-center gap-3 font-vazirBold sm:gap-6">
           <h1 className="text-[#007F3D] font-[900]  text-3xl sm:text-[50px]">
             قربانی آنلاین
           </h1>
