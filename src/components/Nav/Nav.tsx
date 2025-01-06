@@ -34,7 +34,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className="w-[90%] absolute top-4 left-1/2 translate-x-[-50%] bg-white z-50 border nav-shadow h-20 rounded-3xl flex  p-4 items-center justify-between text-base">
+      <nav className="w-[90%] absolute top-4 left-1/2 translate-x-[-50%] bg-white z-50  nav-shadow h-20 rounded-3xl flex  p-4 items-center justify-between text-base">
         <ul className="hidden sm:flex items-center  justify-center text-black gap-5">
           <li>
             <NavLink

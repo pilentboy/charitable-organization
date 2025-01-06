@@ -16,6 +16,9 @@ export default {
     fontFamily: {
       vazirBold: ["Vazir-Bold"],
     },
+    colors: {
+      primary: "#13A89E",
+    },
   },
   plugins: [],
 };
