@@ -16,7 +16,6 @@ const LoginOTP = () => {
 
   const handleCheckOTP = (data: any) => {
     console.log("OTP Data Submitted:", data);
-    alert("Verification Successful!");
   };
 
   return (
