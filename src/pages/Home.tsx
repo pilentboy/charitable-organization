@@ -6,12 +6,6 @@ import { BiSolidDownArrow } from "react-icons/bi";
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState("option1");
 
-  const optionsMap = {
-    option1: ["Apple", "Banana", "Cherry"],
-    option2: ["Carrot", "Broccoli", "Spinach"],
-    option3: ["Dog", "Cat", "Rabbit"],
-  };
-
   const handleRadioChange = (e: any) => {
     setSelectedOption(e.target.value);
   };
@@ -119,7 +113,7 @@ const Home = () => {
                   required
                   inputId="province"
                   placeholder="نوع"
-                  options={[{ value: "1", label: "1" }]}
+                  options={[{ value: 1, label: 1 }]}
                   defaultInputValue="1"
                   components={{
                     DropdownIndicator: (props) => (
@@ -162,7 +156,7 @@ const Home = () => {
                   required
                   inputId="province"
                   placeholder="نوع"
-                  options={[{ value: "1", label: "1" }]}
+                  options={[{ value: 1, label: 1 }]}
                   defaultInputValue="1"
                   components={{
                     DropdownIndicator: (props) => (
