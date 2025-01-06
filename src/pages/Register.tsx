@@ -1,37 +1,50 @@
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
+import { useForm, Controller } from "react-hook-form";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import Select, { SingleValue } from "react-select";
+import Select from "react-select";
 import { provinces, ProvinceType } from "../data/provinces";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link } from "react-router";
 
-const Register = () => {
-  // States for form inputs
-  const [username, setUsername] = useState("");
-  const [firstName, setfirstname] = useState("");
-  const [lastName, setLastname] = useState("");
-  const [password, setPassword] = useState("");
-  const [phonenumber, setPhonenumber] = useState("");
-  const [birthdate, setBirthdate] = useState<DateObject | null>(null);
-  const [province, setProvince] = useState<SingleValue<ProvinceType>>(null);
-  const [city, setCity] =
-    useState<SingleValue<{ value: string; label: string }>>(null);
-  const [address, setAddress] = useState("");
-  const [passwordType, setPasswordType] = useState<string>("password");
+type FormData = {
+  username: string;
+  firstName: string;
+  lastName: string;
+  password: string;
+  phoneNumber: string;
+  birthdate: DateObject | null;
+  province: ProvinceType | null;
+  city: { value: string; label: string } | null;
+  cities: { value: string; label: string }[];
+  address: string;
+  passwordType: "password" | "text";
+};
 
-  // list of the cities when user selectes a province
-  const [cities, setCities] = useState<{ value: string; label: string }[]>([]);
+const Register = () => {
+  const { register, handleSubmit, control, watch, setValue, getValues } =
+    useForm<FormData>({
+      defaultValues: {
+        passwordType: "password",
+      },
+    });
+
+  const province = watch("province");
 
   useEffect(() => {
     if (province) {
-      setCities(province.cities.map((city) => ({ value: city, label: city })));
+      const cities = province.cities.map((city) => ({
+        value: city,
+        label: city,
+      }));
+      setValue("city", null);
+      setValue("cities", cities);
     }
-  }, [province]);
+  }, [province, setValue]);
 
-  const handleRegister = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleRegister = (data: FormData) => {
+    console.log(data);
   };
 
   return (
@@ -39,141 +52,155 @@ const Register = () => {
       <div className="w-full min-h-[600px] flex items-center justify-between border rounded-2xl overflow-hidden">
         <div className="w-full h-full py-8 px-6 ">
           <form
-            onSubmit={handleRegister}
+            onSubmit={handleSubmit(handleRegister)}
             className="flex flex-col gap-5 mx-auto sm:w-1/2"
           >
             <h1 className="text-3xl font-bold mb-2 text-center">عضویت</h1>
 
             <label htmlFor="username">نام کاربری</label>
             <input
-              name="username"
+              {...register("username")}
+              required
               id="username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
               autoFocus
             />
 
-            <label htmlFor="first_name">نام</label>
+            <label htmlFor="firstName">نام</label>
             <input
-              name="first_name"
-              id="first_name"
-              value={firstName}
-              onChange={(e) => setfirstname(e.target.value)}
+              {...register("firstName")}
+              required
+              id="firstName"
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
 
-            <label htmlFor="lastname">نام خانوادگی</label>
+            <label htmlFor="lastName">نام خانوادگی</label>
             <input
-              name="last_name"
-              id="lastname"
-              value={lastName}
-              onChange={(e) => setLastname(e.target.value)}
+              {...register("lastName")}
+              id="lastName"
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
 
             <label htmlFor="password">رمز عبور</label>
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
               <input
-                name="password"
+                {...register("password")}
+                required
                 id="password"
-                type={passwordType}
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                type={watch("passwordType", "password")}
                 className="w-[90%] h-full bg-transparent outline-none border-none"
               />
               <button
                 type="button"
                 onClick={() => {
-                  if (passwordType === "password") {
-                    setPasswordType("text");
-                  } else {
-                    setPasswordType("password");
-                  }
+                  const currentType =
+                    getValues("passwordType") === "password"
+                      ? "text"
+                      : "password";
+                  setValue("passwordType", currentType);
                 }}
               >
-                {passwordType === "text" ? <FaEye /> : <FaEyeSlash />}
+                {watch("passwordType") === "text" ? <FaEye /> : <FaEyeSlash />}
               </button>
             </div>
 
-            <label htmlFor="phonenumber">شماره تلفن</label>
+            <label htmlFor="phoneNumber">شماره تلفن</label>
             <input
-              name="phonenumber"
-              id="phonenumber"
+              {...register("phoneNumber")}
+              id="phoneNumber"
+              required
               type="tel"
-              value={phonenumber}
-              onChange={(e) => setPhonenumber(e.target.value)}
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
 
             <label htmlFor="birthdate">تاریخ تولد</label>
-            <DatePicker
-              id="birthdate"
-              calendar={persian}
-              locale={persian_fa}
-              calendarPosition="bottom-right"
-              value={birthdate}
-              onChange={setBirthdate}
-              inputClass="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800 placeholder:text-sm"
-              placeholder="تاریخ تولد"
+            <Controller
+              control={control}
+              name="birthdate"
+              render={({ field: { ref, ...field } }) => (
+                <DatePicker
+                  required
+                  {...field}
+                  calendar={persian}
+                  locale={persian_fa}
+                  calendarPosition="bottom-right"
+                  inputClass="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800 placeholder:text-sm"
+                  placeholder="تاریخ تولد"
+                />
+              )}
             />
 
             <label htmlFor="province">استان</label>
-            <Select
-              inputId="province"
-              value={province}
-              onChange={(selectedOption) => setProvince(selectedOption)}
-              placeholder="انتخاب استان"
-              options={provinces}
-              getOptionLabel={(option) => option.label}
-              getOptionValue={(option) => option.value}
-              styles={{
-                control: (provided) => ({
-                  ...provided,
-                  width: "200px",
-                  borderColor: "#ddd",
-                  borderRadius: "8px",
-                  padding: "0 10px",
-                }),
-                menu: (provided) => ({
-                  ...provided,
-                  width: "200px",
-                }),
-              }}
+            <Controller
+              control={control}
+              name="province"
+              render={({ field }) => (
+                <Select
+                  required
+                  {...field}
+                  inputId="province"
+                  placeholder="انتخاب استان"
+                  options={provinces}
+                  getOptionLabel={(option) => option.label}
+                  getOptionValue={(option) => option.value}
+                  styles={{
+                    control: (provided) => ({
+                      ...provided,
+                      width: "200px",
+                      height: "48px",
+                      borderColor: "#d1d5db",
+                      borderRadius: "16px",
+                      padding: "0 10px",
+                      backgroundColor: "#f3f4f6",
+                    }),
+                    menu: (provided) => ({
+                      ...provided,
+                      width: "200px",
+                    }),
+                  }}
+                />
+              )}
             />
 
             <label htmlFor="city">شهر</label>
-            <Select
-              inputId="city"
-              value={city}
-              onChange={(selectedOption) => setCity(selectedOption)}
-              placeholder="انتخاب شهر"
-              options={cities}
-              isDisabled={!province}
-              getOptionLabel={(option) => option.label}
-              getOptionValue={(option) => option.value}
-              styles={{
-                control: (provided) => ({
-                  ...provided,
-                  width: "200px",
-                  borderColor: "#ddd",
-                  borderRadius: "8px",
-                  padding: "0 10px",
-                }),
-                menu: (provided) => ({
-                  ...provided,
-                  width: "200px",
-                }),
-              }}
+            <Controller
+              control={control}
+              name="city"
+              render={({ field }) => (
+                <Select
+                  required
+                  {...field}
+                  inputId="city"
+                  placeholder="انتخاب شهر"
+                  options={watch("cities") || []}
+                  isDisabled={!province}
+                  getOptionLabel={(option) => option.label}
+                  getOptionValue={(option) => option.value}
+                  styles={{
+                    control: (provided) => ({
+                      ...provided,
+                      width: "200px",
+                      height: "48px",
+                      borderColor: "#d1d5db",
+                      borderRadius: "16px",
+                      padding: "0 10px",
+                      backgroundColor: "#f3f4f6",
+                    }),
+                    menu: (provided) => ({
+                      ...provided,
+                      width: "200px",
+                    }),
+                  }}
+                />
+              )}
             />
 
             <label htmlFor="address">آدرس</label>
             <textarea
-              name="address"
+              {...register("address")}
+              placeholder="مثال: تهران، خیابان..."
               id="address"
-              value={address}
-              onChange={(e) => setAddress(e.target.value)}
-              className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-28 p-2 duration-200 focus:border-gray-800"
+              className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-28 p-2 placeholder:text-sm duration-200 focus:border-gray-800"
             ></textarea>
 
             <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
