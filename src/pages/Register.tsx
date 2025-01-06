@@ -204,6 +204,7 @@ const Register = () => {
             <textarea
               {...register("address")}
               placeholder="مثال: تهران، خیابان..."
+			  required
               id="address"
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-28 p-2 placeholder:text-sm duration-200 focus:border-gray-800"
             ></textarea>
