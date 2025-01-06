@@ -21,6 +21,7 @@ const Login = () => {
             <label htmlFor="username">نام کاربری</label>
             <input
               {...register("username")}
+              required
               id="username"
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
               autoFocus
@@ -30,6 +31,8 @@ const Login = () => {
             <input
               {...register("password")}
               type="password"
+              required
+
               id="password"
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
