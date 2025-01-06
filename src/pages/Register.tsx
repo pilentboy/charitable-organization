@@ -43,6 +43,10 @@ const Register = () => {
     }
   }, [province, setValue]);
 
+  useEffect(() => {
+    document.title = "ثبت نام";
+  }, []);
+
   const handleRegister = (data: FormData) => {
     console.log(data);
   };

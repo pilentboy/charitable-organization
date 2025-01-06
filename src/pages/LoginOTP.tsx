@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
@@ -17,6 +17,10 @@ const LoginOTP = () => {
   const handleCheckOTP = (data: any) => {
     console.log("OTP Data Submitted:", data);
   };
+
+  useEffect(() => {
+    document.title = "ورود";
+  }, []);
 
   return (
     <section className="h-screen sm:h-full flex justify-center items-center">

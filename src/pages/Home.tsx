@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+
 const Home = () => {
+  useEffect(() => {
+    document.title = "خانه";
+  }, []);
   return (
     <>
       {/* <header></header> */}

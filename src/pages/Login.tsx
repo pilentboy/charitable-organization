@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 
@@ -7,6 +8,10 @@ const Login = () => {
   const onSubmit = (data: any) => {
     console.log(data);
   };
+
+  useEffect(() => {
+    document.title = "ورود";
+  }, []);
 
   return (
     <section className="h-screen sm:h-full flex justify-center items-center">
