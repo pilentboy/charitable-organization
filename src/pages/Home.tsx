@@ -119,9 +119,8 @@ const Home = () => {
                   required
                   inputId="province"
                   placeholder="نوع"
-                  // options={provinces}
-                  // getOptionLabel={(option) => option.label}
-                  // getOptionValue={(option) => option.value}
+                  options={[{ value: "1", label: "1" }]}
+                  defaultInputValue="1"
                   components={{
                     DropdownIndicator: (props) => (
                       <components.DropdownIndicator {...props}>
@@ -134,21 +133,24 @@ const Home = () => {
                     control: (provided) => ({
                       ...provided,
                       height: "52px",
-                      borderColor: "#9ca3af",
                       borderRadius: "8px",
                       padding: "0 10px",
                       backgroundColor: "white",
-                      "&:focus": {
-                        borderColor: "red",
-                      },
                     }),
                     menu: (provided) => ({
                       ...provided,
-                      width: "200px",
+                      backgroundColor: "white",
                     }),
                     dropdownIndicator: (provided) => ({
                       ...provided,
                       color: "#13A89E",
+                    }),
+                    option: (provided) => ({
+                      ...provided,
+                      padding: "12px 20px",
+                      backgroundColor: "white",
+                      cursor: "pointer",
+                      color: "black",
                     }),
                   }}
                 />
@@ -160,8 +162,8 @@ const Home = () => {
                   required
                   inputId="province"
                   placeholder="نوع"
-                  // options={provinces}
-
+                  options={[{ value: "1", label: "1" }]}
+                  defaultInputValue="1"
                   components={{
                     DropdownIndicator: (props) => (
                       <components.DropdownIndicator {...props}>
@@ -174,21 +176,24 @@ const Home = () => {
                     control: (provided) => ({
                       ...provided,
                       height: "52px",
-                      borderColor: "#9ca3af",
                       borderRadius: "8px",
                       padding: "0 10px",
                       backgroundColor: "white",
-                      "&:focus": {
-                        borderColor: "red",
-                      },
                     }),
                     menu: (provided) => ({
                       ...provided,
-                      width: "200px",
+                      backgroundColor: "white",
                     }),
                     dropdownIndicator: (provided) => ({
                       ...provided,
                       color: "#13A89E",
+                    }),
+                    option: (provided) => ({
+                      ...provided,
+                      padding: "12px 20px",
+                      backgroundColor: "white",
+                      cursor: "pointer",
+                      color: "black",
                     }),
                   }}
                 />

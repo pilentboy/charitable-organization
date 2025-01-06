@@ -58,7 +58,7 @@ const Nav = () => {
               }
             >
               <FaRegHeart />
-              کمک به شعف
+              نذر آنلاین
             </NavLink>
           </li>
 
@@ -125,7 +125,7 @@ const Nav = () => {
               }
             >
               <FaRegHeart />
-              کمک به شعف
+              نذر آنلاین
             </NavLink>
           </li>
 
