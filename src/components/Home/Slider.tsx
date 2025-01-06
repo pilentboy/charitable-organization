@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-
+import logo from "../../assets/images/logo.png";
 const Slider = () => {
   return (
     <Swiper
@@ -19,11 +19,7 @@ const Slider = () => {
       className="w-full  rounded-2xl h-[200px] sm:h-[300px] lg:h-[480px] "
     >
       <SwiperSlide>
-        <img
-          src="https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/A_black_image.jpg/640px-A_black_image.jpg"
-          alt="img"
-          className="object-cover w-full h-full"
-        />
+        <img src={logo} alt="img" className="object-fill bg-black w-full h-full" />
       </SwiperSlide>
       <SwiperSlide>
         <img

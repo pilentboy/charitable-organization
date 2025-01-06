@@ -6,7 +6,7 @@ import { BiSolidDownArrow } from "react-icons/bi";
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState("option1");
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
-    useState<boolean>(true);
+    useState<boolean>(false);
 
   const handleRadioChange = (e: any) => {
     setSelectedOption(e.target.value);
@@ -17,7 +17,9 @@ const Home = () => {
   }, []);
   return (
     <>
-      <header className="mb-10 w-full">{/* {<Slider />} */}</header>
+      <header className="mb-10 w-full"> 
+        {/* <Slider /> */}
+         </header>
 
       <main className="w-full h-[500px]  rounded-lg">
         {/* title */}
@@ -35,7 +37,7 @@ const Home = () => {
         </div> */}
 
         {/* offering form */}
-        <div className="w-full md:w-[96%] xl:w-[65%] mx-auto h-fit rounded-2xl bg-[#efeff0c9] flex flex-col items-center py-4 px-6 ">
+        <div className="w-full md:w-[96%] xl:w-[65%] my-6 mx-auto h-fit rounded-2xl bg-[#efeff0c9] flex flex-col items-center py-4 px-6 ">
           {/* form parts */}
           <div className="text-sm gap-2 font-medium  w-full flex items-center border-b border-dotted pb-4 border-gray-300">
             <span
