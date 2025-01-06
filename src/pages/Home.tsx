@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
-// import Slider from "../components/Home/Slider";
+import Slider from "../components/Home/Slider";
+import Select, { components } from "react-select";
+import { BiSolidDownArrow } from "react-icons/bi";
 
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState("option1");
@@ -19,12 +21,9 @@ const Home = () => {
   }, []);
   return (
     <>
-      {/* <header></header> */}
-      {/* <header className="mb-10 w-full">
-        <Slider />
-      </header> */}
+      <header className="mb-10 w-full">{/* <Slider /> */}</header>
 
-      <main className="w-full h-[500px]   rounded-lg">
+      <main className="w-full h-[500px]  rounded-lg">
         {/* title */}
         {/* <div className="flex flex-col items-center gap-3 font-vazirBold sm:gap-6">
           <h1 className="text-primary font-[900]  text-3xl sm:text-[50px]">
@@ -40,7 +39,7 @@ const Home = () => {
         </div> */}
 
         {/* offering form */}
-        <div className="w-full sm:w-[78%] mx-auto min-h-[450px] my-5  rounded-lg bg-gray-100 flex flex-col items-center p-6 ">
+        <div className="w-full md:w-[65%] mx-auto min-h-[450px] my-4  rounded-2xl bg-[#efeff0c9] flex flex-col items-center p-6 ">
           {/* form parts */}
 
           <div className="text-sm gap-2 font-medium  w-full flex items-center border-b border-dotted pb-4 border-gray-300">
@@ -48,11 +47,11 @@ const Home = () => {
             <span className="text-gray-400">2 مشخصات فردی</span>
           </div>
 
-          <form className="py-4">
+          <form className="py-4 w-full px-2">
             {/* offering type */}
-            <div className="flex gap-4">
+            <div className="flex w-full justify-between items-center flex-col gap-4 font-bold lg:flex-row">
               {/* Option 1 */}
-              <label className="flex gap-2 w-56 h-14 rounded-2xl border border-primary items-center p-3">
+              <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary items-center p-3 cursor-pointer">
                 <input
                   type="radio"
                   name="dynamic"
@@ -61,7 +60,7 @@ const Home = () => {
                   onChange={handleRadioChange}
                   className="hidden peer"
                 />
-                <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white ">
+                <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
                   <span
                     className={`w-3/4 h-3/4 test rounded-md transition-colors ${
                       selectedOption === "option1" ? "bg-primary" : "bg-white"
@@ -72,7 +71,7 @@ const Home = () => {
               </label>
 
               {/* Option 2 */}
-              <label className="flex gap-2 w-56 h-14 rounded-2xl border border-primary items-center p-3">
+              <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary items-center p-3 cursor-pointer">
                 <input
                   type="radio"
                   name="dynamic"
@@ -88,11 +87,11 @@ const Home = () => {
                     }`}
                   ></span>
                 </div>
-                <span>عتیقه گوسفند و بزن</span>
+                <span>عتیقه گوسفند و بز</span>
               </label>
 
               {/* Option 3 */}
-              <label className="flex gap-2 w-56 h-14 rounded-2xl border border-primary items-center p-3">
+              <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary items-center p-3 cursor-pointer">
                 <input
                   type="radio"
                   name="dynamic"
@@ -111,6 +110,108 @@ const Home = () => {
                 <span>قربانی مرغ</span>
               </label>
             </div>
+
+            {/* selection */}
+            <div className="flex flex-col gap-4 mt-10 mb-6 items-center justify-between  w-full md:flex-row">
+              <div className="w-full md:w-5/6 flex flex-col gap-1">
+                <span className="font-bold text-gray-700 pr-1">نوع </span>
+                <Select
+                  required
+                  inputId="province"
+                  placeholder="نوع"
+                  // options={provinces}
+                  // getOptionLabel={(option) => option.label}
+                  // getOptionValue={(option) => option.value}
+                  components={{
+                    DropdownIndicator: (props) => (
+                      <components.DropdownIndicator {...props}>
+                        <BiSolidDownArrow color="#13A89E" size="20px" />
+                      </components.DropdownIndicator>
+                    ),
+                  }}
+                  className="w-full text-black"
+                  styles={{
+                    control: (provided) => ({
+                      ...provided,
+                      height: "52px",
+                      borderColor: "#9ca3af",
+                      borderRadius: "8px",
+                      padding: "0 10px",
+                      backgroundColor: "white",
+                      "&:focus": {
+                        borderColor: "red",
+                      },
+                    }),
+                    menu: (provided) => ({
+                      ...provided,
+                      width: "200px",
+                    }),
+                    dropdownIndicator: (provided) => ({
+                      ...provided,
+                      color: "#13A89E",
+                    }),
+                  }}
+                />
+              </div>
+
+              <div className="w-full  md:w-5/6 flex flex-col gap-1">
+                <span className="font-bold text-gray-700 pr-1">تعداد </span>
+                <Select
+                  required
+                  inputId="province"
+                  placeholder="نوع"
+                  // options={provinces}
+
+                  components={{
+                    DropdownIndicator: (props) => (
+                      <components.DropdownIndicator {...props}>
+                        <BiSolidDownArrow color="#13A89E" size="20px" />
+                      </components.DropdownIndicator>
+                    ),
+                  }}
+                  className="w-full text-black"
+                  styles={{
+                    control: (provided) => ({
+                      ...provided,
+                      height: "52px",
+                      borderColor: "#9ca3af",
+                      borderRadius: "8px",
+                      padding: "0 10px",
+                      backgroundColor: "white",
+                      "&:focus": {
+                        borderColor: "red",
+                      },
+                    }),
+                    menu: (provided) => ({
+                      ...provided,
+                      width: "200px",
+                    }),
+                    dropdownIndicator: (provided) => ({
+                      ...provided,
+                      color: "#13A89E",
+                    }),
+                  }}
+                />
+              </div>
+            </div>
+
+            {/* warning text */}
+            <p className="py-2">
+              نکته مهم
+              <br />
+              در عقیقه ، متولیان عقیقه ،فقط دعای عقیقه را می‌خوانند و بقیه آداب
+              آن را انجام نمی‌دهند، اصل هم همین دعاست و پس از ذبح ، بین فقرا
+              توزیع می شود
+            </p>
+            <div className=" w-full flex-wrap justify-center gap-4 items-center flex py-10 border-y border-dotted font-bold text-gray-700  border-gray-300 text-xl font-vazirBold">
+              {/* total cost */}
+              <h1>مجموع پرداختی قربانی</h1>
+              <span className="text-red-600">۲۶۰,۰۰۰ تومان </span>
+            </div>
+
+            <button className="w-40 h-11 my-2 rounded-2xl text-white bg-primary text-center hover:opacity-80 duration-150 font-vazirBold">
+              ادامه
+            </button>
           </form>
         </div>
       </main>
