@@ -26,6 +26,7 @@ const LoginOTP = () => {
               {...register("otp")}
               name="otp"
               autoFocus
+              required
               id="otp"
               type={otpType}
               className="w-[90%] h-full bg-transparent outline-none border-none"
