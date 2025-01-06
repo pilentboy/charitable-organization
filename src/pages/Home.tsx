@@ -244,7 +244,7 @@ const Home = () => {
                   displayFirstOfferingForm ? "bg-primary" : "bg-gray-600"
                 }`}
               >
-                {displayFirstOfferingForm ? "قبلی" : "برگشت"}
+                {displayFirstOfferingForm ? "ادامه" : "قبلی"}
               </button>
             </div>
           </form>
