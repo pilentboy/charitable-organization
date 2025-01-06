@@ -26,7 +26,6 @@ const LoginOTP = () => {
     <section className="h-screen sm:h-full flex justify-center items-center">
       <div className="w-full min-h-[400px] flex items-center justify-center border rounded-2xl overflow-hidden sm:min-h-[460px] ">
         {OTPSent ? (
-          // Assign a unique key to ensure React fully unmounts and remounts the form
           <form
             key="otp-form"
             onSubmit={otpForm.handleSubmit(handleCheckOTP)}
@@ -55,7 +54,7 @@ const LoginOTP = () => {
               </button>
             </div>
 
-            <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
+            <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
               تایید
             </button>
 
@@ -98,17 +97,17 @@ const LoginOTP = () => {
               />
             </div>
 
-            <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
+            <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
               ارسال کد یک بار مصرف
             </button>
 
             <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
-              <Link to="/login" className=" text-blue-700">
+              <Link to="/login" className=" text-primary">
                 ورود با نام کاربری
               </Link>
               <div className="flex gap-2">
                 حساب کاربری ندارید؟
-                <Link to="/register" className=" text-blue-700">
+                <Link to="/register" className=" text-primary">
                   عضویت
                 </Link>
               </div>

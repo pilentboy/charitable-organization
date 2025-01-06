@@ -204,18 +204,18 @@ const Register = () => {
             <textarea
               {...register("address")}
               placeholder="مثال: تهران، خیابان..."
-			  required
+              required
               id="address"
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-28 p-2 placeholder:text-sm duration-200 focus:border-gray-800"
             ></textarea>
 
-            <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
+            <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
               عضویت
             </button>
 
             <div className="flex gap-2 border-t pt-2">
               حساب کاربری دارید؟
-              <Link to="/login" className=" text-blue-700">
+              <Link to="/login" className=" text-primary">
                 ورود
               </Link>
             </div>

@@ -42,7 +42,7 @@ const Nav = () => {
           </Link>
 
           <FiMenu
-            className="block sm:hidden text-2xl cursor-pointer hover:text-[#007F3D]"
+            className="block sm:hidden text-2xl cursor-pointer hover:text-primary"
             onClick={() => setDisplayMobileNav((pre: boolean) => !pre)}
           />
         </div>
@@ -53,8 +53,8 @@ const Nav = () => {
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center gap-1 text-[#007F3D]"
-                  : "flex items-center gap-1 hover:text-[#007F3D]"
+                  ? "flex items-center gap-1 text-primary"
+                  : "flex items-center gap-1 hover:text-primary"
               }
             >
               <FaRegHeart />
@@ -67,8 +67,8 @@ const Nav = () => {
               to="contact-us"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center gap-1 text-[#007F3D]"
-                  : "flex items-center gap-1 hover:text-[#007F3D]"
+                  ? "flex items-center gap-1 text-primary"
+                  : "flex items-center gap-1 hover:text-primary"
               }
             >
               <CiLocationOn />
@@ -81,8 +81,8 @@ const Nav = () => {
               to="about-us"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center gap-1 text-[#007F3D]"
-                  : "flex items-center gap-1 hover:text-[#007F3D]"
+                  ? "flex items-center gap-1 text-primary"
+                  : "flex items-center gap-1 hover:text-primary"
               }
             >
               <FaPeopleGroup />
@@ -94,13 +94,13 @@ const Nav = () => {
         <ul className="flex items-center justify-center text-black gap-2">
           <FaRegUser color="gray" />
           <li>
-            <Link to="login" className="duration-200 hover:text-[#007F3D]">
+            <Link to="login" className="duration-200 hover:text-primary">
               ورود
             </Link>
           </li>
           |
           <li>
-            <Link to="register" className="duration-200 hover:text-[#007F3D]">
+            <Link to="register" className="duration-200 hover:text-primary">
               عضویت
             </Link>
           </li>
@@ -120,8 +120,8 @@ const Nav = () => {
               to="/"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center gap-1 text-[#007F3D]"
-                  : "flex items-center gap-1 hover:text-[#007F3D]"
+                  ? "flex items-center gap-1 text-primary"
+                  : "flex items-center gap-1 hover:text-primary"
               }
             >
               <FaRegHeart />
@@ -134,8 +134,8 @@ const Nav = () => {
               to="contact-us"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center gap-1 text-[#007F3D]"
-                  : "flex items-center gap-1 hover:text-[#007F3D]"
+                  ? "flex items-center gap-1 text-primary"
+                  : "flex items-center gap-1 hover:text-primary"
               }
             >
               <CiLocationOn />
@@ -148,8 +148,8 @@ const Nav = () => {
               to="about-us"
               className={({ isActive }) =>
                 isActive
-                  ? "flex items-center gap-1 text-[#007F3D]"
-                  : "flex items-center gap-1 hover:text-[#007F3D]"
+                  ? "flex items-center gap-1 text-primary"
+                  : "flex items-center gap-1 hover:text-primary"
               }
             >
               <FaPeopleGroup />

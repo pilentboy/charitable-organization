@@ -41,17 +41,17 @@ const Login = () => {
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
 
-            <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
+            <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
               ورود
             </button>
 
             <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
-              <Link to="/login-otp" className=" text-blue-700">
+              <Link to="/login-otp" className=" text-primary">
                 ورود با شماره تلفن
               </Link>
               <div className="flex gap-2">
                 حساب کاربری ندارید؟
-                <Link to="/register" className=" text-blue-700">
+                <Link to="/register" className=" text-primary">
                 عضویت
                 </Link>
               </div>
