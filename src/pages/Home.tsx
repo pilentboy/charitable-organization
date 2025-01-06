@@ -15,7 +15,7 @@ const Home = () => {
   }, []);
   return (
     <>
-      <header className="mb-10 w-full">{/* <Slider /> */}</header>
+      <header className="mb-10 w-full">{/* {<Slider />} */}</header>
 
       <main className="w-full h-[500px]  rounded-lg">
         {/* title */}
@@ -33,7 +33,7 @@ const Home = () => {
         </div> */}
 
         {/* offering form */}
-        <div className="w-full md:w-[65%] mx-auto min-h-[450px] my-4  rounded-2xl bg-[#efeff0c9] flex flex-col items-center p-6 ">
+        <div className="w-full md:w-[96%] xl:w-[65%] mx-auto h-fit rounded-2xl bg-[#efeff0c9] flex flex-col items-center p-6 ">
           {/* form parts */}
 
           <div className="text-sm gap-2 font-medium  w-full flex items-center border-b border-dotted pb-4 border-gray-300">
@@ -43,7 +43,7 @@ const Home = () => {
 
           <form className="py-4 w-full px-2">
             {/* offering type */}
-            <div className="flex w-full justify-between items-center flex-col gap-4 font-bold lg:flex-row">
+            <div className="flex w-full justify-between items-center flex-col gap-4 font-bold md:flex-row">
               {/* Option 1 */}
               <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary items-center p-3 cursor-pointer">
                 <input
