@@ -1,66 +1,112 @@
-import { useForm } from "react-hook-form";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { Link } from "react-router";
 import { useState } from "react";
-
+import { useForm } from "react-hook-form";
+import { Link } from "react-router";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const LoginOTP = () => {
-  const { register, handleSubmit } = useForm();
+  const phoneForm = useForm(); // Form for phone number
+  const otpForm = useForm(); // Form for OTP
+  const [OTPSent, setOTPSent] = useState<boolean>(false);
   const [otpType, setOTPType] = useState<string>("password");
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const handleSendOTP = (data: any) => {
+    console.log("Phone Data Submitted:", data);
+    setOTPSent(true);
+  };
+
+  const handleCheckOTP = (data: any) => {
+    console.log("OTP Data Submitted:", data);
+    alert("Verification Successful!");
   };
 
   return (
-    <section className="h-screen sm:h-full flex justify-center items-center  ">
-      <div className="w-full h-[400px]  flex items-center justify-center border rounded-2xl overflow-hidden sm:h-[460px]">
-        <form
-          onSubmit={handleSubmit(onSubmit)}
-          className="w-full  py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5 "
-        >
-          <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
-          <label htmlFor="otp">لطفا رمز ارسال شده را وارد کنید</label>
-          <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
-            <input
-              {...register("otp")}
-              name="otp"
-              autoFocus
-              required
-              id="otp"
-              type={otpType}
-              className="w-[90%] h-full bg-transparent outline-none border-none"
-            />
-            <button
-              type="button"
-              onClick={() => {
-                if (otpType === "password") {
-                  setOTPType("text");
-                } else {
-                  setOTPType("password");
+    <section className="h-screen sm:h-full flex justify-center items-center">
+      <div className="w-full h-[400px] flex items-center justify-center border rounded-2xl overflow-hidden sm:h-[460px]">
+        {OTPSent ? (
+          // Assign a unique key to ensure React fully unmounts and remounts the form
+          <form
+            key="otp-form"
+            onSubmit={otpForm.handleSubmit(handleCheckOTP)}
+            className="w-full py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5"
+          >
+            <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
+            <label htmlFor="otp_input">لطفا رمز ارسال شده را وارد کنید</label>
+            <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
+              <input
+                {...otpForm.register("otp")}
+                id="otp_input"
+                autoFocus
+                required
+                type={otpType}
+                className="w-[90%] h-full bg-transparent outline-none border-none"
+              />
+              <button
+                type="button"
+                onClick={() =>
+                  setOTPType((prev) =>
+                    prev === "password" ? "text" : "password"
+                  )
                 }
-              }}
-            >
-              {otpType === "text" ? <FaEye /> : <FaEyeSlash />}
-            </button>
-          </div>
-
-          <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
-            تایید
-          </button>
-
-          <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
-            <Link to="/login" className=" text-blue-700">
-              ورود با نام کاربری
-            </Link>
-            <div className="flex gap-2">
-              حساب کاربری ندارید؟
-              <Link to="/register" className=" text-blue-700">
-                ثبت نام
-              </Link>
+              >
+                {otpType === "text" ? <FaEye /> : <FaEyeSlash />}
+              </button>
             </div>
-          </div>
-        </form>
+
+            <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
+              تایید
+            </button>
+
+            <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
+              <Link to="/login" className=" text-blue-700">
+                ورود با نام کاربری
+              </Link>
+              <div className="flex gap-2">
+                حساب کاربری ندارید؟
+                <Link to="/register" className=" text-blue-700">
+                  ثبت نام
+                </Link>
+              </div>
+            </div>
+          </form>
+        ) : (
+          <form
+            key="phone-form"
+            onSubmit={phoneForm.handleSubmit(handleSendOTP)}
+            className="w-full py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5"
+          >
+            <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
+            <label htmlFor="phone_input">
+              لطفا شماره تلفنی که هنگام ثبت نام وارد کردید را وارد نمائید.
+            </label>
+            <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
+              <input
+                {...phoneForm.register("phone_number")}
+                id="phone_input"
+                placeholder="09XXXXXXXXX"
+                autoFocus
+                required
+                type="tel"
+                className="w-[95%] h-full bg-transparent outline-none border-none"
+              />
+            </div>
+
+            <button className="w-full h-12 bg-green-600 rounded-2xl duration-200 text-white hover:opacity-90">
+              ارسال کد یک بار مصرف
+            </button>
+
+            <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
+              <Link to="/login" className=" text-blue-700">
+                ورود با نام کاربری
+              </Link>
+              <div className="flex gap-2">
+                حساب کاربری ندارید؟
+                <Link to="/register" className=" text-blue-700">
+                  ثبت نام
+                </Link>
+              </div>
+            </div>
+          </form>
+        )}
       </div>
     </section>
   );

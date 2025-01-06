@@ -23,7 +23,9 @@ const App = () => {
                 <Route index element={<Profile />} />
               </Route>
               <Route path="login" element={<Login />} />
+
               <Route path="login-otp" element={<LoginOTP />} />
+
 
               <Route path="register" element={<Register />} />
               <Route path="about-us" element={<AboutUs />} />
