@@ -14,7 +14,7 @@ const Home = () => {
       <main className="w-full h-[500px]   rounded-lg">
         {/* title */}
         <div className="flex flex-col items-center gap-3 font-vazirBold sm:gap-6">
-          <h1 className="text-[#007F3D] font-[900]  text-3xl sm:text-[50px]">
+          <h1 className="text-primary font-[900]  text-3xl sm:text-[50px]">
             قربانی آنلاین
           </h1>
           <div className="flex items-center text-[20px] flex-wrap  justify-center sm:text-[22px] font-[900] gap-[3px]">
