@@ -2,7 +2,11 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: "#13A89E",
+      },
+    },
     container: {
       center: true,
       padding: {
@@ -15,9 +19,6 @@ export default {
     },
     fontFamily: {
       vazirBold: ["Vazir-Bold"],
-    },
-    colors: {
-      primary: "#13A89E",
     },
   },
   plugins: [],
