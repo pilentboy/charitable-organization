@@ -44,6 +44,10 @@ const Register = () => {
     }
   }, [province, setValue]);
 
+  useEffect(() => {
+    document.title = "عضویت";
+  }, []);
+
   // useEffect(() => {
   //   const birthdate = watch("birthdate");
   //   if (birthdate) {
