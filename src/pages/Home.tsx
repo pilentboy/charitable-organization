@@ -97,7 +97,7 @@ const Home = () => {
                 {/* offering type */}
                 <div className="flex w-full justify-between items-center flex-col gap-4 font-bold md:flex-row">
                   {/* Option 1 */}
-                  <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary items-center p-3 cursor-pointer">
+                  <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
                     <input
                       type="radio"
                       name="dynamic"
@@ -119,7 +119,7 @@ const Home = () => {
                   </label>
 
                   {/* Option 2 */}
-                  <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary items-center p-3 cursor-pointer">
+                  <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
                     <input
                       type="radio"
                       name="dynamic"
@@ -141,7 +141,7 @@ const Home = () => {
                   </label>
 
                   {/* Option 3 */}
-                  <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary items-center p-3 cursor-pointer">
+                  <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
                     <input
                       type="radio"
                       name="dynamic"
