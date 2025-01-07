@@ -58,7 +58,7 @@ const Home = () => {
         {/* title */}
         <div className="flex flex-col items-center gap-3 font-vazirBold sm:gap-6">
           <h1 className="text-primary font-[900]  text-3xl sm:text-[50px]">
-            قربانی آنلاین
+            نذری آنلاین
           </h1>
           <div className="flex items-center text-[20px] flex-wrap  justify-center sm:text-[22px] font-[900] gap-[3px]">
             <h2> پرداخت نذورات</h2>
@@ -509,7 +509,7 @@ const Home = () => {
           </div>
         </section>
 
-        <div className="w-full  h-72 bg-gray-500 flex items-center justify-center mt-5"></div>
+        <div className="w-full  h-72 bg-gray-200 flex items-center justify-center mt-5"></div>
       </main>
     </>
   );
