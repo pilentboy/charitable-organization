@@ -42,7 +42,7 @@ const ResetPassword = () => {
             <h1 className="text-3xl font-bold mb-2 text-center">
               بازیابی رمز عبور
             </h1>
-            <label htmlFor="otp_input" className="text-primary">
+            <label htmlFor="otp_input">
               لطفا رمز ارسال شده را وارد کنید
             </label>
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
