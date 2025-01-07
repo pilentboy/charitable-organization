@@ -30,13 +30,35 @@ const Home = () => {
   ]);
 
   // radio button options
-  const [offeringRadioOptions, setofferingRadioOptions] = useState<string[]>([
-    "قربانی بز",
-    "قربانی مرغ",
-    "قربانی x",
-    "قربانی y",
-    "قربانی z",
-    "قربانی o",
+  const [offeringRadioOptions, setofferingRadioOptions] = useState<any>([
+    {
+      title: "قربانی بز",
+      id: 1,
+      types: [
+        {
+          title: "گوسفند 10 میلیونی",
+          count: 5,
+        },
+        {
+          title: "گوسفند 20 میلیونی",
+          count: 5,
+        },
+      ],
+    },
+    {
+      title: "قربانی مرغ",
+      id: 3,
+      types: [
+        {
+          title: "ذبح خروس",
+          count: 10,
+        },
+        {
+          title: "ذبح مرغ",
+          count: 5,
+        },
+      ],
+    },
   ]);
 
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
@@ -51,7 +73,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    setofferingRadio(offeringRadioOptions[0])
+    setofferingRadio(offeringRadioOptions[0]?.title);
     document.title = "نذر آنلاین";
   }, []);
   return (
@@ -101,28 +123,28 @@ const Home = () => {
             {displayFirstOfferingForm ? (
               <>
                 {/* offering type */}
-                <div className="flex w-full justify-between items-center flex-col gap-4 font-bold md:flex-row md:flex-wrap">
-                  {offeringRadioOptions.map((option: string, index) => (
+                <div className="flex w-full  items-center flex-col gap-4 font-bold md:flex-row md:flex-wrap">
+                  {offeringRadioOptions.map((option: any) => (
                     <label
-                      key={index}
+                      key={option.id}
                       className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer"
                     >
                       <input
                         type="radio"
-                        name={option}
-                        value={option}
-                        checked={offeringRadio === option}
+                        name={option.title}
+                        value={option.title}
+                        checked={offeringRadio === option.title}
                         onChange={handleOfferingRadioChange}
                         className="hidden peer"
                       />
                       <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
                         <span
                           className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                            offeringRadio === option ? "bg-primary" : "bg-white"
+                            offeringRadio === option.title ? "bg-primary" : "bg-white"
                           }`}
                         ></span>
                       </div>
-                      <span>{option}</span>
+                      <span>{option.title}</span>
                     </label>
                   ))}
                   {/* <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
