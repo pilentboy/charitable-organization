@@ -13,7 +13,7 @@ const Home = () => {
   const [acceptPP, setAcceptPP] = useState<boolean>(false);
 
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
-    useState<boolean>(false);
+    useState<boolean>(true);
 
   const handleOfferingRadioChange = (e: any) => {
     setSelectedOption(e.target.value);
