@@ -43,13 +43,7 @@ const Register = () => {
     }
   }, [province, setValue]);
 
-  useEffect(() => {
-    const birthdate = watch("birthdate");
-    if (birthdate) {
-      console.log(birthdate.format());
-    }
-    document.title = "ثبت نام";
-  }, [watch("birthdate")]);
+
 
   const handleRegister = (data: FormData) => {
     console.log(data);
