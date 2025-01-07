@@ -24,7 +24,7 @@ const Home = () => {
   };
 
   useEffect(() => {
-    document.title = "خانه";
+    document.title = "نذر آنلاین";
   }, []);
   return (
     <>
