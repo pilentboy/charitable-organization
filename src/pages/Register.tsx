@@ -57,7 +57,7 @@ const Register = () => {
         <div className="w-full h-full py-8 px-6 ">
           <form
             onSubmit={handleSubmit(handleRegister)}
-            className="flex flex-col gap-5 mx-auto sm:w-1/2"
+            className="flex  flex-col gap-5 mx-auto sm:w-5/6  lg:w-3/4 xl:w-1/2"
           >
             <h1 className="text-3xl font-bold mb-2 text-center">عضویت</h1>
 
@@ -68,21 +68,6 @@ const Register = () => {
               id="username"
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
               autoFocus
-            />
-
-            <label htmlFor="firstName">نام</label>
-            <input
-              {...register("firstName")}
-              required
-              id="firstName"
-              className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
-            />
-
-            <label htmlFor="lastName">نام خانوادگی</label>
-            <input
-              {...register("lastName")}
-              id="lastName"
-              className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
 
             <label htmlFor="password">رمز عبور</label>
@@ -108,6 +93,21 @@ const Register = () => {
               </button>
             </div>
 
+            <label htmlFor="firstName">نام</label>
+            <input
+              {...register("firstName")}
+              required
+              id="firstName"
+              className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
+            />
+
+            <label htmlFor="lastName">نام خانوادگی</label>
+            <input
+              {...register("lastName")}
+              id="lastName"
+              className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
+            />
+
             <label htmlFor="phoneNumber">شماره تلفن</label>
             <input
               {...register("phoneNumber")}
@@ -115,90 +115,98 @@ const Register = () => {
               placeholder="09XXXXXXXXX"
               required
               type="tel"
-              className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
+              className="border border-gray-300  bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
 
-            <label htmlFor="birthdate">تاریخ تولد</label>
-            <Controller
-              control={control}
-              name="birthdate"
-              render={({ field: { ref, ...field } }) => (
-                <DatePicker
-                  required
-                  {...field}
-                  calendar={persian}
-                  locale={persian_fa}
-                  calendarPosition="bottom-right"
-                  inputClass="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800 placeholder:text-sm"
-                  placeholder="تاریخ تولد"
+            <div className="flex flex-col gap-4 items-center  justify-between md:flex-row">
+              <div className="flex flex-col gap-2 w-full md:w-[170px]">
+                <label htmlFor="birthdate">تاریخ تولد</label>
+                <Controller
+                  control={control}
+                  name="birthdate"
+                  render={({ field: { ref, ...field } }) => (
+                    <DatePicker
+                      required
+                      {...field}
+                      calendar={persian}
+                      locale={persian_fa}
+                      calendarPosition="bottom-right"
+                      inputClass="border border-gray-300 w-full  bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800 placeholder:text-sm"
+                      placeholder="تاریخ تولد"
+                    />
+                  )}
                 />
-              )}
-            />
+              </div>
 
-            <label htmlFor="province">استان</label>
-            <Controller
-              control={control}
-              name="province"
-              render={({ field }) => (
-                <Select
-                  required
-                  {...field}
-                  inputId="province"
-                  placeholder="انتخاب استان"
-                  options={provinces}
-                  getOptionLabel={(option) => option.label}
-                  getOptionValue={(option) => option.value}
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      width: "200px",
-                      height: "48px",
-                      borderColor: "#d1d5db",
-                      borderRadius: "16px",
-                      padding: "0 10px",
-                      backgroundColor: "#f3f4f6",
-                    }),
-                    menu: (provided) => ({
-                      ...provided,
-                      width: "200px",
-                    }),
-                  }}
+              <div className="flex flex-col gap-2 w-full md:w-[170px]">
+                <label htmlFor="province">استان</label>
+                <Controller
+                  control={control}
+                  name="province"
+                  render={({ field }) => (
+                    <Select
+                      required
+                      {...field}
+                      inputId="province"
+                      placeholder="انتخاب استان"
+                      options={provinces}
+                      getOptionLabel={(option) => option.label}
+                      getOptionValue={(option) => option.value}
+                      styles={{
+                        control: (provided) => ({
+                          ...provided,
+                          width: "100%",
+                          height: "48px",
+                          borderColor: "#d1d5db",
+                          borderRadius: "16px",
+                          padding: "0 10px",
+                          backgroundColor: "#f3f4f6",
+                        }),
+                        menu: (provided) => ({
+                          ...provided,
+                          width: "100%",
+                        }),
+                      }}
+                    />
+                  )}
                 />
-              )}
-            />
+              </div>
 
-            <label htmlFor="city">شهر</label>
-            <Controller
-              control={control}
-              name="city"
-              render={({ field }) => (
-                <Select
-                  required
-                  {...field}
-                  inputId="city"
-                  placeholder="انتخاب شهر"
-                  options={watch("cities") || []}
-                  isDisabled={!province}
-                  getOptionLabel={(option) => option.label}
-                  getOptionValue={(option) => option.value}
-                  styles={{
-                    control: (provided) => ({
-                      ...provided,
-                      width: "200px",
-                      height: "48px",
-                      borderColor: "#d1d5db",
-                      borderRadius: "16px",
-                      padding: "0 10px",
-                      backgroundColor: "#f3f4f6",
-                    }),
-                    menu: (provided) => ({
-                      ...provided,
-                      width: "200px",
-                    }),
-                  }}
+              <div className="flex flex-col gap-2 w-full md:w-[170px]">
+                <label htmlFor="city">شهر</label>
+                <Controller
+                  control={control}
+                  name="city"
+                  render={({ field }) => (
+                    <Select
+                      required
+                      {...field}
+                      inputId="city"
+                      placeholder="انتخاب شهر"
+                      options={watch("cities") || []}
+                      isDisabled={!province}
+                      getOptionLabel={(option) => option.label}
+                      getOptionValue={(option) => option.value}
+                      styles={{
+                        control: (provided) => ({
+                          ...provided,
+                          width: "100%",
+                          height: "48px",
+                          borderColor: "#d1d5db",
+                          borderRadius: "16px",
+                          padding: "0 10px",
+                          backgroundColor: "#f3f4f6",
+                        }),
+                        menu: (provided) => ({
+                          ...provided,
+                          width: "100%",
+                        }),
+                      }}
+                    />
+                  )}
                 />
-              )}
-            />
+              </div>
+            </div>
 
             <label htmlFor="address">آدرس</label>
             <textarea
