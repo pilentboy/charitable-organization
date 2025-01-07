@@ -30,9 +30,12 @@ const Home = () => {
   ]);
 
   // radio button options
-  const [offeringRadioOptions, setofferingRadioOptions] = useState<string[]>(
-    []
-  );
+  const [offeringRadioOptions, setofferingRadioOptions] = useState<string[]>([
+    "قربانی بز",
+    "قربانی مرغ",
+    "قربانی x",
+    "قربانی y",
+  ]);
 
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
     useState<boolean>(true);
