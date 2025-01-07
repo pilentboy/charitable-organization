@@ -4,19 +4,36 @@ import Select, { components } from "react-select";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { TiTick } from "react-icons/ti";
 
-
 const Home = () => {
-  const [selectedOption, setSelectedOption] = useState("option1");
+  // offering form inputs states
+  const [offeringRadio, setofferingRadio] = useState<string>("option1");
+  const [offeringType, setOfferingType] = useState<string | number>(1);
+  const [offeringTypeCount, setOfferingTypeCount] = useState<number>(1);
   const [socialMedia, setSocialMedia] = useState<string>("خیر تمایلی ندارم");
   const [displayMessageBox, setDisplayMessageBox] = useState<boolean>(false);
   const [userMessage, setUserMessage] = useState<string>("");
   const [acceptPP, setAcceptPP] = useState<boolean>(false);
+  // end
+
+  // selects values
+  const [offeringTypeOptions, setOfferingTypeOptions] = useState([
+    { value: 1, label: 1 },
+    { value: 2, label: 2 },
+    { value: 3, label: 3 },
+  ]);
+
+  // select counts
+  const [offeringTypeCountOptions, setOfferingTypeCountOptions] = useState([
+    { value: 1, label: 1 },
+    { value: 2, label: 2 },
+    { value: 3, label: 3 },
+  ]);
 
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
     useState<boolean>(true);
 
   const handleOfferingRadioChange = (e: any) => {
-    setSelectedOption(e.target.value);
+    setofferingRadio(e.target.value);
   };
 
   const handleSendSocialMediaRadioChange = (e: any) => {
@@ -65,7 +82,7 @@ const Home = () => {
                 !displayFirstOfferingForm ? "text-black" : "text-gray-400"
               }`}
             >
-              2 مشخصات فردی
+              2 ثبت سفارش
             </span>
           </div>
 
@@ -80,14 +97,14 @@ const Home = () => {
                       type="radio"
                       name="dynamic"
                       value="option1"
-                      checked={selectedOption === "option1"}
+                      checked={offeringRadio === "option1"}
                       onChange={handleOfferingRadioChange}
                       className="hidden peer"
                     />
                     <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
                       <span
                         className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                          selectedOption === "option1"
+                          offeringRadio === "option1"
                             ? "bg-primary"
                             : "bg-white"
                         }`}
@@ -102,14 +119,14 @@ const Home = () => {
                       type="radio"
                       name="dynamic"
                       value="option2"
-                      checked={selectedOption === "option2"}
+                      checked={offeringRadio === "option2"}
                       onChange={handleOfferingRadioChange}
                       className="hidden peer"
                     />
                     <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white ">
                       <span
                         className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                          selectedOption === "option2"
+                          offeringRadio === "option2"
                             ? "bg-primary"
                             : "bg-white"
                         }`}
@@ -124,14 +141,14 @@ const Home = () => {
                       type="radio"
                       name="dynamic"
                       value="option3"
-                      checked={selectedOption === "option3"}
+                      checked={offeringRadio === "option3"}
                       onChange={handleOfferingRadioChange}
                       className="hidden peer"
                     />
                     <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white ">
                       <span
                         className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                          selectedOption === "option3"
+                          offeringRadio === "option3"
                             ? "bg-primary"
                             : "bg-white"
                         }`}
@@ -149,8 +166,11 @@ const Home = () => {
                       required
                       inputId="province"
                       placeholder="نوع"
-                      options={[{ value: 1, label: 1 }]}
-                      defaultInputValue="1"
+                      options={offeringTypeOptions}
+                      onChange={(e: any) => setOfferingType(e.value)}
+                      value={offeringTypeOptions.find(
+                        (option) => option.value === offeringType
+                      )}
                       components={{
                         DropdownIndicator: (props) => (
                           <components.DropdownIndicator {...props}>
@@ -191,9 +211,12 @@ const Home = () => {
                     <Select
                       required
                       inputId="province"
-                      placeholder="نوع"
-                      options={[{ value: 1, label: 1 }]}
-                      defaultInputValue="1"
+                      placeholder="تعداد"
+                      options={offeringTypeCountOptions}
+                      onChange={(e: any) => setOfferingTypeCount(e.value)}
+                      value={offeringTypeCountOptions.find(
+                        (option) => option.value === offeringTypeCount
+                      )} // Set the selected value
                       components={{
                         DropdownIndicator: (props) => (
                           <components.DropdownIndicator {...props}>
@@ -242,7 +265,7 @@ const Home = () => {
             ) : (
               <>
                 {/* user info in offering form */}
-                <div className="flex flex-col  justify-between w-full gap-2 pb-5 md:flex-row">
+                {/* <div className="flex flex-col  justify-between w-full gap-2 pb-5 md:flex-row">
                   <label
                     htmlFor="fullname"
                     className="font-bold flex flex-col gap-2 w-full lg:w-2/4"
@@ -272,7 +295,7 @@ const Home = () => {
                     />
                     <span className="text-gray-600 font-normal text-sm">{`جهت اطلاع رسانی (حتما صحیح وارد شود)`}</span>
                   </label>
-                </div>
+                </div> */}
 
                 {/* social media */}
                 <div className="flex flex-col gap-4 my-2">
