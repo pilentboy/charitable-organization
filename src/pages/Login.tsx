@@ -45,7 +45,7 @@ const Login = () => {
               ورود
             </button>
 
-            <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
+            <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-2 sm:flex-wrap ">
               <Link to="/login-otp" className=" text-primary">
                 ورود با شماره تلفن
               </Link>

@@ -1,4 +1,4 @@
-import { Outlet, Link, NavLink, useLocation } from "react-router";
+import { Link, NavLink, useLocation } from "react-router";
 import { FaRegUser } from "react-icons/fa";
 import { FaPeopleGroup } from "react-icons/fa6";
 import { CiLocationOn } from "react-icons/ci";
@@ -36,7 +36,7 @@ const Nav = () => {
 
   return (
     <>
-      <nav className="w-[90%] absolute h-20 top-4 left-1/2 translate-x-[-50%] bg-white z-50  nav-shadow   sm:h-24 rounded-3xl flex  p-4 items-center justify-between text-base overflow-hidden">
+      <nav className="w-full mb-5 h-20  bg-white z-50  nav-shadow   sm:h-24 rounded-3xl flex  p-4 items-center justify-between text-base overflow-hidden">
         <div className="flex items-center gap-1">
           <Link to={"/"}>
             <img src={logo} alt="logo" className="w-24 sm:w-[130px]" />
@@ -169,7 +169,6 @@ const Nav = () => {
           </li>
         </ul>
       </div>
-      <Outlet />
     </>
   );
 };
