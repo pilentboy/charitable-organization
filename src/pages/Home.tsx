@@ -28,11 +28,14 @@ const Home = () => {
   }, []);
   return (
     <>
-      <header className="mb-10 w-full">{/* <Slider /> */}</header>
+      <header className="mb-10 w-full">
+        {" "}
+        <Slider />{" "}
+      </header>
 
       <main className="w-full h-full pb-6  rounded-lg">
         {/* title */}
-        {/* <div className="flex flex-col items-center gap-3 font-vazirBold sm:gap-6">
+        <div className="flex flex-col items-center gap-3 font-vazirBold sm:gap-6">
           <h1 className="text-primary font-[900]  text-3xl sm:text-[50px]">
             قربانی آنلاین
           </h1>
@@ -43,7 +46,7 @@ const Home = () => {
             </span>
             ،<h2> بز و مرغ</h2>
           </div>
-        </div> */}
+        </div>
 
         {/* offering form */}
         <div className="w-full md:w-[96%] xl:w-[65%] my-6 mx-auto h-fit rounded-2xl bg-[#efeff0c9] flex flex-col items-center py-4 px-6 ">
@@ -469,7 +472,7 @@ const Home = () => {
         {/* daily message */}
         <section className="flex  w-full h-fit items-center justify-center">
           <div className="w-3/4   flex flex-col ">
-            <p className="w-5/6 ">
+            <p className="sm:w-5/6 text-justify sm:text-start ">
               از امام رضا علیه السلام سوال شد که اگر قرباني در منا براي ما كمياب
               شد، آيا جايز است كه دو نفر، يك گوسفند را قرباني كنند؟ حضرت فرمودند
               : بله، هفتاد نفر هم با هم میتوانند.
@@ -480,8 +483,7 @@ const Home = () => {
           </div>
         </section>
 
-        <div className="w-full  h-72 bg-gray-500 flex items-center justify-center mt-5">
-        </div>
+        <div className="w-full  h-72 bg-gray-500 flex items-center justify-center mt-5"></div>
       </main>
     </>
   );
