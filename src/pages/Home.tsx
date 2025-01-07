@@ -3,7 +3,7 @@ import Slider from "../components/Home/Slider";
 import Select, { components } from "react-select";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { TiTick } from "react-icons/ti";
-// import logo from "../assets/images/logo.png";
+
 
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState("option1");
