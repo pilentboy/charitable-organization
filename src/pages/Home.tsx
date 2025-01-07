@@ -7,7 +7,7 @@ import { TiTick } from "react-icons/ti";
 const Home = () => {
   // offering form inputs states
   const [offeringRadio, setofferingRadio] = useState<string>();
-  const [offeringType, setOfferingType] = useState<string | number>(1);
+  const [offeringType, setOfferingType] = useState<any>();
   const [offeringTypeCount, setOfferingTypeCount] = useState<number>(1);
   const [socialMedia, setSocialMedia] = useState<string>("خیر تمایلی ندارم");
   const [displayMessageBox, setDisplayMessageBox] = useState<boolean>(false);
@@ -16,11 +16,7 @@ const Home = () => {
   // end
 
   // selects values
-  const [offeringTypeOptions, setOfferingTypeOptions] = useState([
-    { value: 1, label: 1 },
-    { value: 2, label: 2 },
-    { value: 3, label: 3 },
-  ]);
+  const [offeringTypeOptions, setOfferingTypeOptions] = useState([]);
 
   // select counts
   const [offeringTypeCountOptions, setOfferingTypeCountOptions] = useState([
@@ -36,11 +32,13 @@ const Home = () => {
       id: 1,
       types: [
         {
-          title: "گوسفند 10 میلیونی",
+          value: "گوسفند 10 میلیونی",
+          label: "گوسفند 10 میلیونی",
           count: 5,
         },
         {
-          title: "گوسفند 20 میلیونی",
+          value: "گوسفند 20 میلیونی",
+          label: "گوسفند 20 میلیونی",
           count: 5,
         },
       ],
@@ -50,11 +48,13 @@ const Home = () => {
       id: 3,
       types: [
         {
-          title: "ذبح خروس",
+          value: "ذبح خروس",
+          label: "ذبح خروس",
           count: 10,
         },
         {
-          title: "ذبح مرغ",
+          value: "ذبح مرغ",
+          label: "ذبح مرغ",
           count: 5,
         },
       ],
@@ -63,6 +63,18 @@ const Home = () => {
 
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
     useState<boolean>(true);
+
+  useEffect(() => {
+    if (offeringRadio) {
+      const selectedOption = offeringRadioOptions.find(
+        (option: any) => option.title === offeringRadio
+      );
+      const selectedTypes = selectedOption ? selectedOption.types : [];
+      setOfferingTypeOptions(selectedTypes);
+      setOfferingType(selectedTypes[0]);
+    }
+    console.log(offeringType);
+  }, [offeringRadio]);
 
   const handleOfferingRadioChange = (e: any) => {
     setofferingRadio(e.target.value);
@@ -140,7 +152,9 @@ const Home = () => {
                       <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
                         <span
                           className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                            offeringRadio === option.title ? "bg-primary" : "bg-white"
+                            offeringRadio === option.title
+                              ? "bg-primary"
+                              : "bg-white"
                           }`}
                         ></span>
                       </div>
@@ -222,10 +236,11 @@ const Home = () => {
                       inputId="province"
                       placeholder="نوع"
                       options={offeringTypeOptions}
-                      onChange={(e: any) => setOfferingType(e.value)}
-                      value={offeringTypeOptions.find(
-                        (option) => option.value === offeringType
-                      )}
+                      onChange={(e: any) => {
+                        setOfferingType(e);
+                        console.log(e);
+                      }}
+                      value={offeringType}
                       components={{
                         DropdownIndicator: (props) => (
                           <components.DropdownIndicator {...props}>
