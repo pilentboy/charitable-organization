@@ -10,6 +10,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import Container from "./components/Container";
 import LoginOTP from "./pages/LoginOTP";
 import Nav from "./components/Nav/Nav";
+import ResetPassword from "./pages/ResetPassword";
 
 const App = () => {
   return (
@@ -26,6 +27,7 @@ const App = () => {
 
               <Route path="login-otp" element={<LoginOTP />} />
 
+              <Route path="reset-password" element={<ResetPassword />} />
 
               <Route path="register" element={<Register />} />
               <Route path="about-us" element={<AboutUs />} />

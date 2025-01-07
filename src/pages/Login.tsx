@@ -49,10 +49,13 @@ const Login = () => {
               <Link to="/login-otp" className=" text-primary">
                 ورود با شماره تلفن
               </Link>
+              <Link to="/reset-password" className=" text-primary">
+                بازیابی رمز عبور
+              </Link>
               <div className="flex gap-2">
                 حساب کاربری ندارید؟
                 <Link to="/register" className=" text-primary">
-                عضویت
+                  عضویت
                 </Link>
               </div>
             </div>
