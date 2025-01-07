@@ -6,7 +6,7 @@ import { TiTick } from "react-icons/ti";
 
 const Home = () => {
   // offering form inputs states
-  const [offeringRadio, setofferingRadio] = useState<string>("option1");
+  const [offeringRadio, setofferingRadio] = useState<string>();
   const [offeringType, setOfferingType] = useState<string | number>(1);
   const [offeringTypeCount, setOfferingTypeCount] = useState<number>(1);
   const [socialMedia, setSocialMedia] = useState<string>("خیر تمایلی ندارم");
@@ -35,6 +35,8 @@ const Home = () => {
     "قربانی مرغ",
     "قربانی x",
     "قربانی y",
+    "قربانی z",
+    "قربانی o",
   ]);
 
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
@@ -49,6 +51,7 @@ const Home = () => {
   };
 
   useEffect(() => {
+    setofferingRadio(offeringRadioOptions[0])
     document.title = "نذر آنلاین";
   }, []);
   return (
@@ -98,9 +101,31 @@ const Home = () => {
             {displayFirstOfferingForm ? (
               <>
                 {/* offering type */}
-                <div className="flex w-full justify-between items-center flex-col gap-4 font-bold md:flex-row">
-                  {/* Option 1 */}
-                  <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
+                <div className="flex w-full justify-between items-center flex-col gap-4 font-bold md:flex-row md:flex-wrap">
+                  {offeringRadioOptions.map((option: string, index) => (
+                    <label
+                      key={index}
+                      className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer"
+                    >
+                      <input
+                        type="radio"
+                        name={option}
+                        value={option}
+                        checked={offeringRadio === option}
+                        onChange={handleOfferingRadioChange}
+                        className="hidden peer"
+                      />
+                      <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
+                        <span
+                          className={`w-3/4 h-3/4 test rounded-md transition-colors ${
+                            offeringRadio === option ? "bg-primary" : "bg-white"
+                          }`}
+                        ></span>
+                      </div>
+                      <span>{option}</span>
+                    </label>
+                  ))}
+                  {/* <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
                     <input
                       type="radio"
                       name="dynamic"
@@ -119,10 +144,10 @@ const Home = () => {
                       ></span>
                     </div>
                     <span>قربانی گوسفند و بز</span>
-                  </label>
+                  </label> */}
 
                   {/* Option 2 */}
-                  <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
+                  {/* <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
                     <input
                       type="radio"
                       name="dynamic"
@@ -141,10 +166,10 @@ const Home = () => {
                       ></span>
                     </div>
                     <span>عتیقه گوسفند و بز</span>
-                  </label>
+                  </label> */}
 
                   {/* Option 3 */}
-                  <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
+                  {/* <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
                     <input
                       type="radio"
                       name="dynamic"
@@ -163,7 +188,7 @@ const Home = () => {
                       ></span>
                     </div>
                     <span>قربانی مرغ</span>
-                  </label>
+                  </label> */}
                 </div>
 
                 {/* selection */}
