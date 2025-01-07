@@ -54,6 +54,10 @@ const LoginOTP = () => {
               </button>
             </div>
 
+            <span className="text-sm ">
+              اگر پس از 2 دقیقه پیامک دریافت نشد، مجددا درخواست کد را ارسال
+              کنید.
+            </span>
             <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
               تایید
             </button>
