@@ -415,7 +415,7 @@ const Home = () => {
                 </div>
 
                 {/* accept P&P */}
-                <div className="flex gap-3 flex-col my-6">
+                <div className="flex gap-3 flex-col  my-6">
                   <div className="flex items-center gap-2">
                     <button
                       onClick={() => setAcceptPP((pre) => !pre)}
@@ -430,10 +430,9 @@ const Home = () => {
                     </button>
                     <span
                       onClick={() => setAcceptPP((pre) => !pre)}
-                      className="text-gray-950  text-[15px]  gap-1  font-medium cursor-pointer"
+                      className="text-gray-950  text-[15px]  font-medium cursor-pointer"
                     >
-                      من شرایط و مقررات پرداخت نذر آنلاین را خوانده ام و آن را
-                      می پذیرم.
+                      با قوانین و شرایط نذر آنلاین موافق هستم.
                     </span>
                   </div>
                 </div>
