@@ -44,13 +44,13 @@ const Register = () => {
     }
   }, [province, setValue]);
 
-  useEffect(() => {
-    const birthdate = watch("birthdate");
-    if (birthdate) {
-      console.log(birthdate.format());
-      convertDateToFAEN(birthdate.format(), "english");
-    }
-  }, [watch("birthdate")]);
+  // useEffect(() => {
+  //   const birthdate = watch("birthdate");
+  //   if (birthdate) {
+  //     console.log(birthdate.format());
+  //     convertDateToFAEN(birthdate.format(), "english");
+  //   }
+  // }, [watch("birthdate")]);
 
   const handleRegister = (data: FormData) => {
     console.log(data);
