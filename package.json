@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@types/moment-jalaali": "^0.7.9",
     "axios": "^1.7.9",
     "moment-jalaali": "^0.10.4",
     "persian-date": "^1.1.0",
