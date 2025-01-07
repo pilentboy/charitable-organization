@@ -76,7 +76,6 @@ const Register = () => {
               required
               id="username"
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
-              autoFocus
             />
 
             <label htmlFor="password">رمز عبور</label>

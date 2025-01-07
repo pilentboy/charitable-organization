@@ -37,7 +37,6 @@ const LoginOTP = () => {
               <input
                 {...otpForm.register("otp")}
                 id="otp_input"
-                autoFocus
                 required
                 type={otpType}
                 className="w-[90%] h-full bg-transparent outline-none border-none"
@@ -93,7 +92,6 @@ const LoginOTP = () => {
                 {...phoneForm.register("phone_number")}
                 id="phone_input"
                 placeholder="09XXXXXXXXX"
-                autoFocus
                 required
                 type="tel"
                 className="w-[95%] h-full bg-transparent outline-none border-none"
