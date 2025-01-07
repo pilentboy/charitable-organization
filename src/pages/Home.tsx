@@ -2,14 +2,24 @@ import { useEffect, useState } from "react";
 import Slider from "../components/Home/Slider";
 import Select, { components } from "react-select";
 import { BiSolidDownArrow } from "react-icons/bi";
+import { TiTick } from "react-icons/ti";
 
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState("option1");
+  const [socialMedia, setSocialMedia] = useState<string>("خیر تمایلی ندارم");
+  const [displayMessageBox, setDisplayMessageBox] = useState<boolean>(false);
+  const [userMessage, setUserMessage] = useState<string>("");
+  const [acceptPP, setAcceptPP] = useState<boolean>(false);
+
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
     useState<boolean>(false);
 
-  const handleRadioChange = (e: any) => {
+  const handleOfferingRadioChange = (e: any) => {
     setSelectedOption(e.target.value);
+  };
+
+  const handleSendSocialMediaRadioChange = (e: any) => {
+    setSocialMedia(e.target.value);
   };
 
   useEffect(() => {
@@ -17,9 +27,7 @@ const Home = () => {
   }, []);
   return (
     <>
-      <header className="mb-10 w-full"> 
-        {/* <Slider /> */}
-         </header>
+      <header className="mb-10 w-full">{/* <Slider /> */}</header>
 
       <main className="w-full h-[500px]  rounded-lg">
         {/* title */}
@@ -70,7 +78,7 @@ const Home = () => {
                       name="dynamic"
                       value="option1"
                       checked={selectedOption === "option1"}
-                      onChange={handleRadioChange}
+                      onChange={handleOfferingRadioChange}
                       className="hidden peer"
                     />
                     <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
@@ -92,7 +100,7 @@ const Home = () => {
                       name="dynamic"
                       value="option2"
                       checked={selectedOption === "option2"}
-                      onChange={handleRadioChange}
+                      onChange={handleOfferingRadioChange}
                       className="hidden peer"
                     />
                     <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white ">
@@ -114,7 +122,7 @@ const Home = () => {
                       name="dynamic"
                       value="option3"
                       checked={selectedOption === "option3"}
-                      onChange={handleRadioChange}
+                      onChange={handleOfferingRadioChange}
                       className="hidden peer"
                     />
                     <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white ">
@@ -229,7 +237,204 @@ const Home = () => {
                 </p>
               </>
             ) : (
-              <h1>test</h1>
+              <>
+                {/* user info in offering form */}
+                <div className="flex flex-col  justify-between w-full gap-2 pb-5 md:flex-row">
+                  <label
+                    htmlFor="fullname"
+                    className="font-bold flex flex-col gap-2 w-full lg:w-2/4"
+                  >
+                    <span className="mr-1 text-gray-700">
+                      نام و نام خانوادگی{" "}
+                    </span>
+                    <input
+                      required
+                      type="text"
+                      name="full_name"
+                      id="fullname"
+                      className="w-full p-2 font-normal h-9 border rounded-lg outline-none  bg-white text-gray-500"
+                    />
+                  </label>
+                  <label
+                    htmlFor="phonenumber"
+                    className="font-bold  flex flex-col gap-2 w-full lg:w-2/4"
+                  >
+                    <span className="mr-1 text-gray-700">شماره تلفن</span>
+                    <input
+                      required
+                      type="tel"
+                      name="phone_number"
+                      id="phonenumber"
+                      className="w-full p-2 font-normal h-9 border rounded-lg outline-none  bg-white text-gray-500"
+                    />
+                    <span className="text-gray-600 font-normal text-sm">{`جهت اطلاع رسانی (حتما صحیح وارد شود)`}</span>
+                  </label>
+                </div>
+
+                {/* social media */}
+                <div className="flex flex-col gap-4 my-2">
+                  <span className="font-bold text-gray-700">
+                    آیا میخواهید نذر آنلاین برایتان گزارش قربانی را ارسال کند؟
+                  </span>
+
+                  <div className="flex gap-2 md:items-center flex-col md:flex-row flex-wrap">
+                    <label className="flex gap-2 w-fit h-fit rounded-2xl items-center  cursor-pointer">
+                      <input
+                        type="radio"
+                        value="خیر تمایلی ندارم"
+                        checked={socialMedia === "خیر تمایلی ندارم"}
+                        onChange={handleSendSocialMediaRadioChange}
+                        className="hidden peer"
+                      />
+                      <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
+                        <span
+                          className={`w-3/4 h-3/4 test rounded-md transition-colors ${
+                            socialMedia === "خیر تمایلی ندارم"
+                              ? "bg-primary"
+                              : "bg-white"
+                          }`}
+                        ></span>
+                      </div>
+                      <span>خیر نیازی نیست</span>
+                    </label>
+
+                    <label className="flex gap-2 w-fit h-fit rounded-2xl items-center  cursor-pointer">
+                      <input
+                        type="radio"
+                        value="تلگرام"
+                        checked={socialMedia === "تلگرام"}
+                        onChange={handleSendSocialMediaRadioChange}
+                        className="hidden peer"
+                      />
+                      <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
+                        <span
+                          className={`w-3/4 h-3/4 test rounded-md transition-colors ${
+                            socialMedia === "تلگرام" ? "bg-primary" : "bg-white"
+                          }`}
+                        ></span>
+                      </div>
+                      <span>ارسال به تلگرام</span>
+                    </label>
+
+                    <label className="flex gap-2 w-fit h-fit rounded-2xl items-center  cursor-pointer">
+                      <input
+                        type="radio"
+                        value="واتساپ"
+                        checked={socialMedia === "واتساپ"}
+                        onChange={handleSendSocialMediaRadioChange}
+                        className="hidden peer"
+                      />
+                      <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
+                        <span
+                          className={`w-3/4 h-3/4 test rounded-md transition-colors ${
+                            socialMedia === "واتساپ" ? "bg-primary" : "bg-white"
+                          }`}
+                        ></span>
+                      </div>
+                      <span>ارسال به واتساپ</span>
+                    </label>
+
+                    <label className="flex gap-2 w-fit h-fit rounded-2xl items-center  cursor-pointer">
+                      <input
+                        type="radio"
+                        value="بله"
+                        checked={socialMedia === "بله"}
+                        onChange={handleSendSocialMediaRadioChange}
+                        className="hidden peer"
+                      />
+                      <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
+                        <span
+                          className={`w-3/4 h-3/4 test rounded-md transition-colors ${
+                            socialMedia === "بله" ? "bg-primary" : "bg-white"
+                          }`}
+                        ></span>
+                      </div>
+                      <span>ارسال به بله</span>
+                    </label>
+
+                    <label className="flex gap-2 w-fit h-fit rounded-2xl items-center  cursor-pointer">
+                      <input
+                        type="radio"
+                        value="ایتا"
+                        checked={socialMedia === "ایتا"}
+                        onChange={handleSendSocialMediaRadioChange}
+                        className="hidden peer"
+                      />
+                      <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
+                        <span
+                          className={`w-3/4 h-3/4 test rounded-md transition-colors ${
+                            socialMedia === "ایتا" ? "bg-primary" : "bg-white"
+                          }`}
+                        ></span>
+                      </div>
+                      <span>ارسال به ایتا</span>
+                    </label>
+                  </div>
+                  <p className="text-gray-600 font-normal text-sm my-2 text-justify">
+                    فقط در قربانی گوسفند و بز کامل و یا مرغ و خروس کامل گزارش
+                    قابلیت ارسال را دارد و موارد مشارکت جمعی بصورت عمومی اطلاع
+                    رسانی می شود .
+                  </p>
+                </div>
+
+                {/* user message */}
+                <div className="flex gap-3 flex-col">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setDisplayMessageBox((pre) => !pre)}
+                      type="button"
+                      className={`w-6 h-6 flex  items-center  justify-center  ${
+                        displayMessageBox
+                          ? "bg-primary border-none"
+                          : "bg-white border border-gray-600"
+                      }`}
+                    >
+                      {displayMessageBox && (
+                        <TiTick color="white" size={"20px"} />
+                      )}
+                    </button>
+                    <span
+                      onClick={() => setDisplayMessageBox((pre) => !pre)}
+                      className="text-gray-950  text-[15px] font-medium cursor-pointer"
+                    >
+                      توضیحاتی دارم که مایل به درج هستم !
+                    </span>
+                  </div>
+                  {displayMessageBox && (
+                    <textarea
+                      value={userMessage}
+                      onChange={(e: any) => setUserMessage(e.target.value)}
+                      name="usermessage"
+                      id="usermmessage"
+                      className="border border-gray-400 h-28 rounded-md overflow-y-auto  text-gray-700 outline-none p-2 focus:border-gray-600"
+                    ></textarea>
+                  )}
+                </div>
+
+                {/* accept P&P */}
+                <div className="flex gap-3 flex-col my-6">
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setAcceptPP((pre) => !pre)}
+                      type="button"
+                      className={`w-6 h-6 flex  items-center  justify-center  ${
+                        acceptPP
+                          ? "bg-primary border-none"
+                          : "bg-white border border-gray-600"
+                      }`}
+                    >
+                      {acceptPP && <TiTick color="white" size={"20px"} />}
+                    </button>
+                    <span
+                      onClick={() => setAcceptPP((pre) => !pre)}
+                      className="text-gray-950  text-[15px]  gap-1  font-medium cursor-pointer"
+                    >
+                      من شرایط و مقررات پرداخت نذر آنلاین را خوانده ام و آن را می
+                      پذیرم.
+                    </span>
+                  </div>
+                </div>
+              </>
             )}
 
             <div className=" w-full flex-wrap justify-center gap-4 items-center flex py-10 border-y border-dotted font-bold text-gray-700  border-gray-300 text-xl font-vazirBold">
@@ -238,16 +443,24 @@ const Home = () => {
               <span className="text-red-600">۲۶۰,۰۰۰ تومان </span>
             </div>
 
-            <div className="flex items-center pt-2">
+            <div className="flex items-center flex-col sm:flex-row pt-2 gap-2">
               <button
                 type="button"
                 onClick={() => setDisplayFirstOfferingForm((pre) => !pre)}
-                className={`w-40 h-11  rounded-2xl text-white  text-center hover:opacity-80 duration-150 font-vazirBold ${
+                className={`w-full sm:w-40 h-11  rounded-2xl text-white  text-center hover:opacity-80 duration-150 font-vazirBold ${
                   displayFirstOfferingForm ? "bg-primary" : "bg-gray-600"
                 }`}
               >
                 {displayFirstOfferingForm ? "ادامه" : "قبلی"}
               </button>
+              {!displayFirstOfferingForm && (
+                <button
+                  onClick={() => alert("test")}
+                  className="w-full sm:w-40 h-11  bg-primary  rounded-2xl text-white  text-center hover:opacity-80 duration-150 font-vazirBold "
+                >
+                  پرداخت
+                </button>
+              )}
             </div>
           </form>
         </div>
