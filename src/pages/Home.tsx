@@ -497,13 +497,13 @@ const Home = () => {
 
         {/* daily message */}
         <section className="flex  w-full h-fit items-center justify-center">
-          <div className="w-3/4   flex flex-col ">
+          <div className="w-full   items-center lg:w-[65%] gap-1   flex flex-col ">
             <p className="sm:w-5/6 text-justify sm:text-start ">
               از امام رضا علیه السلام سوال شد که اگر قرباني در منا براي ما كمياب
               شد، آيا جايز است كه دو نفر، يك گوسفند را قرباني كنند؟ حضرت فرمودند
               : بله، هفتاد نفر هم با هم میتوانند.
             </p>
-            <span className="text-gray-700  text-sm">
+            <span className="text-gray-700   text-sm">
               استبصار، شيخ طوسي، ج2، ص 267
             </span>
           </div>
