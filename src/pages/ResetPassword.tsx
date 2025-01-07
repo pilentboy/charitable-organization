@@ -42,9 +42,7 @@ const ResetPassword = () => {
             <h1 className="text-3xl font-bold mb-2 text-center">
               بازیابی رمز عبور
             </h1>
-            <label htmlFor="otp_input">
-              لطفا رمز ارسال شده را وارد کنید
-            </label>
+            <label htmlFor="otp_input">لطفا رمز ارسال شده را وارد کنید</label>
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
               <input
                 {...otpForm.register("otp")}
@@ -65,7 +63,10 @@ const ResetPassword = () => {
                 {otpType === "text" ? <FaEye /> : <FaEyeSlash />}
               </button>
             </div>
-
+            <span className="text-sm ">
+              اگر پس از 2 دقیقه پیامک دریافت نشد، مجددا درخواست کد را ارسال
+              کنید.
+            </span>
             <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
               تایید
             </button>
