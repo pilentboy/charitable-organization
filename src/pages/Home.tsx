@@ -29,8 +29,7 @@ const Home = () => {
   return (
     <>
       <header className="mb-10 w-full">
-        {" "}
-        <Slider />{" "}
+        <Slider />
       </header>
 
       <main className="w-full h-full pb-6  rounded-lg">
