@@ -13,7 +13,7 @@ const authContext = createContext<{
 });
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [loggedIn, setLoggedIn] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(false);
 
   return (

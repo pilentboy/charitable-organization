@@ -6,12 +6,13 @@ import { FaRegHeart } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
 import { useEffect, useState, useRef } from "react";
 import logo from "../../assets/images/logo.png";
+import useAuth from "../../context/AuthProvider";
 
 const Nav = () => {
   const [displayMobileNav, setDisplayMobileNav] = useState<boolean>(false);
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
-
+  const { loggedIn } = useAuth();
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -93,17 +94,27 @@ const Nav = () => {
 
         <ul className="flex items-center justify-center text-black gap-2">
           <FaRegUser color="gray" />
-          <li>
-            <Link to="login" className="duration-200 hover:text-primary">
-              ورود
-            </Link>
-          </li>
-          |
-          <li>
-            <Link to="register" className="duration-200 hover:text-primary">
-              عضویت
-            </Link>
-          </li>
+          {loggedIn ? (
+            <li>
+              <Link to="profile" className="duration-200 hover:text-primary">
+                username
+              </Link>
+            </li>
+          ) : (
+            <>
+              <li>
+                <Link to="login" className="duration-200 hover:text-primary">
+                  ورود
+                </Link>
+              </li>
+              |
+              <li>
+                <Link to="register" className="duration-200 hover:text-primary">
+                  عضویت
+                </Link>
+              </li>
+            </>
+          )}
         </ul>
       </nav>
 
