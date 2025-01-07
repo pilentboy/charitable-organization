@@ -7,6 +7,8 @@ import Select from "react-select";
 import { provinces, ProvinceType } from "../data/provinces";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link } from "react-router";
+import moment from "jalali-moment";
+import convertDateToFAEN from "../utils/convertDateToFAEN";
 
 type FormData = {
   username: string;
@@ -43,7 +45,13 @@ const Register = () => {
     }
   }, [province, setValue]);
 
-
+  useEffect(() => {
+    const birthdate = watch("birthdate");
+    if (birthdate) {
+      console.log(birthdate.format());
+      convertDateToFAEN(birthdate.format(), "english");
+    }
+  }, [watch("birthdate")]);
 
   const handleRegister = (data: FormData) => {
     console.log(data);

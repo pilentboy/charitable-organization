@@ -1,4 +1,4 @@
-declare module "moment-jalaali" {
+declare module "jalali-moment" {
   import moment from "moment";
   export = moment;
 }
