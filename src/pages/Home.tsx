@@ -3,6 +3,7 @@ import Slider from "../components/Home/Slider";
 import Select, { components } from "react-select";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { TiTick } from "react-icons/ti";
+import logo from "../assets/images/logo.png";
 
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState("option1");
@@ -29,7 +30,7 @@ const Home = () => {
     <>
       <header className="mb-10 w-full">{/* <Slider /> */}</header>
 
-      <main className="w-full h-[500px]  rounded-lg">
+      <main className="w-full h-full pb-6  rounded-lg">
         {/* title */}
         {/* <div className="flex flex-col items-center gap-3 font-vazirBold sm:gap-6">
           <h1 className="text-primary font-[900]  text-3xl sm:text-[50px]">
@@ -429,8 +430,8 @@ const Home = () => {
                       onClick={() => setAcceptPP((pre) => !pre)}
                       className="text-gray-950  text-[15px]  gap-1  font-medium cursor-pointer"
                     >
-                      من شرایط و مقررات پرداخت نذر آنلاین را خوانده ام و آن را می
-                      پذیرم.
+                      من شرایط و مقررات پرداخت نذر آنلاین را خوانده ام و آن را
+                      می پذیرم.
                     </span>
                   </div>
                 </div>
@@ -463,6 +464,23 @@ const Home = () => {
               )}
             </div>
           </form>
+        </div>
+
+        {/* daily message */}
+        <section className="flex  w-full h-fit items-center justify-center">
+          <div className="w-3/4   flex flex-col ">
+            <p className="w-5/6 ">
+              از امام رضا علیه السلام سوال شد که اگر قرباني در منا براي ما كمياب
+              شد، آيا جايز است كه دو نفر، يك گوسفند را قرباني كنند؟ حضرت فرمودند
+              : بله، هفتاد نفر هم با هم میتوانند.
+            </p>
+            <span className="text-gray-700  text-sm">
+              استبصار، شيخ طوسي، ج2، ص 267
+            </span>
+          </div>
+        </section>
+
+        <div className="w-full  h-72 bg-gray-500 flex items-center justify-center mt-5">
         </div>
       </main>
     </>
