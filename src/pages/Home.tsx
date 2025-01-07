@@ -29,6 +29,11 @@ const Home = () => {
     { value: 3, label: 3 },
   ]);
 
+  // radio button options
+  const [offeringRadioOptions, setofferingRadioOptions] = useState<string[]>(
+    []
+  );
+
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
     useState<boolean>(true);
 
