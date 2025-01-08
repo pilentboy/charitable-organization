@@ -28,7 +28,7 @@ const Home = () => {
   >();
 
   // radio button options
-  const [offeringRadioOptions, setofferingRadioOptions] = useState<any>([
+  const offeringRadioOptions = useState<any>([
     {
       title: "قربانی بز",
       id: 1,
