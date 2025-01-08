@@ -9,26 +9,32 @@ const Profile = () => {
     document.title = "حساب کاربری";
   }, []);
 
+  const renderProfileInfo = () => (
+    <div className="w-full h-fit flex flex-wrap gap-2 md:gap-0 items-center justify-center md:justify-between">
+      {profileInfo.map(({ title, value, lgInfo }, index) => (
+        <UserInfoBox key={index} title={title} value={value} lgInfo={lgInfo} />
+      ))}
+    </div>
+  );
+
+  const profileInfo = [
+    { title: "نام و نام خانوادگی", value: "علی رضایی" },
+    { title: "نام کاربری", value: "aliReza2" },
+    { title: "تاریخ تولد", value: "۱۳۶۰/۱۲/۰۱" },
+    { title: "شماره تلفن", value: "۰۹۰۰۰۰۰۰۰۰۰" },
+    { title: "استان", value: "اصفهان" },
+    { title: "شهر", value: "کاشان" },
+    { title: "آدرس", value: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ", lgInfo: true },
+  ];
+
   return (
-    <div className="flex justify-between  mt-10 mb-32 ">
+    <div className="flex justify-between mt-10 mb-32">
       <BottomProfileLinks setProfileDisplay={setProfileDisplay} profileDisplay={profileDisplay} />
 
       {profileDisplay === "profile" ? (
-        <div className="w-full  h-fit flex flex-wrap gap-2 md:gap-0 items-center justify-center md:justify-between  ">
-          <UserInfoBox title="نام و نام خانوادگی" value="علی رضایی" />
-          <UserInfoBox title="نام کاربری" value="aliReza2" />
-          <UserInfoBox title="ناریخ تولد" value="۱۳۶۰/۱۲/۰۱" />
-          <UserInfoBox title="شماره تلفن" value="۰۹۰۰۰۰۰۰۰۰۰" />
-          <UserInfoBox title="استان" value="اصفهان" />
-          <UserInfoBox title="شهر" value="کاشان" />
-          <UserInfoBox
-            title="آدرس"
-            value="لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ"
-            lgInfo
-          />
-        </div>
+        renderProfileInfo()
       ) : (
-        <h1 className="text-center absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]">
+        <h1 className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           وضعیت نذری ها
         </h1>
       )}
