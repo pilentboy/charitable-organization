@@ -3,7 +3,9 @@ import UserInfoBox from "../components/Profile/UserInfoBox";
 import BottomProfileLinks from "../components/Profile/BottomProfileLinks";
 
 const Profile = () => {
-  const [profileDisplay, setProfileDisplay] = useState<"profile" | "donations">("profile");
+  const [profileDisplay, setProfileDisplay] = useState<"profile" | "donations">(
+    "profile"
+  );
 
   useEffect(() => {
     document.title = "حساب کاربری";
@@ -24,12 +26,20 @@ const Profile = () => {
     { title: "شماره تلفن", value: "۰۹۰۰۰۰۰۰۰۰۰" },
     { title: "استان", value: "اصفهان" },
     { title: "شهر", value: "کاشان" },
-    { title: "آدرس", value: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ", lgInfo: true },
+    { title: "تاریخ عضویت", value: "1403/05/10" },
+    {
+      title: "آدرس",
+      value: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ",
+      lgInfo: true,
+    },
   ];
 
   return (
     <div className="flex justify-between mt-10 mb-32">
-      <BottomProfileLinks setProfileDisplay={setProfileDisplay} profileDisplay={profileDisplay} />
+      <BottomProfileLinks
+        setProfileDisplay={setProfileDisplay}
+        profileDisplay={profileDisplay}
+      />
 
       {profileDisplay === "profile" ? (
         renderProfileInfo()
