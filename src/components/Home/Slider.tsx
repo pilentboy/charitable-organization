@@ -33,13 +33,19 @@ const Slider = () => {
       className="w-full  rounded-2xl h-[200px] sm:h-[300px] lg:h-[480px] "
     >
       {sliderContents?.length > 0 ? (
-        <SwiperSlide>
-          <img
-            src={logo}
-            alt="img"
-            className="object-fill bg-black w-full h-full"
-          />
-        </SwiperSlide>
+        sliderContents.map((slider: any) => {
+          console.log(slider.media);
+          return (
+            <SwiperSlide key={slider.id}>
+              <img
+                src={`https://nazronlinetest.liara.run${slider.media}`}
+                alt={slider.alt_text}
+                title={slider.alt_text}
+                className="object-fill bg-black w-full h-full text-white"
+              />
+            </SwiperSlide>
+          );
+        })
       ) : (
         <SwiperSlide className="flex items-center justify-center w-full h-full bg-gray-400">
           <h1>اطلاعاتی دریافت نشد</h1>
