@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import handleGetContactUs from "../utils/api/handleGetContactUs";
+import handleGetContactUs from "../utils/api/content/handleGetContactUs";
 
 const AboutUs = () => {
   const [contactUs, setContactUs] = useState<any>();

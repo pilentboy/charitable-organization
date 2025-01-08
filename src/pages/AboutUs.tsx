@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import handleGetAboutUs from "../utils/api/handleGetAboutUs";
+import handleGetAboutUs from "../utils/api/content/handleGetAboutUs";
 
 const AboutUs = () => {
   const [aboutUs, setAboutUs] = useState<any>();
