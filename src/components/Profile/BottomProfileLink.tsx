@@ -14,18 +14,22 @@ const BottomProfileLink = ({
   action,
   profileDisplay,
   id,
-}: BottomProfileLinkProps) => (
-  <button
-    id={id}
-    type="button"
-    className={`flex flex-col hover:text-primary duration-150 gap-1 items-center ${
-      profileDisplay === id ? "text-primary" : null
-    }`}
-    onClick={() => action()}
-  >
-    {icon}
-    {title}
-  </button>
-);
+}: BottomProfileLinkProps) => {
+  const isActive = profileDisplay === id;
+
+  return (
+    <button
+      id={id}
+      type="button"
+      className={`flex flex-col items-center gap-1 duration-150 hover:text-primary ${
+        isActive ? "text-primary" : ""
+      }`}
+      onClick={action}
+    >
+      {icon}
+      <span>{title}</span>
+    </button>
+  );
+};
 
 export default BottomProfileLink;
