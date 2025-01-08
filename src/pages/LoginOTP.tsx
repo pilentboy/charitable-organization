@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
 const LoginOTP = () => {
   const phoneForm = useForm(); // Form for phone number
@@ -9,11 +10,21 @@ const LoginOTP = () => {
   const [OTPSent, setOTPSent] = useState<boolean>(false);
   const [otpType, setOTPType] = useState<string>("password");
 
-  const handleSendOTP = (data: any) => {
-    console.log("Phone Data Submitted:", data);
-    setOTPSent(true);
+  // send otp code to user phone
+  const handleSendOTP = async (data: any) => {
+    try {
+      console.log(data);
+      await axios.post(
+        "https://nazronlinetest.liara.run/user/login/phone/",
+        data
+      );
+      setOTPSent(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
+  // check otp code and log in
   const handleCheckOTP = (data: any) => {
     console.log("OTP Data Submitted:", data);
   };
