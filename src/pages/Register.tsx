@@ -6,10 +6,9 @@ import persian_fa from "react-date-object/locales/persian_fa";
 import Select from "react-select";
 import { provinces, ProvinceType } from "../data/provinces";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import handleUserRegister from "../utils/api/user/handleUserRegister";
 import convertDateToFAEN from "../utils/convertDateToFAEN";
-
 type FormData = {
   username: string;
   first_name: string;
@@ -26,6 +25,8 @@ type FormData = {
 
 const Register = () => {
   const [formatedBirthDate, setFormatedBirthDate] = useState<string>("");
+
+  const navigate = useNavigate();
 
   const { register, handleSubmit, control, watch, setValue, getValues } =
     useForm<FormData>({
@@ -64,6 +65,7 @@ const Register = () => {
       city: data.city?.value,
       address: data.address,
     });
+    navigate("/login");
   };
 
   useEffect(() => {
