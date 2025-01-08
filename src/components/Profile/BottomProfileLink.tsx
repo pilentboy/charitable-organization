@@ -21,9 +21,9 @@ const BottomProfileLink = ({
     <button
       id={id}
       type="button"
-      className={`flex flex-col items-center gap-1 duration-150 hover:text-primary ${
-        isActive ? "text-primary" : ""
-      }`}
+      className={`flex flex-col items-center gap-1 duration-150 ${
+        title === "خروج از حساب" ? "hover:text-red-500" : "hover:text-primary"
+      } ${isActive ? "text-primary" : ""}`}
       onClick={action}
     >
       {icon}

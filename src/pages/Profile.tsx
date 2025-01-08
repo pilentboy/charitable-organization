@@ -1,38 +1,44 @@
 import { useEffect, useState } from "react";
 import UserInfoBox from "../components/Profile/UserInfoBox";
 import BottomProfileLinks from "../components/Profile/BottomProfileLinks";
+import useAuth from "../context/AuthProvider";
 
 const Profile = () => {
+  const {
+    profileInfo: {
+      first_name,
+      last_name,
+      address,
+      phone_number,
+      username,
+      birth_date,
+      city,
+      province,
+      join_date,
+    },
+  } = useAuth();
   const [profileDisplay, setProfileDisplay] = useState<"profile" | "donations">(
     "profile"
   );
-
   useEffect(() => {
     document.title = "حساب کاربری";
   }, []);
 
-  const renderProfileInfo = () => (
-    <div className="w-full h-fit flex flex-wrap gap-2 md:gap-0 items-center justify-center md:justify-between">
-      {profileInfo.map(({ title, value, lgInfo }, index) => (
-        <UserInfoBox key={index} title={title} value={value} lgInfo={lgInfo} />
-      ))}
-    </div>
-  );
-
-  const profileInfo = [
-    { title: "نام و نام خانوادگی", value: "علی رضایی" },
-    { title: "نام کاربری", value: "aliReza2" },
-    { title: "تاریخ تولد", value: "۱۳۶۰/۱۲/۰۱" },
-    { title: "شماره تلفن", value: "۰۹۰۰۰۰۰۰۰۰۰" },
-    { title: "استان", value: "اصفهان" },
-    { title: "شهر", value: "کاشان" },
-    { title: "تاریخ عضویت", value: "1403/05/10" },
-    {
-      title: "آدرس",
-      value: "لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ",
-      lgInfo: true,
-    },
-  ];
+  const renderProfileInfo = () => {
+    return (
+      <div className="w-full h-fit flex flex-wrap gap-2 md:gap-0 items-center justify-center md:justify-between">
+        <UserInfoBox title={"نام"} value={first_name} />
+        <UserInfoBox title={"نام خانوادگی"} value={last_name} />
+        <UserInfoBox title={"نام کاربری"} value={username} />
+        <UserInfoBox title={"شماره تلفن"} value={phone_number} />
+        <UserInfoBox title={"شهر"} value={city} />
+        <UserInfoBox title={"استان"} value={province} />
+        <UserInfoBox title={"تاریخ تولد"} value={birth_date} />
+        <UserInfoBox title={"تاریخ عضویت"} value={join_date.split("T")[0]} />
+        <UserInfoBox title={"آدرس"} value={address}  />
+      </div>
+    );
+  };
 
   return (
     <div className="flex justify-between mt-10 mb-32">
