@@ -8,7 +8,7 @@ const Home = () => {
   // offering form inputs states
   const [offeringRadio, setofferingRadio] = useState<string>();
   const [offeringType, setOfferingType] = useState<any>();
-  const [offeringTypeCount, setOfferingTypeCount] = useState<number>(1);
+  const [offeringTypeCount, setOfferingTypeCount] = useState<any>();
   const [socialMedia, setSocialMedia] = useState<string>("خیر تمایلی ندارم");
   const [displayMessageBox, setDisplayMessageBox] = useState<boolean>(false);
   const [userMessage, setUserMessage] = useState<string>("");
@@ -16,14 +16,12 @@ const Home = () => {
   // end
 
   // selects values
-  const [offeringTypeOptions, setOfferingTypeOptions] = useState([]);
+  const [offeringTypeOptions, setOfferingTypeOptions] = useState<[] | null>();
 
   // select counts
-  const [offeringTypeCountOptions, setOfferingTypeCountOptions] = useState([
-    { value: 1, label: 1 },
-    { value: 2, label: 2 },
-    { value: 3, label: 3 },
-  ]);
+  const [offeringTypeCountOptions, setOfferingTypeCountOptions] = useState<
+    { value: number; label: number }[] | null
+  >();
 
   // radio button options
   const [offeringRadioOptions, setofferingRadioOptions] = useState<any>([
@@ -39,18 +37,18 @@ const Home = () => {
         {
           value: "گوسفند 20 میلیونی",
           label: "گوسفند 20 میلیونی",
-          count: 5,
+          count: 35,
         },
       ],
     },
     {
       title: "قربانی مرغ",
-      id: 3,
+      id: 2,
       types: [
         {
           value: "ذبح خروس",
           label: "ذبح خروس",
-          count: 10,
+          count: 6,
         },
         {
           value: "ذبح مرغ",
@@ -59,22 +57,72 @@ const Home = () => {
         },
       ],
     },
+    {
+      title: "قربانی گوسفند",
+      id: 3,
+    },
+    {
+      title: "قربانی x",
+      id: 4,
+      types: [
+        {
+          value: "x خروس",
+          label: "x خروس",
+          count: 2,
+        },
+        {
+          value: "y مرغ",
+          label: "y مرغ",
+          count: 1,
+        },
+      ],
+    },
   ]);
 
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
     useState<boolean>(true);
+
+  const handleSetOfferingTypeRange = (count: number) => {
+    const result = [];
+
+    for (let i = 1; i <= count; i++) {
+      result.push({ value: i, label: i });
+    }
+    return result;
+  };
 
   useEffect(() => {
     if (offeringRadio) {
       const selectedOption = offeringRadioOptions.find(
         (option: any) => option.title === offeringRadio
       );
-      const selectedTypes = selectedOption ? selectedOption.types : [];
-      setOfferingTypeOptions(selectedTypes);
-      setOfferingType(selectedTypes[0]);
+      const selectedTypes =
+        selectedOption && selectedOption.types ? selectedOption.types : null;
+
+      if (selectedTypes) {
+        setOfferingTypeOptions(selectedTypes);
+        setOfferingType(selectedTypes[0]);
+        const optionTypeOrderRange = handleSetOfferingTypeRange(
+          selectedTypes[0].count
+        );
+        setOfferingTypeCountOptions(optionTypeOrderRange);
+        setOfferingTypeCount(optionTypeOrderRange[0]);
+      } else {
+        setOfferingTypeOptions(null);
+        setOfferingTypeCountOptions(null);
+      }
     }
-    console.log(offeringType);
   }, [offeringRadio]);
+
+  useEffect(() => {
+    if (offeringType) {
+      const optionTypeOrderRange = handleSetOfferingTypeRange(
+        offeringType.count
+      );
+      setOfferingTypeCountOptions(optionTypeOrderRange);
+      setOfferingTypeCount(optionTypeOrderRange[0]);
+    }
+  }, [offeringType]);
 
   const handleOfferingRadioChange = (e: any) => {
     setofferingRadio(e.target.value);
@@ -88,6 +136,7 @@ const Home = () => {
     setofferingRadio(offeringRadioOptions[0]?.title);
     document.title = "نذر آنلاین";
   }, []);
+
   return (
     <>
       <header className="mb-10 w-full">
@@ -161,166 +210,107 @@ const Home = () => {
                       <span>{option.title}</span>
                     </label>
                   ))}
-                  {/* <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="dynamic"
-                      value="option1"
-                      checked={offeringRadio === "option1"}
-                      onChange={handleOfferingRadioChange}
-                      className="hidden peer"
-                    />
-                    <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
-                      <span
-                        className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                          offeringRadio === "option1"
-                            ? "bg-primary"
-                            : "bg-white"
-                        }`}
-                      ></span>
-                    </div>
-                    <span>قربانی گوسفند و بز</span>
-                  </label> */}
-
-                  {/* Option 2 */}
-                  {/* <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="dynamic"
-                      value="option2"
-                      checked={offeringRadio === "option2"}
-                      onChange={handleOfferingRadioChange}
-                      className="hidden peer"
-                    />
-                    <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white ">
-                      <span
-                        className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                          offeringRadio === "option2"
-                            ? "bg-primary"
-                            : "bg-white"
-                        }`}
-                      ></span>
-                    </div>
-                    <span>عتیقه گوسفند و بز</span>
-                  </label> */}
-
-                  {/* Option 3 */}
-                  {/* <label className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer">
-                    <input
-                      type="radio"
-                      name="dynamic"
-                      value="option3"
-                      checked={offeringRadio === "option3"}
-                      onChange={handleOfferingRadioChange}
-                      className="hidden peer"
-                    />
-                    <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white ">
-                      <span
-                        className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                          offeringRadio === "option3"
-                            ? "bg-primary"
-                            : "bg-white"
-                        }`}
-                      ></span>
-                    </div>
-                    <span>قربانی مرغ</span>
-                  </label> */}
                 </div>
 
                 {/* selection */}
                 <div className="flex flex-col gap-4 mt-10 mb-6 items-center justify-between  w-full md:flex-row">
-                  <div className="w-full md:w-5/6 flex flex-col gap-1">
-                    <span className="font-bold text-gray-700 pr-1">نوع </span>
-                    <Select
-                      required
-                      inputId="province"
-                      placeholder="نوع"
-                      options={offeringTypeOptions}
-                      onChange={(e: any) => {
-                        setOfferingType(e);
-                        console.log(e);
-                      }}
-                      value={offeringType}
-                      components={{
-                        DropdownIndicator: (props) => (
-                          <components.DropdownIndicator {...props}>
-                            <BiSolidDownArrow color="#13A89E" size="20px" />
-                          </components.DropdownIndicator>
-                        ),
-                      }}
-                      className="w-full text-black"
-                      styles={{
-                        control: (provided) => ({
-                          ...provided,
-                          height: "52px",
-                          borderRadius: "8px",
-                          padding: "0 10px",
-                          backgroundColor: "white",
-                        }),
-                        menu: (provided) => ({
-                          ...provided,
-                          backgroundColor: "white",
-                        }),
-                        dropdownIndicator: (provided) => ({
-                          ...provided,
-                          color: "#13A89E",
-                        }),
-                        option: (provided) => ({
-                          ...provided,
-                          padding: "12px 20px",
-                          backgroundColor: "white",
-                          cursor: "pointer",
-                          color: "black",
-                        }),
-                      }}
-                    />
-                  </div>
-
-                  <div className="w-full  md:w-5/6 flex flex-col gap-1">
-                    <span className="font-bold text-gray-700 pr-1">تعداد </span>
-                    <Select
-                      required
-                      inputId="province"
-                      placeholder="تعداد"
-                      options={offeringTypeCountOptions}
-                      onChange={(e: any) => setOfferingTypeCount(e.value)}
-                      value={offeringTypeCountOptions.find(
-                        (option) => option.value === offeringTypeCount
-                      )} // Set the selected value
-                      components={{
-                        DropdownIndicator: (props) => (
-                          <components.DropdownIndicator {...props}>
-                            <BiSolidDownArrow color="#13A89E" size="20px" />
-                          </components.DropdownIndicator>
-                        ),
-                      }}
-                      className="w-full text-black"
-                      styles={{
-                        control: (provided) => ({
-                          ...provided,
-                          height: "52px",
-                          borderRadius: "8px",
-                          padding: "0 10px",
-                          backgroundColor: "white",
-                        }),
-                        menu: (provided) => ({
-                          ...provided,
-                          backgroundColor: "white",
-                        }),
-                        dropdownIndicator: (provided) => ({
-                          ...provided,
-                          color: "#13A89E",
-                        }),
-                        option: (provided) => ({
-                          ...provided,
-                          padding: "12px 20px",
-                          backgroundColor: "white",
-                          cursor: "pointer",
-                          color: "black",
-                        }),
-                      }}
-                    />
-                  </div>
+                  {/* type */}
+                  {offeringTypeOptions && (
+                    <div className="w-full md:w-5/6 flex flex-col gap-1">
+                      <span className="font-bold text-gray-700 pr-1">نوع </span>
+                      <Select
+                        required
+                        inputId="type"
+                        placeholder="نوع"
+                        options={offeringTypeOptions}
+                        onChange={(e: any) => {
+                          setOfferingType(e);
+                          console.log(e);
+                        }}
+                        value={offeringType}
+                        components={{
+                          DropdownIndicator: (props) => (
+                            <components.DropdownIndicator {...props}>
+                              <BiSolidDownArrow color="#13A89E" size="20px" />
+                            </components.DropdownIndicator>
+                          ),
+                        }}
+                        className="w-full text-black"
+                        styles={{
+                          control: (provided) => ({
+                            ...provided,
+                            height: "52px",
+                            borderRadius: "8px",
+                            padding: "0 10px",
+                            backgroundColor: "white",
+                          }),
+                          menu: (provided) => ({
+                            ...provided,
+                            backgroundColor: "white",
+                          }),
+                          dropdownIndicator: (provided) => ({
+                            ...provided,
+                            color: "#13A89E",
+                          }),
+                          option: (provided) => ({
+                            ...provided,
+                            padding: "12px 20px",
+                            backgroundColor: "white",
+                            cursor: "pointer",
+                            color: "black",
+                          }),
+                        }}
+                      />
+                    </div>
+                  )}
+                  {/* count */}
+                  {offeringTypeCountOptions && (
+                    <div className="w-full  md:w-5/6 flex flex-col gap-1">
+                      <span className="font-bold text-gray-700 pr-1">
+                        تعداد
+                      </span>
+                      <Select
+                        required
+                        inputId="count"
+                        placeholder="تعداد"
+                        options={offeringTypeCountOptions}
+                        onChange={(e: any) => setOfferingTypeCount(e)}
+                        value={offeringTypeCount}
+                        components={{
+                          DropdownIndicator: (props) => (
+                            <components.DropdownIndicator {...props}>
+                              <BiSolidDownArrow color="#13A89E" size="20px" />
+                            </components.DropdownIndicator>
+                          ),
+                        }}
+                        className="w-full text-black"
+                        styles={{
+                          control: (provided) => ({
+                            ...provided,
+                            height: "52px",
+                            borderRadius: "8px",
+                            padding: "0 10px",
+                            backgroundColor: "white",
+                          }),
+                          menu: (provided) => ({
+                            ...provided,
+                            backgroundColor: "white",
+                          }),
+                          dropdownIndicator: (provided) => ({
+                            ...provided,
+                            color: "#13A89E",
+                          }),
+                          option: (provided) => ({
+                            ...provided,
+                            padding: "12px 20px",
+                            backgroundColor: "white",
+                            cursor: "pointer",
+                            color: "black",
+                          }),
+                        }}
+                      />
+                    </div>
+                  )}
                 </div>
 
                 {/* warning text */}
@@ -334,39 +324,6 @@ const Home = () => {
               </>
             ) : (
               <>
-                {/* user info in offering form */}
-                {/* <div className="flex flex-col  justify-between w-full gap-2 pb-5 md:flex-row">
-                  <label
-                    htmlFor="fullname"
-                    className="font-bold flex flex-col gap-2 w-full lg:w-2/4"
-                  >
-                    <span className="mr-1 text-gray-700">
-                      نام و نام خانوادگی{" "}
-                    </span>
-                    <input
-                      required
-                      type="text"
-                      name="full_name"
-                      id="fullname"
-                      className="w-full p-2 font-normal h-9 border rounded-lg outline-none  bg-white text-gray-500"
-                    />
-                  </label>
-                  <label
-                    htmlFor="phonenumber"
-                    className="font-bold  flex flex-col gap-2 w-full lg:w-2/4"
-                  >
-                    <span className="mr-1 text-gray-700">شماره تلفن</span>
-                    <input
-                      required
-                      type="tel"
-                      name="phone_number"
-                      id="phonenumber"
-                      className="w-full p-2 font-normal h-9 border rounded-lg outline-none  bg-white text-gray-500"
-                    />
-                    <span className="text-gray-600 font-normal text-sm">{`جهت اطلاع رسانی (حتما صحیح وارد شود)`}</span>
-                  </label>
-                </div> */}
-
                 {/* social media */}
                 <div className="flex flex-col gap-4 my-2">
                   <span className="font-bold text-gray-700">
