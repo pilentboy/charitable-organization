@@ -1,8 +1,9 @@
 import axios from "axios";
-const handleContactUs = async () => {
+
+const handleGetQuotes = async () => {
   try {
     const response = await axios.get(
-      "https://nazronlinetest.liara.run/content/about-us/"
+      "https://nazronlinetest.liara.run/content/quotes/"
     );
     return response;
   } catch (error: any) {
@@ -11,4 +12,4 @@ const handleContactUs = async () => {
   }
 };
 
-export default handleContactUs;
+export default handleGetQuotes;

@@ -6,6 +6,7 @@ const handleGetAboutUs = async () => {
     );
     return response;
   } catch (error: any) {
+    console.log(error);
     return error.message || "مشکلی پیش آمد";
   }
 };
