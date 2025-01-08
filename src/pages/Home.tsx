@@ -4,11 +4,10 @@ import Select, { components } from "react-select";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { TiTick } from "react-icons/ti";
 import useAuth from "../context/AuthProvider";
-import { useNavigate } from "react-router";
 
 const Home = () => {
   const { loggedIn } = useAuth();
-  const navigate = useNavigate();
+
 
   // offering form inputs states
   const [offeringRadio, setofferingRadio] = useState<string>();
