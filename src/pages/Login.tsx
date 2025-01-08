@@ -1,21 +1,24 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import handleUserLoginUsername from "../utils/api/user/handleUserLoginUsername";
+import useAuth from "../context/AuthProvider";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
+  const { updateAccessToken } = useAuth();
+  const navigate = useNavigate();
 
   const onSubmit = async (data: any) => {
-    console.log("log in check");
-    const req=await handleUserLoginUsername(data);
-    console.log(req)
+    console.log("wait for login response...");
+    await handleUserLoginUsername(data);
+    updateAccessToken();
+    navigate("/");
   };
 
   useEffect(() => {
     document.title = "ورود";
   }, []);
-  // 09116093835Ali aliEbrahimi
   return (
     <section className="h-screen sm:h-full flex justify-center items-center">
       <div className="w-full min-h-[400px] flex items-center justify-between border rounded-2xl overflow-hidden">

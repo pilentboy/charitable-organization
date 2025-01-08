@@ -12,7 +12,7 @@ const Nav = () => {
   const [displayMobileNav, setDisplayMobileNav] = useState<boolean>(false);
   const mobileNavRef = useRef<HTMLDivElement | null>(null);
   const location = useLocation();
-  const { loggedIn } = useAuth();
+  const { loggedIn, profileInfo } = useAuth();
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (
@@ -96,8 +96,12 @@ const Nav = () => {
           <FaRegUser color="gray" />
           {loggedIn ? (
             <li>
-              <Link to="profile" className="duration-200 hover:text-primary">
-                username
+              <Link
+                to="profile"
+                className="duration-200 hover:text-primary flex items-center gap-1"
+              >
+                <span>{profileInfo.first_name}</span>
+                <span>{profileInfo.last_name}</span>
               </Link>
             </li>
           ) : (

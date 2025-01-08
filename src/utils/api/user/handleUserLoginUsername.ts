@@ -11,10 +11,10 @@ const handleUserLogin = async (loginInfo: any) => {
     localStorage.setItem("refreshToken", response.data.refresh);
 
     console.log("Login successful!");
+    
     return response.data;
   } catch (error: any) {
     console.error("Login failed:", error.message || "مشکلی پیش آمد");
-    return null;
   }
 };
 
