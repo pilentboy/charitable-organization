@@ -1,15 +1,24 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import handleGetContactUs from "../utils/api/handleGetContactUs";
 
-const ContactUs = () => {
+const AboutUs = () => {
+  const [contactUs, setContactUs] = useState<any>();
+
   useEffect(() => {
-    document.title = "ارتباط با ما";
+    const getData = async () => {
+      const data = await handleGetContactUs();
+      setContactUs(data.status);
+    };
+    getData();
+
+    document.title = "درباره ما";
   }, []);
+
   return (
     <h1 className="bg-primary p-5 rounded-md text-white absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]">
-  
-      ارتباط با ما
+      {contactUs ? contactUs : "در حال دریافت اطلاعات"}
     </h1>
   );
 };
 
-export default ContactUs;
+export default AboutUs;

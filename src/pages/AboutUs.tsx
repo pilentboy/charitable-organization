@@ -1,12 +1,22 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import handleGetAboutUs from "../utils/api/handleGetAboutUs";
 
 const AboutUs = () => {
+  const [aboutUs, setAboutUs] = useState<any>();
+
   useEffect(() => {
+    const getData = async () => {
+      const data = await handleGetAboutUs();
+      setAboutUs(data.status);
+    };
+    getData();
+
     document.title = "درباره ما";
   }, []);
+
   return (
     <h1 className="bg-primary p-5 rounded-md text-white absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]">
-      درباره ما
+      {aboutUs ? aboutUs : "در حال دریافت اطلاعات"}
     </h1>
   );
 };
