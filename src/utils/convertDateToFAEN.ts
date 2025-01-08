@@ -14,9 +14,9 @@ const convertDateToFAEN = (date: string, expectedType: string) => {
     })
     .join("");
   if (expectedType === "persian") {
-    console.log(result.replace(/-/g, "/"));
+    return result.replace(/-/g, "/");
   } else {
-    console.log(result.replace(/\//g, "-"));
+    return result.replace(/\//g, "-");
   }
 };
-export default convertDateToFAEN
+export default convertDateToFAEN;

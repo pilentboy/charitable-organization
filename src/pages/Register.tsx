@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import DatePicker, { DateObject } from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
@@ -7,14 +7,16 @@ import Select from "react-select";
 import { provinces, ProvinceType } from "../data/provinces";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link } from "react-router";
+import handleUserRegister from "../utils/api/user/handleUserRegister";
+import convertDateToFAEN from "../utils/convertDateToFAEN";
 
 type FormData = {
   username: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   password: string;
-  phoneNumber: string;
-  birthdate: DateObject | null;
+  phone_number: string;
+  birth_date: DateObject | null;
   province: ProvinceType | null;
   city: { value: string; label: string } | null;
   cities: { value: string; label: string }[];
@@ -23,6 +25,8 @@ type FormData = {
 };
 
 const Register = () => {
+  const [formatedBirthDate, setFormatedBirthDate] = useState<string>("");
+
   const { register, handleSubmit, control, watch, setValue, getValues } =
     useForm<FormData>({
       defaultValues: {
@@ -47,17 +51,27 @@ const Register = () => {
     document.title = "عضویت";
   }, []);
 
-  // useEffect(() => {
-  //   const birthdate = watch("birthdate");
-  //   if (birthdate) {
-  //     console.log(birthdate.format());
-  //     convertDateToFAEN(birthdate.format(), "english");
-  //   }
-  // }, [watch("birthdate")]);
-
-  const handleRegister = (data: FormData) => {
-    console.log(data);
+  const handleRegister = async (data: FormData) => {
+    console.log("wait for register");
+    await handleUserRegister({
+      username: data.username,
+      password: data.password,
+      first_name: data.first_name,
+      last_name: data.last_name,
+      phone_number: data.phone_number,
+      birth_date: formatedBirthDate,
+      province: data.province?.value,
+      city: data.city?.value,
+      address: data.address,
+    });
   };
+
+  useEffect(() => {
+    const birthdate = watch("birth_date");
+    if (birthdate) {
+      setFormatedBirthDate(convertDateToFAEN(birthdate.format(), "english"));
+    }
+  }, [watch("birth_date")]);
 
   return (
     <section className="h-full flex items-center justify-center">
@@ -100,25 +114,25 @@ const Register = () => {
               </button>
             </div>
 
-            <label htmlFor="firstName">نام</label>
+            <label htmlFor="first_name">نام</label>
             <input
-              {...register("firstName")}
+              {...register("first_name")}
               required
-              id="firstName"
+              id="first_name"
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
 
-            <label htmlFor="lastName">نام خانوادگی</label>
+            <label htmlFor="last_name">نام خانوادگی</label>
             <input
-              {...register("lastName")}
-              id="lastName"
+              {...register("last_name")}
+              id="last_name"
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
 
-            <label htmlFor="phoneNumber">شماره تلفن</label>
+            <label htmlFor="phone_number">شماره تلفن</label>
             <input
-              {...register("phoneNumber")}
-              id="phoneNumber"
+              {...register("phone_number")}
+              id="phone_number"
               placeholder="09XXXXXXXXX"
               required
               type="tel"
@@ -127,13 +141,13 @@ const Register = () => {
 
             <div className="flex flex-col gap-4 items-center  justify-between md:flex-row">
               <div className="flex flex-col gap-2 w-full md:w-[170px]">
-                <label htmlFor="birthdate">تاریخ تولد</label>
+                <label htmlFor="birth_date">تاریخ تولد</label>
                 <Controller
                   control={control}
-                  name="birthdate"
+                  name="birth_date"
                   render={({ field: { onChange, value } }) => (
                     <DatePicker
-                      id="birthdate"
+                      id="birth_date"
                       calendar={persian}
                       locale={persian_fa}
                       calendarPosition="bottom-right"
@@ -243,3 +257,6 @@ const Register = () => {
 };
 
 export default Register;
+function ueeState<T>(arg0: string): [any, any] {
+  throw new Error("Function not implemented.");
+}
