@@ -3,8 +3,13 @@ import Slider from "../components/Home/Slider";
 import Select, { components } from "react-select";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { TiTick } from "react-icons/ti";
+import useAuth from "../context/AuthProvider";
+import { useNavigate } from "react-router";
 
 const Home = () => {
+  const { loggedIn } = useAuth();
+  const navigate = useNavigate();
+
   // offering form inputs states
   const [offeringRadio, setofferingRadio] = useState<string>();
   const [offeringType, setOfferingType] = useState<any>();
@@ -507,7 +512,14 @@ const Home = () => {
               </button>
               {!displayFirstOfferingForm && (
                 <button
-                  onClick={() => alert("test")}
+                  type={loggedIn ? "submit" : "button"}
+                  onClick={() => {
+                    loggedIn
+                      ? alert("پرداخت")
+                      : alert(
+                          "لطفا جهت پرداخت ابتدا به حساب کاربری خود وارد شوید"
+                        );
+                  }}
                   className="w-full sm:w-40 h-11  bg-primary  rounded-2xl text-white  text-center hover:opacity-80 duration-150 font-vazirBold "
                 >
                   پرداخت
