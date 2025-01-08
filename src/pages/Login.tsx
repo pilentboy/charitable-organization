@@ -1,18 +1,21 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
+import handleUserLoginUsername from "../utils/api/user/handleUserLoginUsername";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
 
-  const onSubmit = (data: any) => {
-    console.log(data);
+  const onSubmit = async (data: any) => {
+    console.log("log in check");
+    const req=await handleUserLoginUsername(data);
+    console.log(req)
   };
 
   useEffect(() => {
     document.title = "ورود";
   }, []);
-
+  // 09116093835Ali aliEbrahimi
   return (
     <section className="h-screen sm:h-full flex justify-center items-center">
       <div className="w-full min-h-[400px] flex items-center justify-between border rounded-2xl overflow-hidden">

@@ -50,7 +50,7 @@ const Register = () => {
   useEffect(() => {
     document.title = "عضویت";
   }, []);
-  // 09116093835Ali aliEbrahimi
+
   const handleRegister = async (data: FormData) => {
     console.log("wait for register");
     await handleUserRegister({

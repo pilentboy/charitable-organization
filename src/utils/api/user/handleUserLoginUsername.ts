@@ -1,16 +1,21 @@
 import axios from "axios";
 
-const handleUserLoginUsername = async (loginInfo: any) => {
+const handleUserLogin = async (loginInfo: any) => {
   try {
     const response = await axios.post(
-      "https://nazronlinetest.liara.run/user/register/",
-      loginInfo 
+      "https://nazronlinetest.liara.run/user/login/username/",
+      loginInfo
     );
-    return response;
+
+    localStorage.setItem("accessToken", response.data.access);
+    localStorage.setItem("refreshToken", response.data.refresh);
+
+    console.log("Login successful!");
+    return response.data;
   } catch (error: any) {
-    console.log(error);
-    return error.message || "مشکلی پیش آمد";
+    console.error("Login failed:", error.message || "مشکلی پیش آمد");
+    return null;
   }
 };
 
-export default handleUserLoginUsername;
+export default handleUserLogin
