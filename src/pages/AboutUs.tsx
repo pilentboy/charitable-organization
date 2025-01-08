@@ -6,8 +6,8 @@ const AboutUs = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await handleGetAboutUs();
-      setAboutUs(data.status);
+      const req = await handleGetAboutUs();
+      setAboutUs(req.status);
     };
     getData();
 

@@ -6,8 +6,8 @@ const AboutUs = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const data = await handleGetContactUs();
-      setContactUs(data.status);
+      const req = await handleGetContactUs();
+      setContactUs(req.status);
     };
     getData();
 
