@@ -8,7 +8,6 @@ import useAuth from "../context/AuthProvider";
 const Home = () => {
   const { loggedIn } = useAuth();
 
-
   // offering form inputs states
   const [offeringRadio, setofferingRadio] = useState<string>();
   const [offeringType, setOfferingType] = useState<any>();
@@ -28,7 +27,7 @@ const Home = () => {
   >();
 
   // radio button options
-  const offeringRadioOptions = useState<any>([
+  const [offeringRadioOptions] = useState<any>([
     {
       title: "قربانی بز",
       id: 1,
