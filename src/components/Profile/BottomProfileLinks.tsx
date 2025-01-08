@@ -7,33 +7,44 @@ const BottomProfileLinks = ({
   setProfileDisplay,
   profileDisplay,
 }: {
-  setProfileDisplay: any;
+  setProfileDisplay: (display: "profile" | "donations") => void;
   profileDisplay: "donations" | "profile";
 }) => {
   const navigate = useNavigate();
 
+  const links = [
+    {
+      title: "مشخصات من",
+      icon: <FaRegUser />,
+      id: "profile",
+      action: () => setProfileDisplay("profile"),
+    },
+    {
+      title: "نذری های من",
+      icon: <FaRegHeart />,
+      id: "donations",
+      action: () => setProfileDisplay("donations"),
+    },
+    {
+      title: "خروج از حساب",
+      icon: <CiLogout />,
+      id: "logout",
+      action: () => navigate("/"),
+    },
+  ];
+
   return (
-    <div className=" fixed bottom-6 left-1/2 translate-x-[-50%] w-[90%] h-20  sm:w-96 border bg-white border-gray-300 flex items-center justify-between p-2 rounded-md">
-      <BottomProfileLink
-        title="مشخصات من"
-        icon={<FaRegUser />}
-        profileDisplay={profileDisplay}
-        id="profile"
-        action={() => setProfileDisplay("profile")}
-      />
-      <BottomProfileLink
-        title="نذری های من"
-        icon={<FaRegHeart />}
-        id="donations"
-        profileDisplay={profileDisplay}
-        action={() => setProfileDisplay("donations")}
-      />
-      <BottomProfileLink
-        title="خروج از حساب"
-        icon={<CiLogout />}
-        profileDisplay={profileDisplay}
-        action={() => navigate("/")}
-      />
+    <div className="fixed bottom-6 left-1/2 translate-x-[-50%] w-[90%] h-20 sm:w-96 border bg-white border-gray-300 flex items-center justify-between p-2 rounded-md">
+      {links.map(({ title, icon, id, action }) => (
+        <BottomProfileLink
+          key={id}
+          title={title}
+          icon={icon}
+          profileDisplay={profileDisplay}
+          id={id}
+          action={action}
+        />
+      ))}
     </div>
   );
 };
