@@ -258,7 +258,4 @@ const Register = () => {
   );
 };
 
-export default Register;
-function ueeState<T>(arg0: string): [any, any] {
-  throw new Error("Function not implemented.");
-}
+

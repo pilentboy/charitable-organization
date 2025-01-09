@@ -1,7 +1,7 @@
 import { FaRegUser, FaRegHeart } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 import BottomProfileLink from "./BottomProfileLink";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 import useAuth from "../../context/AuthProvider";
 
 const BottomProfileLinks = ({
@@ -11,7 +11,7 @@ const BottomProfileLinks = ({
   setProfileDisplay: (display: "profile" | "donations") => void;
   profileDisplay: "donations" | "profile";
 }) => {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const { handleLogOut } = useAuth();
 
   const links = [
