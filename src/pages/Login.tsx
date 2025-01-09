@@ -1,16 +1,23 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import useAuth from "../context/AuthProvider";
 import axios from "axios";
 
 const Login = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    setError,
+    formState: { errors },
+  } = useForm();
   const { updateAccessToken } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const onSubmit = async (data: any) => {
     console.log("wait for login response...");
+    setLoading(true);
 
     try {
       const response = await axios.post(
@@ -26,8 +33,26 @@ const Login = () => {
       navigate("/");
     } catch (error: any) {
       console.log(error);
-      alert(error.response.data.error[0]);
+
+      if (error.response && error.response.status === 400) {
+        const serverErrors = error.response.data.error;
+        if (Array.isArray(serverErrors) && serverErrors.length > 0) {
+          setError("server", { type: "server", message: serverErrors[0] });
+        } else {
+          setError("server", {
+            type: "server",
+            message: "مشکل عمومی در ورود.",
+          });
+        }
+      } else {
+        setError("server", {
+          type: "network",
+          message: "مشکل در ارتباط با سرور.",
+        });
+      }
     }
+
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -43,7 +68,14 @@ const Login = () => {
           >
             <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
 
+            {errors.server && (
+              <p className="text-red-500">
+                {errors.server.message?.toString()}
+              </p>
+            )}
+
             <label htmlFor="username">نام کاربری</label>
+
             <input
               {...register("username")}
               required
@@ -60,8 +92,13 @@ const Login = () => {
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
             />
 
-            <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
-              ورود
+            <button
+              className={`w-full h-12 bg-primary rounded-2xl duration-200 text-white ${
+                loading ? "opacity-50" : "hover:opacity-90"
+              }`}
+              disabled={loading}
+            >
+              {loading ? "لطفا صبر کنید" : "ورود"}
             </button>
 
             <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-2 sm:flex-wrap ">
