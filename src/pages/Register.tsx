@@ -7,7 +7,6 @@ import Select from "react-select";
 import { provinces, ProvinceType } from "../data/provinces";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
-import handleUserRegister from "../utils/api/user/handleUserRegister";
 import convertDateToFAEN from "../utils/convertDateToFAEN";
 import axios from "axios";
 type FormData = {
