@@ -25,8 +25,24 @@ const LoginOTP = () => {
   };
 
   // check otp code and log in
-  const handleCheckOTP = (data: any) => {
-    console.log("OTP Data Submitted:", data);
+  const handleCheckOTP = async (data: any) => {
+    try {
+      console.log({
+        ...data,
+        phone_number: phoneForm.getValues("phone_number"),
+      });
+      // login 
+      const response = await axios.post(
+        "https://nazronlinetest.liara.run/user/login/phone/",
+        {
+          ...data,
+          phone_number: phoneForm.getValues("phone_number"),
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
