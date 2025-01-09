@@ -1,7 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import handleGetUserProfileInfo from "./../utils/api/user/handleGetUserProfileInfo";
-import { useNavigate } from "react-router";
 
 const authContext = createContext<{
   loggedIn: boolean;
@@ -10,9 +9,9 @@ const authContext = createContext<{
   profileInfo: any;
   setLoggedIn: React.Dispatch<React.SetStateAction<boolean>>;
   setLoading: React.Dispatch<React.SetStateAction<boolean>>;
-  setPorfileInfo: React.Dispatch<React.SetStateAction<string | undefined>>;
+  setAccessToken: React.Dispatch<React.SetStateAction<boolean | string>>;
+  setPorfileInfo: React.Dispatch<React.SetStateAction<any>>;
   updateAccessToken: () => void;
-  handleLogOut: () => void;
 }>({
   loggedIn: true,
   loading: true,
@@ -21,8 +20,8 @@ const authContext = createContext<{
   setLoggedIn: () => {},
   setLoading: () => {},
   updateAccessToken() {},
-  handleLogOut() {},
   setPorfileInfo: () => {},
+  setAccessToken: () => {},
 });
 
 const AuthProvider = ({ children }: { children: React.ReactNode }) => {
@@ -31,30 +30,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [profileInfo, setPorfileInfo] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
 
-  const navigate = useNavigate();
-
-  // log out
-  const handleLogOut = async () => {
-    try {
-      console.warn("log out...");
-      const response = await axios.post(
-        "https://nazronlinetest.liara.run/user/logout/",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
-          },
-        }
-      );
-      console.log(response);
-      // localStorage.removeItem("refreshToken");
-      // localStorage.removeItem("accessToken");
-      // setLoggedIn(false);
-      // setAccessToken(false);
-      // navigate("/");
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   // get access token and user profile info
   const updateAccessToken = async () => {
@@ -101,7 +76,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         updateAccessToken,
         profileInfo,
         setPorfileInfo,
-        handleLogOut,
+        setAccessToken,
       }}
     >
       {children}

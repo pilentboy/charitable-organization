@@ -1,8 +1,10 @@
 import { FaRegUser, FaRegHeart } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 import BottomProfileLink from "./BottomProfileLink";
-// import { useNavigate } from "react-router";
 import useAuth from "../../context/AuthProvider";
+import { useState } from "react";
+import { useNavigate } from "react-router";
+import axios from "axios";
 
 const BottomProfileLinks = ({
   setProfileDisplay,
@@ -11,8 +13,36 @@ const BottomProfileLinks = ({
   setProfileDisplay: (display: "profile" | "donations") => void;
   profileDisplay: "donations" | "profile";
 }) => {
-  // const navigate = useNavigate();
-  const { handleLogOut } = useAuth();
+  const [loading, setLoading] = useState<boolean>(false);
+  const navigate = useNavigate();
+
+  const { setLoggedIn, setAccessToken, setPorfileInfo } = useAuth();
+
+  const handleLogOut = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "https://nazronlinetest.liara.run/user/logout/",
+        { refresh: localStorage.getItem("refreshToken") },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      );
+      alert(response.data.message);
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("accessToken");
+      setLoggedIn(false);
+      setAccessToken(false);
+      setPorfileInfo(null);
+      navigate("/");
+    } catch (error: any) {
+      console.log(error);
+      alert("خطا در ارتباط با api هنگام خروج از حساب");
+    }
+    setLoading(false);
+  };
 
   const links = [
     {
@@ -45,6 +75,7 @@ const BottomProfileLinks = ({
           profileDisplay={profileDisplay}
           id={id}
           action={action}
+          loading={loading}
         />
       ))}
     </div>

@@ -6,6 +6,7 @@ interface BottomProfileLinkProps {
   profileDisplay: "donations" | "profile";
   id?: string;
   action: () => void;
+  loading?: boolean;
 }
 
 const BottomProfileLink = ({
@@ -14,6 +15,7 @@ const BottomProfileLink = ({
   action,
   profileDisplay,
   id,
+  loading,
 }: BottomProfileLinkProps) => {
   const isActive = profileDisplay === id;
 
@@ -22,9 +24,12 @@ const BottomProfileLink = ({
       id={id}
       type="button"
       className={`flex flex-col items-center gap-1 duration-150 ${
+        loading ? "opacity-50" : "opacity-100"
+      } ${
         title === "خروج از حساب" ? "hover:text-red-500" : "hover:text-primary"
       } ${isActive ? "text-primary" : ""}`}
       onClick={action}
+      disabled={loading}
     >
       {icon}
       <span>{title}</span>

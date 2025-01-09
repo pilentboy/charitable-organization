@@ -1,8 +1,8 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
-import handleUserLoginUsername from "../utils/api/user/handleUserLoginUsername";
 import useAuth from "../context/AuthProvider";
+import axios from "axios";
 
 const Login = () => {
   const { register, handleSubmit } = useForm();
@@ -11,9 +11,23 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     console.log("wait for login response...");
-    await handleUserLoginUsername(data);
-    updateAccessToken();
-    navigate("/");
+
+    try {
+      const response = await axios.post(
+        "https://nazronlinetest.liara.run/user/login/username/",
+        data
+      );
+
+      localStorage.setItem("accessToken", response.data.access);
+      localStorage.setItem("refreshToken", response.data.refresh);
+
+      alert("ورود با موفقیت");
+      updateAccessToken();
+      navigate("/");
+    } catch (error: any) {
+      console.log(error);
+      alert(error.response.data.error[0]);
+    }
   };
 
   useEffect(() => {
