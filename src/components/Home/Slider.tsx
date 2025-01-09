@@ -40,7 +40,7 @@ const Slider = () => {
               <img
                 src={`https://nazronlinetest.liara.run${slider.media}`}
                 alt={slider.alt_text}
-                title={slider.alt_text}
+                title={slider.display_text}
                 className="object-fill bg-black w-full h-full text-white"
               />
             </SwiperSlide>
