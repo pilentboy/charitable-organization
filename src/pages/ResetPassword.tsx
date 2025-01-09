@@ -14,8 +14,6 @@ const ResetPassword = () => {
 
   // send otp code
   const handleSendOTP = async (data: any) => {
-    // send otp code to user phone
-
     try {
       console.log(data);
       await axios.post(
@@ -28,6 +26,7 @@ const ResetPassword = () => {
     }
   };
 
+  // verify otp
   const handleCheckOTP = async (data: any) => {
     try {
       console.log({
@@ -51,6 +50,7 @@ const ResetPassword = () => {
     }
   };
 
+  // confirm new password
   const handleResetPasssword = (data: any) => {
     console.log("OTP Data Submitted:", data);
   };
