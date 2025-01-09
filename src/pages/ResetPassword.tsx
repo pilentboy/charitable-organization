@@ -12,7 +12,7 @@ const ResetPassword = () => {
   const [otpConfirmed, setOTPConfirmed] = useState<boolean>(false);
   const [otpType, setOTPType] = useState<string>("password");
 
-  // send otp code
+  // send otp code to phonenumber
   const handleSendOTP = async (data: any) => {
     try {
       console.log(data);
@@ -50,8 +50,31 @@ const ResetPassword = () => {
     }
   };
 
-  // confirm new password
-  const handleResetPasssword = (data: any) => {
+  // confirm new password | not fixed yet
+  const handleResetPasssword = async (data: any) => {
+    try {
+      console.log({
+        phone_number: phoneForm.getValues("phone_number"),
+        otp: data.otp,
+      });
+      const response = await axios.post(
+        "https://nazronlinetest.liara.run/user/password-reset/confirm/",
+        {
+          ...data,
+          phone_number: phoneForm.getValues("phone_number"),
+          otp: otpForm.getValues("otp"),
+        },
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response);
+    } catch (error) {
+      console.log(error);
+    }
     console.log("OTP Data Submitted:", data);
   };
 
@@ -167,10 +190,7 @@ const ResetPassword = () => {
             <h1 className="text-3xl font-bold mb-2 text-center">
               بازیابی رمز عبور
             </h1>
-            <label htmlFor="new_password">
-              {" "}
-              لطفا رمز جدید خود را وارد کنید
-            </label>
+            <label htmlFor="new_password">لطفا رمز جدید خود را وارد کنید</label>
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
               <input
                 {...resetPasswordForm.register("new_password")}
