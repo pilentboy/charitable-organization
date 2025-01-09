@@ -4,6 +4,8 @@ import Select, { components } from "react-select";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { TiTick } from "react-icons/ti";
 import useAuth from "../context/AuthProvider";
+import handleGetDedications from "../utils/api/content/handleGetDedications";
+import handleGetQuotes from "../utils/api/content/handleGetQuotes";
 
 const Home = () => {
   const { loggedIn } = useAuth();
@@ -135,7 +137,19 @@ const Home = () => {
     setSocialMedia(e.target.value);
   };
 
+  const getDedications = async () => {
+    const res = await handleGetDedications();
+    console.log(res, "dedications ");
+  };
+
+  const getQuotes = async () => {
+    const res = await handleGetQuotes();
+    console.log(res, "quotes ");
+  };
+
   useEffect(() => {
+    getDedications();
+    getQuotes();
     setofferingRadio(offeringRadioOptions[0]?.title);
     document.title = "نذر آنلاین";
   }, []);
