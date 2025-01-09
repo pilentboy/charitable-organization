@@ -8,7 +8,6 @@ import useAuth from "../context/AuthProvider";
 const LoginOTP = () => {
   const { updateAccessToken } = useAuth();
   const navigate = useNavigate();
-  // const { register, handleSubmit, setError, formState: { errors } } = useForm();
   const phoneForm = useForm(); // Form for phone number
   const otpForm = useForm(); // Form for OTP
   const [OTPSent, setOTPSent] = useState<boolean>(false);
@@ -43,12 +42,18 @@ const LoginOTP = () => {
           message: "مشکل در ارتباط با سرور.",
         });
       }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
-  // check otp code and log in
-  const handleCheckOTP = async (data: any) => {
+
+  // verify otp code and log in
+  const handleVerifyOTP = async (data: any) => {
     setLoading(true);
+    console.log({
+      ...data,
+      phone_number: phoneForm.getValues("phone_number"),
+    });
     try {
       const response = await axios.post(
         "https://nazronlinetest.liara.run/user/login/phone/",
@@ -63,26 +68,53 @@ const LoginOTP = () => {
       updateAccessToken();
       navigate("/");
     } catch (error: any) {
-      alert(error.response.data.error[0]);
+      console.log(error);
+      if (error.response && error.response.status === 400) {
+        const serverErrors =
+          error.response.data.error || error.response.data.phone_number;
+        if (Array.isArray(serverErrors) && serverErrors.length > 0) {
+          otpForm.setError("server", {
+            type: "server",
+            message: serverErrors[0],
+          });
+        }
+      } else {
+        otpForm.setError("server", {
+          type: "network",
+          message: "مشکل در ارتباط با سرور.",
+        });
+      }
+    } finally {
+      setLoading(false);
     }
-    setLoading(false);
   };
 
   useEffect(() => {
+    console.log(OTPSent);
     document.title = "ورود";
-  }, []);
+  }, [OTPSent]);
 
   return (
     <section className="h-screen sm:h-full flex justify-center items-center">
       <div className="w-full min-h-[400px] flex items-center justify-center border rounded-2xl overflow-hidden sm:min-h-[460px] ">
         {OTPSent ? (
+          // form for get OTP code
           <form
             key="otp-form"
-            onSubmit={otpForm.handleSubmit(handleCheckOTP)}
+            onSubmit={(e) => {
+              e.preventDefault();
+              otpForm.clearErrors();
+              otpForm.handleSubmit(handleVerifyOTP)(e);
+            }}
             className="w-full  py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5"
           >
             <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
             <label htmlFor="otp_input">لطفا رمز ارسال شده را وارد کنید</label>
+            {otpForm.formState.errors.server && (
+              <p className="text-red-500">
+                {otpForm.formState.errors.server.message?.toString()}
+              </p>
+            )}
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
               <input
                 {...otpForm.register("otp")}
@@ -120,7 +152,8 @@ const LoginOTP = () => {
               className="w-full h-12 bg-gray-600 rounded-2xl duration-200 text-white hover:opacity-90"
               onClick={() => {
                 setOTPSent(false);
-                phoneForm.reset();
+                phoneForm.clearErrors();
+                otpForm.reset();
               }}
             >
               اصلاح شماره تلفن
@@ -136,7 +169,12 @@ const LoginOTP = () => {
           // form to get phone number
           <form
             key="phone-form"
-            onSubmit={phoneForm.handleSubmit(handleSendOTP)}
+            // onSubmit={phoneForm.handleSubmit(handleSendOTP)}
+            onSubmit={(e) => {
+              e.preventDefault();
+              phoneForm.clearErrors();
+              phoneForm.handleSubmit(handleSendOTP)(e);
+            }}
             className="w-full py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5"
           >
             <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
