@@ -7,7 +7,8 @@ const AboutUs = () => {
   useEffect(() => {
     const getData = async () => {
       const req = await handleGetAboutUs();
-      setAboutUs(req.status);
+      console.log(req.data);
+      setAboutUs(req.data);
     };
     getData();
 
@@ -15,9 +16,16 @@ const AboutUs = () => {
   }, []);
 
   return (
-    <h1 className="bg-primary p-5 rounded-md text-white absolute top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%]">
-      {aboutUs ? aboutUs : "در حال دریافت اطلاعات"}
-    </h1>
+    <div className="w-full flex items-center flex-wrap gap-2">
+      {aboutUs
+        ? aboutUs.map((content: any) => (
+            <div key={content.id} className="flex flex-col ">
+              <span>{content.title}</span>
+              <span>{content.content}</span>
+            </div>
+          ))
+        : "در حال دریافت اطلاعات"}
+    </div>
   );
 };
 

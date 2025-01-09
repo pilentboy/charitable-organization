@@ -7,6 +7,7 @@ const AboutUs = () => {
   useEffect(() => {
     const getData = async () => {
       const req = await handleGetContactUs();
+      console.log(req.data);
       setContactUs(req.data);
     };
     getData();
