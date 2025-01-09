@@ -48,7 +48,7 @@ const Slider = () => {
         })
       ) : (
         <SwiperSlide className="flex items-center justify-center w-full h-full bg-gray-400">
-          <h1>اطلاعاتی دریافت نشد</h1>
+          <h1>درحال دریافت اطلاعات</h1>
         </SwiperSlide>
       )}
     </Swiper>
