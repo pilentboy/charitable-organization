@@ -8,6 +8,7 @@ import useAuth from "../context/AuthProvider";
 const LoginOTP = () => {
   const { updateAccessToken } = useAuth();
   const navigate = useNavigate();
+  // const { register, handleSubmit, setError, formState: { errors } } = useForm();
   const phoneForm = useForm(); // Form for phone number
   const otpForm = useForm(); // Form for OTP
   const [OTPSent, setOTPSent] = useState<boolean>(false);
@@ -26,11 +27,25 @@ const LoginOTP = () => {
       console.log(response, "login otp response");
       setOTPSent(true);
     } catch (error: any) {
-      alert(error.response.data.error[0]);
+      console.log(error);
+      if (error.response && error.response.status === 400) {
+        const serverErrors =
+          error.response.data.error || error.response.data.phone_number;
+        if (Array.isArray(serverErrors) && serverErrors.length > 0) {
+          phoneForm.setError("server", {
+            type: "server",
+            message: serverErrors[0],
+          });
+        }
+      } else {
+        phoneForm.setError("server", {
+          type: "network",
+          message: "مشکل در ارتباط با سرور.",
+        });
+      }
     }
     setLoading(false);
   };
-
   // check otp code and log in
   const handleCheckOTP = async (data: any) => {
     setLoading(true);
@@ -118,15 +133,23 @@ const LoginOTP = () => {
             </div>
           </form>
         ) : (
+          // form to get phone number
           <form
             key="phone-form"
             onSubmit={phoneForm.handleSubmit(handleSendOTP)}
             className="w-full py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5"
           >
             <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
+
             <label htmlFor="phone_input">
               لطفا شماره تلفنی که هنگام ثبت نام وارد کردید را وارد نمائید.
             </label>
+            {phoneForm.formState.errors.server && (
+              <p className="text-red-500">
+                {phoneForm.formState.errors.server.message?.toString()}
+              </p>
+            )}
+
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
               <input
                 {...phoneForm.register("phone_number")}
@@ -137,7 +160,6 @@ const LoginOTP = () => {
                 className="w-[95%] h-full bg-transparent outline-none border-none"
               />
             </div>
-
             <button
               className={`w-full h-12 bg-primary rounded-2xl duration-200 text-white  ${
                 loading ? "opacity-50" : "hover:opacity-90 opacity-100"
@@ -146,7 +168,6 @@ const LoginOTP = () => {
             >
               {loading ? "بررسی شماره تلفن" : "ارسال کد یک بار مصرف"}
             </button>
-
             <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
               <Link to="/login" className=" text-primary">
                 ورود با نام کاربری
@@ -166,4 +187,3 @@ const LoginOTP = () => {
 };
 
 export default LoginOTP;
-
