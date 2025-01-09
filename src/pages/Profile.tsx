@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import UserInfoBox from "../components/Profile/UserInfoBox";
 import BottomProfileLinks from "../components/Profile/BottomProfileLinks";
 import useAuth from "../context/AuthProvider";
+import convertDateToFAEN from "../utils/convertDateToFAEN";
 
 const Profile = () => {
   const {
@@ -34,8 +35,11 @@ const Profile = () => {
         <UserInfoBox title={"شهر"} value={city} />
         <UserInfoBox title={"استان"} value={province} />
         <UserInfoBox title={"تاریخ تولد"} value={birth_date} />
-        <UserInfoBox title={"تاریخ عضویت"} value={join_date.split("T")[0]} />
-        <UserInfoBox title={"آدرس"} value={address}  />
+        <UserInfoBox
+          title={"تاریخ عضویت"}
+          value={convertDateToFAEN(join_date.split("T")[0], "persian")}
+        />
+        <UserInfoBox title={"آدرس"} value={address} />
       </div>
     );
   };
