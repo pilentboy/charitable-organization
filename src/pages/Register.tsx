@@ -9,6 +9,7 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import handleUserRegister from "../utils/api/user/handleUserRegister";
 import convertDateToFAEN from "../utils/convertDateToFAEN";
+import axios from "axios";
 type FormData = {
   username: string;
   first_name: string;
@@ -25,15 +26,23 @@ type FormData = {
 
 const Register = () => {
   const [formatedBirthDate, setFormatedBirthDate] = useState<string>("");
-
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
-  const { register, handleSubmit, control, watch, setValue, getValues } =
-    useForm<FormData>({
-      defaultValues: {
-        passwordType: "password",
-      },
-    });
+  const {
+    register,
+    handleSubmit,
+    control,
+    watch,
+    setValue,
+    getValues,
+    setError,
+    formState: { errors },
+  } = useForm<FormData>({
+    defaultValues: {
+      passwordType: "password",
+    },
+  });
 
   const province = watch("province");
 
@@ -54,18 +63,50 @@ const Register = () => {
 
   const handleRegister = async (data: FormData) => {
     console.log("wait for register");
-    await handleUserRegister({
-      username: data.username,
-      password: data.password,
-      first_name: data.first_name,
-      last_name: data.last_name,
-      phone_number: data.phone_number,
-      birth_date: formatedBirthDate,
-      province: data.province?.value,
-      city: data.city?.value,
-      address: data.address,
-    });
-    navigate("/login");
+    setLoading(true);
+    try {
+      const response = await axios.post(
+        "https://nazronlinetest.liara.run/user/register/",
+        {
+          username: data.username,
+          password: data.password,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          phone_number: data.phone_number,
+          birth_date: formatedBirthDate,
+          province: data.province?.value,
+          city: data.city?.value,
+          address: data.address,
+        }
+      );
+
+      console.log(response);
+      navigate("/login");
+    } catch (error: any) {
+      if (error.response && error.response.status === 400) {
+        const errors = error.response.data.errors;
+        if (errors) {
+          Object.entries(errors).forEach(([field, message]) => {
+            setError(field as keyof FormData, {
+              type: "server",
+              message: message as string,
+            });
+          });
+        } else {
+          setError("root", {
+            type: "server",
+            message: "خطای عمومی رخ داده است",
+          });
+        }
+      } else {
+        setError("root", {
+          type: "network",
+          message: "مشکل در ارتباط با سرور.",
+        });
+      }
+      console.log(error, "خطای ثبت نام");
+    }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -86,6 +127,9 @@ const Register = () => {
             <h1 className="text-3xl font-bold mb-2 text-center">عضویت</h1>
 
             <label htmlFor="username">نام کاربری</label>
+            {errors.username && (
+              <p className="text-red-500">{errors.username.message}</p>
+            )}
             <input
               {...register("username")}
               required
@@ -94,6 +138,9 @@ const Register = () => {
             />
 
             <label htmlFor="password">رمز عبور</label>
+            {errors.password && (
+              <p className="text-red-500">{errors.password.message}</p>
+            )}
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
               <input
                 {...register("password")}
@@ -117,6 +164,9 @@ const Register = () => {
             </div>
 
             <label htmlFor="first_name">نام</label>
+            {errors.first_name && (
+              <p className="text-red-500">{errors.first_name.message}</p>
+            )}
             <input
               {...register("first_name")}
               required
@@ -125,6 +175,9 @@ const Register = () => {
             />
 
             <label htmlFor="last_name">نام خانوادگی</label>
+            {errors.last_name && (
+              <p className="text-red-500">{errors.last_name.message}</p>
+            )}
             <input
               {...register("last_name")}
               id="last_name"
@@ -132,6 +185,9 @@ const Register = () => {
             />
 
             <label htmlFor="phone_number">شماره تلفن</label>
+            {errors.phone_number && (
+              <p className="text-red-500">{errors.phone_number.message}</p>
+            )}
             <input
               {...register("phone_number")}
               id="phone_number"
@@ -144,6 +200,9 @@ const Register = () => {
             <div className="flex flex-col gap-4 items-center  justify-between md:flex-row">
               <div className="flex flex-col gap-2 w-full md:w-[170px]">
                 <label htmlFor="birth_date">تاریخ تولد</label>
+                {errors.birth_date && (
+                  <p className="text-red-500">{errors.birth_date.message}</p>
+                )}
                 <Controller
                   control={control}
                   name="birth_date"
@@ -164,6 +223,9 @@ const Register = () => {
 
               <div className="flex flex-col gap-2 w-full md:w-[170px]">
                 <label htmlFor="province">استان</label>
+                {errors.province && (
+                  <p className="text-red-500">{errors.province.message}</p>
+                )}
                 <Controller
                   control={control}
                   name="province"
@@ -198,6 +260,9 @@ const Register = () => {
 
               <div className="flex flex-col gap-2 w-full md:w-[170px]">
                 <label htmlFor="city">شهر</label>
+                {errors.city && (
+                  <p className="text-red-500">{errors.city.message}</p>
+                )}
                 <Controller
                   control={control}
                   name="city"
@@ -233,6 +298,9 @@ const Register = () => {
             </div>
 
             <label htmlFor="address">آدرس</label>
+            {errors.address && (
+              <p className="text-red-500">{errors.address.message}</p>
+            )}
             <textarea
               {...register("address")}
               placeholder="مثال: تهران، خیابان..."
@@ -241,8 +309,13 @@ const Register = () => {
               className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-28 p-2 placeholder:text-sm duration-200 focus:border-gray-800"
             ></textarea>
 
-            <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
-              عضویت
+            <button
+              className={`w-full h-12 bg-primary rounded-2xl duration-200 text-white  ${
+                loading ? "opacity-50" : "hover:opacity-90"
+              }`}
+              disabled={loading}
+            >
+              {loading ? "لطفا صبر کنید" : "عضویت"}
             </button>
 
             <div className="flex gap-2 border-t pt-2">
@@ -258,5 +331,4 @@ const Register = () => {
   );
 };
 
-
-export default Register
+export default Register;
