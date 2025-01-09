@@ -1,37 +1,40 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
+import useAuth from "../context/AuthProvider";
 
 const LoginOTP = () => {
+  const { updateAccessToken } = useAuth();
+  const navigate = useNavigate();
   const phoneForm = useForm(); // Form for phone number
   const otpForm = useForm(); // Form for OTP
   const [OTPSent, setOTPSent] = useState<boolean>(false);
   const [otpType, setOTPType] = useState<string>("password");
+  const [loading, setLoading] = useState<boolean>(false);
 
   // send otp code to user phone
   const handleSendOTP = async (data: any) => {
+    setLoading(true);
     try {
       console.log(data);
-      await axios.post(
+      const response = await axios.post(
         "https://nazronlinetest.liara.run/user/login/phone/",
         data
       );
+      console.log(response, "login otp response");
       setOTPSent(true);
-    } catch (error) {
-      console.log(error);
+    } catch (error: any) {
+      alert(error.response.data.error[0]);
     }
+    setLoading(false);
   };
 
   // check otp code and log in
   const handleCheckOTP = async (data: any) => {
+    setLoading(true);
     try {
-      console.log({
-        ...data,
-        phone_number: phoneForm.getValues("phone_number"),
-      });
-      // login 
       const response = await axios.post(
         "https://nazronlinetest.liara.run/user/login/phone/",
         {
@@ -39,10 +42,15 @@ const LoginOTP = () => {
           phone_number: phoneForm.getValues("phone_number"),
         }
       );
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+      console.log(response, "log in successfuly");
+      localStorage.setItem("accessToken", response.data.access);
+      localStorage.setItem("refreshToken", response.data.refresh);
+      updateAccessToken();
+      navigate("/");
+    } catch (error: any) {
+      alert(error.response.data.error[0]);
     }
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -84,8 +92,13 @@ const LoginOTP = () => {
               اگر پس از 2 دقیقه پیامک دریافت نشد، مجددا درخواست کد را ارسال
               کنید.
             </span>
-            <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
-              تایید
+            <button
+              className={`w-full h-12 bg-primary rounded-2xl duration-200 text-white  ${
+                loading ? "opacity-50" : "hover:opacity-90 opacity-100"
+              }`}
+              disabled={loading}
+            >
+              {loading ? "بررسی کد وارد شده" : "تایید"}
             </button>
 
             <button
@@ -125,8 +138,13 @@ const LoginOTP = () => {
               />
             </div>
 
-            <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
-              ارسال کد یک بار مصرف
+            <button
+              className={`w-full h-12 bg-primary rounded-2xl duration-200 text-white  ${
+                loading ? "opacity-50" : "hover:opacity-90 opacity-100"
+              }`}
+              disabled={loading}
+            >
+              {loading ? "بررسی شماره تلفن" : "ارسال کد یک بار مصرف"}
             </button>
 
             <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
@@ -148,3 +166,4 @@ const LoginOTP = () => {
 };
 
 export default LoginOTP;
+

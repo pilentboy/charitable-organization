@@ -36,20 +36,21 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   // log out
   const handleLogOut = async () => {
     try {
-      // const response = await axios.post(
-      //   "https://nazronlinetest.liara.run/user/logout/",
-      //   {
-      //     headers: {
-      //       Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
-      //     },
-      //   }
-      // );
-      // console.log(response);
-      localStorage.removeItem("refreshToken");
-      localStorage.removeItem("accessToken");
-      setLoggedIn(false);
-      setAccessToken(false);
-      navigate("/");
+      console.warn("log out...");
+      const response = await axios.post(
+        "https://nazronlinetest.liara.run/user/logout/",
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("refreshToken")}`,
+          },
+        }
+      );
+      console.log(response);
+      // localStorage.removeItem("refreshToken");
+      // localStorage.removeItem("accessToken");
+      // setLoggedIn(false);
+      // setAccessToken(false);
+      // navigate("/");
     } catch (error) {
       console.log(error);
     }
