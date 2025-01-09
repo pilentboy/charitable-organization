@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import axios from "axios";
 
 const ResetPassword = () => {
   const phoneForm = useForm();
@@ -11,15 +12,43 @@ const ResetPassword = () => {
   const [otpConfirmed, setOTPConfirmed] = useState<boolean>(false);
   const [otpType, setOTPType] = useState<string>("password");
 
-  const handleSendOTP = (data: any) => {
-    setOTPSent(true);
-    console.log("Phone Data Submitted:", data);
+  // send otp code
+  const handleSendOTP = async (data: any) => {
+    // send otp code to user phone
+
+    try {
+      console.log(data);
+      await axios.post(
+        "https://nazronlinetest.liara.run/user/password-reset/request/",
+        data
+      );
+      setOTPSent(true);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
-  const handleCheckOTP = (data: any) => {
-    setOTPConfirmed(true);
-    setOTPSent(false);
-    console.log("OTP Data Submitted:", data);
+  const handleCheckOTP = async (data: any) => {
+    try {
+      console.log({
+        phone_number: phoneForm.getValues("phone_number"),
+        otp: data.otp,
+      });
+      await axios.post(
+        "https://nazronlinetest.liara.run/user/password-reset/verify/",
+        { phone_number: phoneForm.getValues("phone_number"), otp: data.otp },
+
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      setOTPConfirmed(true);
+      setOTPSent(false);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const handleResetPasssword = (data: any) => {
