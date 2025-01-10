@@ -9,6 +9,7 @@ const Login = () => {
     register,
     handleSubmit,
     setError,
+    clearErrors,
     formState: { errors },
   } = useForm();
   const { updateAccessToken } = useAuth();
@@ -63,7 +64,10 @@ const Login = () => {
       <div className="w-full min-h-[400px] flex items-center justify-between border rounded-2xl overflow-hidden">
         <div className="w-full h-full py-8 px-6">
           <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={(e) => {
+              clearErrors();
+              handleSubmit(onSubmit)(e);
+            }}
             className="flex flex-col gap-5 mx-auto md:w-1/2"
           >
             <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
