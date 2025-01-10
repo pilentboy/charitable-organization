@@ -6,6 +6,8 @@ import { TiTick } from "react-icons/ti";
 import useAuth from "../context/AuthProvider";
 import handleGetDedications from "../utils/api/content/handleGetDedications";
 import handleGetQuotes from "../utils/api/content/handleGetQuotes";
+import SocialMediaRadioBTN from "../components/Home/SocialMediaRadioBTN";
+import axios from "axios";
 
 const Home = () => {
   const { loggedIn } = useAuth();
@@ -14,11 +16,16 @@ const Home = () => {
   const [offeringRadio, setofferingRadio] = useState<string>();
   const [offeringType, setOfferingType] = useState<any>();
   const [offeringTypeCount, setOfferingTypeCount] = useState<any>();
-  const [socialMedia, setSocialMedia] = useState<string>("خیر تمایلی ندارم");
+  const [selectedSocialMedia, setSelectedSocialMedia] = useState<
+    string | undefined
+  >();
   const [displayMessageBox, setDisplayMessageBox] = useState<boolean>(false);
   const [userMessage, setUserMessage] = useState<string>("");
   const [acceptPP, setAcceptPP] = useState<boolean>(false);
   // end
+
+  // social media list
+  const [socialMediaOptions, setSocialMediaOptions] = useState<any>();
 
   // selects values
   const [offeringTypeOptions, setOfferingTypeOptions] = useState<[] | null>();
@@ -129,12 +136,24 @@ const Home = () => {
     }
   }, [offeringType]);
 
+  useEffect(() => {
+    const handleGetSocialMedias = async () => {
+      console.log("social medias");
+      try {
+        const response = await axios(
+          "https://nazronlinetest.liara.run/sacrifices/messaging-apps/"
+        );
+        setSelectedSocialMedia("خیر تمایلی ندارم");
+        setSocialMediaOptions(response.data);
+      } catch (error) {
+        console.log("خطا در دریافت لیست شبکه های اجتماعی");
+      }
+    };
+    handleGetSocialMedias();
+  }, []);
+
   const handleOfferingRadioChange = (e: any) => {
     setofferingRadio(e.target.value);
-  };
-
-  const handleSendSocialMediaRadioChange = (e: any) => {
-    setSocialMedia(e.target.value);
   };
 
   const getDedications = async () => {
@@ -342,110 +361,36 @@ const Home = () => {
             ) : (
               <>
                 {/* social media */}
-                <div className="flex flex-col gap-4 my-2">
-                  <span className="font-bold text-gray-700">
-                    آیا میخواهید نذر آنلاین برایتان گزارش قربانی را ارسال کند؟
-                  </span>
 
-                  <div className="flex gap-2 md:items-center flex-col md:flex-row flex-wrap">
-                    <label className="flex gap-2 w-fit h-fit rounded-2xl items-center  cursor-pointer">
-                      <input
-                        type="radio"
-                        value="خیر تمایلی ندارم"
-                        checked={socialMedia === "خیر تمایلی ندارم"}
-                        onChange={handleSendSocialMediaRadioChange}
-                        className="hidden peer"
+                {socialMediaOptions?.length > 0 && (
+                  <div className="flex flex-col gap-4 my-2">
+                    <span className="font-bold text-gray-700">
+                      آیا میخواهید نذر آنلاین برایتان گزارش قربانی را ارسال کند؟
+                    </span>
+                    <div className="flex gap-2 md:items-center flex-col md:flex-row flex-wrap">
+                      <SocialMediaRadioBTN
+                        setSelectedSocialMedia={setSelectedSocialMedia}
+                        value={"خیر تمایلی ندارم"}
+                        selectedSocialMedia={selectedSocialMedia}
                       />
-                      <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
-                        <span
-                          className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                            socialMedia === "خیر تمایلی ندارم"
-                              ? "bg-primary"
-                              : "bg-white"
-                          }`}
-                        ></span>
-                      </div>
-                      <span>خیر نیازی نیست</span>
-                    </label>
-
-                    <label className="flex gap-2 w-fit h-fit rounded-2xl items-center  cursor-pointer">
-                      <input
-                        type="radio"
-                        value="تلگرام"
-                        checked={socialMedia === "تلگرام"}
-                        onChange={handleSendSocialMediaRadioChange}
-                        className="hidden peer"
-                      />
-                      <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
-                        <span
-                          className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                            socialMedia === "تلگرام" ? "bg-primary" : "bg-white"
-                          }`}
-                        ></span>
-                      </div>
-                      <span>ارسال به تلگرام</span>
-                    </label>
-
-                    <label className="flex gap-2 w-fit h-fit rounded-2xl items-center  cursor-pointer">
-                      <input
-                        type="radio"
-                        value="واتساپ"
-                        checked={socialMedia === "واتساپ"}
-                        onChange={handleSendSocialMediaRadioChange}
-                        className="hidden peer"
-                      />
-                      <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
-                        <span
-                          className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                            socialMedia === "واتساپ" ? "bg-primary" : "bg-white"
-                          }`}
-                        ></span>
-                      </div>
-                      <span>ارسال به واتساپ</span>
-                    </label>
-
-                    <label className="flex gap-2 w-fit h-fit rounded-2xl items-center  cursor-pointer">
-                      <input
-                        type="radio"
-                        value="بله"
-                        checked={socialMedia === "بله"}
-                        onChange={handleSendSocialMediaRadioChange}
-                        className="hidden peer"
-                      />
-                      <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
-                        <span
-                          className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                            socialMedia === "بله" ? "bg-primary" : "bg-white"
-                          }`}
-                        ></span>
-                      </div>
-                      <span>ارسال به بله</span>
-                    </label>
-
-                    <label className="flex gap-2 w-fit h-fit rounded-2xl items-center  cursor-pointer">
-                      <input
-                        type="radio"
-                        value="ایتا"
-                        checked={socialMedia === "ایتا"}
-                        onChange={handleSendSocialMediaRadioChange}
-                        className="hidden peer"
-                      />
-                      <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
-                        <span
-                          className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                            socialMedia === "ایتا" ? "bg-primary" : "bg-white"
-                          }`}
-                        ></span>
-                      </div>
-                      <span>ارسال به ایتا</span>
-                    </label>
+                      {socialMediaOptions.map((socialMedia: any) => (
+                        <SocialMediaRadioBTN
+                          key={socialMedia.id}
+                          setSelectedSocialMedia={setSelectedSocialMedia}
+                          value={socialMedia.name}
+                          title={socialMedia.display_text}
+                          selectedSocialMedia={selectedSocialMedia}
+                          logo={socialMedia.logo}
+                        />
+                      ))}
+                    </div>
+                    <p className="text-gray-600 font-normal text-sm my-2 text-justify">
+                      فقط در قربانی گوسفند و بز کامل و یا مرغ و خروس کامل گزارش
+                      قابلیت ارسال را دارد و موارد مشارکت جمعی بصورت عمومی اطلاع
+                      رسانی می شود .
+                    </p>
                   </div>
-                  <p className="text-gray-600 font-normal text-sm my-2 text-justify">
-                    فقط در قربانی گوسفند و بز کامل و یا مرغ و خروس کامل گزارش
-                    قابلیت ارسال را دارد و موارد مشارکت جمعی بصورت عمومی اطلاع
-                    رسانی می شود .
-                  </p>
-                </div>
+                )}
 
                 {/* user message */}
                 <div className="flex gap-3 flex-col">
