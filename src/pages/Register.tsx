@@ -66,20 +66,17 @@ const Register = () => {
     console.log("wait for register", data);
     setLoading(true);
     try {
-      const response = await axios.post(
-        "https://nazronlinetest.liara.run/user/register/",
-        {
-          username: data.username,
-          password: data.password,
-          first_name: data.first_name,
-          last_name: data.last_name,
-          phone_number: data.phone_number,
-          birth_date: formatedBirthDate,
-          province: data.province?.value,
-          city: data.city?.value,
-          address: data.address,
-        }
-      );
+      await axios.post("https://nazronlinetest.liara.run/user/register/", {
+        username: data.username,
+        password: data.password,
+        first_name: data.first_name,
+        last_name: data.last_name,
+        phone_number: data.phone_number,
+        birth_date: formatedBirthDate,
+        province: data.province?.value,
+        city: data.city?.value,
+        address: data.address,
+      });
 
       navigate("/login");
     } catch (error: any) {

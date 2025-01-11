@@ -13,7 +13,7 @@ const ResetPassword = () => {
   const [otpType, setOTPType] = useState<string>("password");
 
   // send otp code to phonenumber
-  const handleSendOTP = async (data: any) => {
+  const handleSendPhoneNumber = async (data: any) => {
     try {
       console.log(data);
       await axios.post(
@@ -21,7 +21,27 @@ const ResetPassword = () => {
         data
       );
       setOTPSent(true);
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response && error.response.status === 400) {
+        const serverErrors =
+          error.response.data.error || error.response.data.phone_number;
+        if (Array.isArray(serverErrors) && serverErrors.length > 0) {
+          phoneForm.setError("server", {
+            type: "server",
+            message: serverErrors[0],
+          });
+        } else {
+          phoneForm.setError("server", {
+            type: "server",
+            message: "خطای نامشخص در دریافت شماره تلفن",
+          });
+        }
+      } else {
+        phoneForm.setError("server", {
+          type: "network",
+          message: "مشکل در ارتباط با سرور.",
+        });
+      }
       console.log(error);
     }
   };
@@ -143,7 +163,10 @@ const ResetPassword = () => {
         {!OTPSent && !otpConfirmed ? (
           <form
             key="phone-form"
-            onSubmit={phoneForm.handleSubmit(handleSendOTP)}
+            onSubmit={(e) => {
+              phoneForm.clearErrors();
+              phoneForm.handleSubmit(handleSendPhoneNumber)(e);
+            }}
             className="w-full py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5"
           >
             <h1 className="text-3xl font-bold mb-2 text-center">
@@ -152,6 +175,11 @@ const ResetPassword = () => {
             <label htmlFor="phone_input">
               لطفا شماره تلفنی که هنگام ثبت نام وارد کردید را وارد نمائید.
             </label>
+            {phoneForm.formState.errors.server && (
+              <p className="text-red-500">
+                {phoneForm.formState.errors.server.message?.toString()}
+              </p>
+            )}
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
               <input
                 {...phoneForm.register("phone_number")}
