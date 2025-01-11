@@ -12,10 +12,11 @@ const ResetPassword = () => {
   const [otpConfirmed, setOTPConfirmed] = useState<boolean>(false);
   const [otpType, setOTPType] = useState<string>("password");
   const [loading, setLoading] = useState<boolean>(false);
-  const navigate=useNavigate()
+  const navigate = useNavigate();
 
   // send otp code to phonenumber
   const handleSendPhoneNumber = async (data: any) => {
+    setLoading(true);
     try {
       await axios.post(
         "https://nazronlinetest.liara.run/user/password-reset/request/",
@@ -43,11 +44,15 @@ const ResetPassword = () => {
           message: "مشکل در ارتباط با سرور.",
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   // verify otp
   const handleCheckOTP = async (data: any) => {
+    setLoading(true);
+
     try {
       await axios.post(
         "https://nazronlinetest.liara.run/user/password-reset/verify/",
@@ -82,11 +87,14 @@ const ResetPassword = () => {
           message: "مشکل در ارتباط با سرور.",
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
   // confirm new password
   const handleResetPasssword = async (data: any) => {
+    setLoading(true);
     try {
       const response = await axios.post(
         "https://nazronlinetest.liara.run/user/password-reset/confirm/",
@@ -125,6 +133,8 @@ const ResetPassword = () => {
           message: "مشکل در ارتباط با سرور.",
         });
       }
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -176,14 +186,20 @@ const ResetPassword = () => {
               اگر پس از 2 دقیقه پیامک دریافت نشد، مجددا درخواست کد را ارسال
               کنید.
             </span>
-            <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
-              تایید
+            <button
+              className={`w-full h-12 bg-primary rounded-2xl duration-200 text-white ${
+                loading ? "opacity-50" : "hover:opacity-90"
+              }`}
+              disabled={loading}
+            >
+              {loading ? "لطفا صبر کنید" : "تایید"}
             </button>
 
             <button
               className="w-full h-12 bg-gray-600 rounded-2xl duration-200 text-white hover:opacity-90"
               onClick={() => {
                 setOTPSent(false);
+                otpForm.reset();
                 phoneForm.reset();
               }}
             >
@@ -229,8 +245,13 @@ const ResetPassword = () => {
               />
             </div>
 
-            <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
-              ارسال کد یک بار مصرف
+            <button
+              className={`w-full h-12 bg-primary rounded-2xl duration-200 text-white ${
+                loading ? "opacity-50" : "hover:opacity-90"
+              }`}
+              disabled={loading}
+            >
+              {loading ? "لطفا صبر کنید" : "ارسال کد یک بار مصرف"}
             </button>
 
             <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
@@ -285,8 +306,13 @@ const ResetPassword = () => {
               </button>
             </div>
 
-            <button className="w-full h-12 bg-primary rounded-2xl duration-200 text-white hover:opacity-90">
-              تایید
+            <button
+              className={`w-full h-12 bg-primary rounded-2xl duration-200 text-white ${
+                loading ? "opacity-50" : "hover:opacity-90"
+              }`}
+              disabled={loading}
+            >
+              {loading ? "لطفا صبر کنید" : " تایید"}
             </button>
 
             <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
