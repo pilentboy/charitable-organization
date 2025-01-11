@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
 
@@ -11,11 +11,12 @@ const ResetPassword = () => {
   const [OTPSent, setOTPSent] = useState<boolean>(false);
   const [otpConfirmed, setOTPConfirmed] = useState<boolean>(false);
   const [otpType, setOTPType] = useState<string>("password");
+  const [loading, setLoading] = useState<boolean>(false);
+  const navigate=useNavigate()
 
   // send otp code to phonenumber
   const handleSendPhoneNumber = async (data: any) => {
     try {
-      console.log(data);
       await axios.post(
         "https://nazronlinetest.liara.run/user/password-reset/request/",
         data
@@ -42,17 +43,12 @@ const ResetPassword = () => {
           message: "مشکل در ارتباط با سرور.",
         });
       }
-      console.log(error);
     }
   };
 
   // verify otp
   const handleCheckOTP = async (data: any) => {
     try {
-      console.log({
-        phone_number: phoneForm.getValues("phone_number"),
-        otp: data.otp,
-      });
       await axios.post(
         "https://nazronlinetest.liara.run/user/password-reset/verify/",
         { phone_number: phoneForm.getValues("phone_number"), otp: data.otp },
@@ -86,11 +82,10 @@ const ResetPassword = () => {
           message: "مشکل در ارتباط با سرور.",
         });
       }
-      console.log(error);
     }
   };
 
-  // confirm new password | not fixed yet
+  // confirm new password
   const handleResetPasssword = async (data: any) => {
     try {
       const response = await axios.post(
@@ -108,11 +103,29 @@ const ResetPassword = () => {
         }
       );
       alert(response.data.message);
-      console.log(response);
-    } catch (error) {
-      console.log(error);
+      navigate("/login");
+    } catch (error: any) {
+      if (error.response && error.response.status === 400) {
+        const serverErrors =
+          error.response.data.error || error.response.data.non_field_errors;
+        if (Array.isArray(serverErrors) && serverErrors.length > 0) {
+          resetPasswordForm.setError("server", {
+            type: "server",
+            message: serverErrors[0],
+          });
+        } else {
+          resetPasswordForm.setError("server", {
+            type: "server",
+            message: "خطای نامشخص در دریافت شماره تلفن",
+          });
+        }
+      } else {
+        resetPasswordForm.setError("server", {
+          type: "network",
+          message: "مشکل در ارتباط با سرور.",
+        });
+      }
     }
-    console.log("OTP Data Submitted:", data);
   };
 
   useEffect(() => {

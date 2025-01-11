@@ -12,7 +12,7 @@ const AboutUs = () => {
     };
     getData();
 
-    document.title = "درباره ما";
+    document.title = "ارتباط با ما";
   }, []);
 
   return (
