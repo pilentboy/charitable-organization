@@ -65,7 +65,27 @@ const ResetPassword = () => {
       );
       setOTPConfirmed(true);
       setOTPSent(false);
-    } catch (error) {
+    } catch (error: any) {
+      if (error.response && error.response.status === 400) {
+        const serverErrors =
+          error.response.data.error || error.response.data.non_field_errors;
+        if (Array.isArray(serverErrors) && serverErrors.length > 0) {
+          otpForm.setError("server", {
+            type: "server",
+            message: serverErrors[0],
+          });
+        } else {
+          otpForm.setError("server", {
+            type: "server",
+            message: "خطای نامشخص در دریافت شماره تلفن",
+          });
+        }
+      } else {
+        otpForm.setError("server", {
+          type: "network",
+          message: "مشکل در ارتباط با سرور.",
+        });
+      }
       console.log(error);
     }
   };
@@ -73,10 +93,6 @@ const ResetPassword = () => {
   // confirm new password | not fixed yet
   const handleResetPasssword = async (data: any) => {
     try {
-      console.log({
-        phone_number: phoneForm.getValues("phone_number"),
-        otp: data.otp,
-      });
       const response = await axios.post(
         "https://nazronlinetest.liara.run/user/password-reset/confirm/",
         {
@@ -91,6 +107,7 @@ const ResetPassword = () => {
           },
         }
       );
+      alert(response.data.message);
       console.log(response);
     } catch (error) {
       console.log(error);
@@ -108,13 +125,21 @@ const ResetPassword = () => {
         {OTPSent && (
           <form
             key="otp-form"
-            onSubmit={otpForm.handleSubmit(handleCheckOTP)}
+            onSubmit={(e) => {
+              otpForm.clearErrors();
+              otpForm.handleSubmit(handleCheckOTP)(e);
+            }}
             className="w-full  py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5"
           >
             <h1 className="text-3xl font-bold mb-2 text-center">
               بازیابی رمز عبور
             </h1>
             <label htmlFor="otp_input">لطفا رمز ارسال شده را وارد کنید</label>
+            {otpForm.formState.errors.server && (
+              <p className="text-red-500">
+                {otpForm.formState.errors.server.message?.toString()}
+              </p>
+            )}
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
               <input
                 {...otpForm.register("otp")}
@@ -212,13 +237,21 @@ const ResetPassword = () => {
         {otpConfirmed && (
           <form
             key="resetPassword-form"
-            onSubmit={resetPasswordForm.handleSubmit(handleResetPasssword)}
+            onSubmit={(e) => {
+              resetPasswordForm.clearErrors();
+              resetPasswordForm.handleSubmit(handleResetPasssword)(e);
+            }}
             className="w-full  py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5"
           >
             <h1 className="text-3xl font-bold mb-2 text-center">
               بازیابی رمز عبور
             </h1>
             <label htmlFor="new_password">لطفا رمز جدید خود را وارد کنید</label>
+            {resetPasswordForm.formState.errors.server && (
+              <p className="text-red-500">
+                {resetPasswordForm.formState.errors.server.message?.toString()}
+              </p>
+            )}
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
               <input
                 {...resetPasswordForm.register("new_password")}
