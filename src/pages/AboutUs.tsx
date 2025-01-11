@@ -24,14 +24,14 @@ const AboutUs = () => {
               content: any // Iterating over the "About Us" data.
             ) => (
               <div key={content.id} className="flex flex-col ">
-                <span>{content.title}</span>{" "}
+                <span>{content.title}</span>
                 {/* Displaying the title of each "About Us" section. */}
-                <span>{content.content}</span>{" "}
+                <span>{content.content}</span>
                 {/* Displaying the content of each "About Us" section. */}
               </div>
             )
           )
-        : "در حال دریافت اطلاعات"}{" "}
+        : "در حال دریافت اطلاعات"}
       {/* If aboutUs is undefined (loading state), display a loading message. */}
     </div>
   );
