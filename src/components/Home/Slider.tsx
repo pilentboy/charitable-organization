@@ -2,7 +2,6 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-// import logo from "../../assets/images/logo.png";
 import handleGetSliderSliders from "../../utils/api/content/handleGetSliderSliders";
 import { useEffect, useState } from "react";
 
