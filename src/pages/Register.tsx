@@ -7,8 +7,10 @@ import Select from "react-select";
 import { provinces, ProvinceType } from "../data/provinces";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
-import convertDateToFAEN from "../utils/convertDateToFAEN";
+import moment from "jalali-moment";
 import axios from "axios";
+import convertDateToFAEN from "../utils/convertDateToFAEN";
+
 type FormData = {
   username: string;
   first_name: string;
@@ -61,7 +63,7 @@ const Register = () => {
   }, []);
 
   const handleRegister = async (data: FormData) => {
-    console.log("wait for register");
+    console.log("wait for register", data);
     setLoading(true);
     try {
       const response = await axios.post(
@@ -79,7 +81,6 @@ const Register = () => {
         }
       );
 
-      console.log(response);
       navigate("/login");
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
@@ -109,9 +110,16 @@ const Register = () => {
   };
 
   useEffect(() => {
+    // convert date picker calender to Christian calendar and also cahnge numbers to English because the api only accepts english numbers in this format: yyyy-mm-dd
     const birthdate = watch("birth_date");
+    const stringBirthdate = birthdate?.toString();
+    const gregorianDate = moment(
+      stringBirthdate ? convertDateToFAEN(stringBirthdate, "english") : "",
+      "jYYYY/jMM/jDD"
+    ).format("YYYY-MM-DD");
+    console.log(gregorianDate);
     if (birthdate) {
-      setFormatedBirthDate(convertDateToFAEN(birthdate.format(), "english"));
+      setFormatedBirthDate(gregorianDate);
     }
   }, [watch("birth_date")]);
 
@@ -208,6 +216,7 @@ const Register = () => {
                   render={({ field: { onChange, value } }) => (
                     <DatePicker
                       id="birth_date"
+                      className="purple"
                       calendar={persian}
                       locale={persian_fa}
                       calendarPosition="bottom-right"
