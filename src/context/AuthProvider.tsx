@@ -30,7 +30,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [profileInfo, setPorfileInfo] = useState<any>();
   const [loading, setLoading] = useState<boolean>(false);
 
-
   // get access token and user profile info
   const updateAccessToken = async () => {
     const refreshToken = localStorage.getItem("refreshToken");

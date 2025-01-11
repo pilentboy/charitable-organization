@@ -16,8 +16,10 @@ const BottomProfileLinks = ({
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
-  const { setLoggedIn, setAccessToken, setPorfileInfo } = useAuth();
+  const { setLoggedIn, setAccessToken, setPorfileInfo, accessToken } =
+    useAuth();
 
+  // handle log out user
   const handleLogOut = async () => {
     setLoading(true);
     try {
@@ -26,7 +28,7 @@ const BottomProfileLinks = ({
         { refresh: localStorage.getItem("refreshToken") },
         {
           headers: {
-            Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+            Authorization: `Bearer ${accessToken})}`,
           },
         }
       );
