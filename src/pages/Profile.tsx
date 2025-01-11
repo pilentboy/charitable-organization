@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
-import UserInfoBox from "../components/Profile/UserInfoBox";
-import BottomProfileLinks from "../components/Profile/BottomProfileLinks";
-import useAuth from "../context/AuthProvider";
-import convertDateToFAEN from "../utils/convertDateToFAEN";
+import { useEffect, useState } from "react"; // Importing React hooks: useEffect for side effects and useState for managing state.
+import UserInfoBox from "../components/Profile/UserInfoBox"; // Importing UserInfoBox component for displaying individual user info.
+import BottomProfileLinks from "../components/Profile/BottomProfileLinks"; // Importing BottomProfileLinks component for navigation between profile sections.
+import useAuth from "../context/AuthProvider"; // Importing custom hook to access the authenticated user's information.
+import convertDateToFAEN from "../utils/convertDateToFAEN"; // Importing utility function to convert dates to Persian format.
 
 const Profile = () => {
+  // Destructuring user information (first_name, last_name, etc.) from the context.
   const {
     profileInfo: {
       first_name,
@@ -17,17 +18,21 @@ const Profile = () => {
       province,
       join_date,
     },
-  } = useAuth();
+  } = useAuth(); // Using useAuth to access the authenticated user's profile data.
+
   const [profileDisplay, setProfileDisplay] = useState<"profile" | "donations">(
     "profile"
-  );
-  useEffect(() => {
-    document.title = "حساب کاربری";
-  }, []);
+  ); // State to track which section to display: 'profile' or 'donations'.
 
+  useEffect(() => {
+    document.title = "حساب کاربری"; // Set the document title to "حساب کاربری" (User Account) when the component is mounted.
+  }, []); // Empty dependency array means this effect runs once when the component is mounted.
+
+  // Function to render the user's profile information in a series of UserInfoBox components.
   const renderProfileInfo = () => {
     return (
       <div className="w-full h-fit flex flex-wrap gap-2 md:gap-0 items-center justify-center md:justify-between">
+        {/* Displaying various pieces of user information like first name, last name, username, etc. */}
         <UserInfoBox title={"نام"} value={first_name} />
         <UserInfoBox title={"نام خانوادگی"} value={last_name} />
         <UserInfoBox title={"نام کاربری"} value={username} />
@@ -35,6 +40,7 @@ const Profile = () => {
         <UserInfoBox title={"شهر"} value={city} />
         <UserInfoBox title={"استان"} value={province} />
         <UserInfoBox title={"تاریخ تولد"} value={birth_date} />
+        {/* Formatting the join date to Persian and displaying it. */}
         <UserInfoBox
           title={"تاریخ عضویت"}
           value={convertDateToFAEN(join_date.split("T")[0], "persian")}
@@ -46,14 +52,17 @@ const Profile = () => {
 
   return (
     <div className="flex justify-between mt-10 mb-32">
+      {/* Rendering the BottomProfileLinks component for navigating between profile sections. */}
       <BottomProfileLinks
-        setProfileDisplay={setProfileDisplay}
-        profileDisplay={profileDisplay}
+        setProfileDisplay={setProfileDisplay} // Passing the state updater function to allow navigation between sections.
+        profileDisplay={profileDisplay} // Passing the current display state (profile or donations).
       />
 
+      {/* Conditionally rendering the profile or donations section based on profileDisplay state. */}
       {profileDisplay === "profile" ? (
-        renderProfileInfo()
+        renderProfileInfo() // If profileDisplay is "profile", render the user's profile information.
       ) : (
+        // If profileDisplay is "donations", display a placeholder text for donations.
         <h1 className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
           وضعیت نذری ها
         </h1>
