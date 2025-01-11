@@ -24,14 +24,14 @@ const ContactUs = () => {
               content: any // Iterating over the contactUs data array.
             ) => (
               <div key={content.id} className="flex flex-col ">
-                <span>{content.title}</span>{" "}
+                <span>{content.title}</span>
                 {/* Displaying the title of each "Contact Us" section. */}
-                <span>{content.content}</span>{" "}
+                <span>{content.content}</span>
                 {/* Displaying the content of each "Contact Us" section. */}
               </div>
             )
           )
-        : "در حال دریافت اطلاعات"}{" "}
+        : "در حال دریافت اطلاعات"}
       {/* If contactUs is still undefined (loading state), show a loading message. */}
     </div>
   );
