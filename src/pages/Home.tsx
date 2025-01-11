@@ -500,7 +500,7 @@ const Home = () => {
           </div>
         </section>
 
-  
+        <div className="w-full  h-72 bg-gray-200 flex items-center justify-center mt-5"></div>
       </main>
     </>
   );

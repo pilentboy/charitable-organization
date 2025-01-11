@@ -7,6 +7,7 @@ import { FiMenu } from "react-icons/fi";
 import { useEffect, useState, useRef } from "react";
 import logo from "../../assets/images/logo.png";
 import useAuth from "../../context/AuthProvider";
+import Logo from "../Logo";
 
 const Nav = () => {
   const [displayMobileNav, setDisplayMobileNav] = useState<boolean>(false);
@@ -38,9 +39,7 @@ const Nav = () => {
     <>
       <nav className="w-full mb-5 h-20  bg-white z-50  nav-shadow   sm:h-24 rounded-3xl flex  p-4 items-center justify-between text-base overflow-hidden">
         <div className="flex items-center gap-1">
-          <Link to={"/"}>
-            <img src={logo} alt="logo" className="w-24 sm:w-[130px]" />
-          </Link>
+          <Logo />
 
           <FiMenu
             className="block sm:hidden text-2xl cursor-pointer hover:text-primary"
