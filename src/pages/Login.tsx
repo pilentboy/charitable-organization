@@ -83,7 +83,7 @@ const Login = () => {
 
             {errors.server && (
               <p className="text-red-500">
-                {errors.server.message?.toString()}{" "}
+                {errors.server.message?.toString()}
                 {/* Display any server-side error messages. */}
               </p>
             )}
@@ -112,7 +112,7 @@ const Login = () => {
               }`}
               disabled={loading} // Disabling the button when loading.
             >
-              {loading ? "لطفا صبر کنید" : "ورود"}{" "}
+              {loading ? "لطفا صبر کنید" : "ورود"}
               {/* Button text changes based on loading state. */}
             </button>
 

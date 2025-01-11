@@ -1,32 +1,33 @@
-import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
-import axios from "axios";
-import useAuth from "../context/AuthProvider";
+import { useEffect, useState } from "react"; // Importing React hooks: useEffect for side effects, useState for managing state.
+import { useForm } from "react-hook-form"; // Importing useForm hook from react-hook-form for managing form state and validation.
+import { Link, useNavigate } from "react-router"; // Importing Link for navigation and useNavigate to programmatically navigate after successful login.
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importing eye icons for showing and hiding OTP input.
+import axios from "axios"; // Importing axios for making HTTP requests.
+import useAuth from "../context/AuthProvider"; // Importing custom hook to handle authentication context like updating the access token.
 
 const LoginOTP = () => {
-  const { updateAccessToken } = useAuth();
-  const navigate = useNavigate();
-  const phoneForm = useForm(); // Form for phone number
-  const otpForm = useForm(); // Form for OTP
-  const [OTPSent, setOTPSent] = useState<boolean>(false);
-  const [otpType, setOTPType] = useState<string>("password");
-  const [loading, setLoading] = useState<boolean>(false);
+  const { updateAccessToken } = useAuth(); // Destructuring updateAccessToken from the authentication context to manage token updates.
+  const navigate = useNavigate(); // Using useNavigate to programmatically navigate to other pages after login.
+  const phoneForm = useForm(); // Creating a form instance for phone number input.
+  const otpForm = useForm(); // Creating a form instance for OTP input.
+  const [OTPSent, setOTPSent] = useState<boolean>(false); // State to track if OTP has been sent or not.
+  const [otpType, setOTPType] = useState<string>("password"); // State to toggle OTP input type between password (hidden) and text (visible).
+  const [loading, setLoading] = useState<boolean>(false); // State to track if a request is being processed (loading state).
 
-  // send otp code to user phone
+  // Function to send OTP to the user's phone
   const handleSendOTP = async (data: any) => {
-    setLoading(true);
+    setLoading(true); // Set loading state to true when sending OTP.
     try {
-      console.log(data);
+      console.log(data); // Log the data for debugging.
       const response = await axios.post(
-        "https://nazronlinetest.liara.run/user/login/phone/",
-        data
+        "https://nazronlinetest.liara.run/user/login/phone/", // API endpoint for sending OTP.
+        data // Sending phone number data to the backend.
       );
-      console.log(response, "login otp response");
-      setOTPSent(true);
+      console.log(response, "login otp response"); // Log the response for debugging.
+      setOTPSent(true); // Mark OTP as sent and switch to OTP verification form.
     } catch (error: any) {
-      console.log(error);
+      console.log(error); // Log the error for debugging.
+      // Handle error responses from the server.
       if (error.response && error.response.status === 400) {
         const serverErrors =
           error.response.data.error || error.response.data.phone_number;
@@ -43,32 +44,34 @@ const LoginOTP = () => {
         });
       }
     } finally {
-      setLoading(false);
+      setLoading(false); // Set loading state to false after the request finishes.
     }
   };
 
-  // verify otp code and log in
+  // Function to verify OTP and log in
   const handleVerifyOTP = async (data: any) => {
-    setLoading(true);
+    setLoading(true); // Set loading state to true when verifying OTP.
     console.log({
       ...data,
-      phone_number: phoneForm.getValues("phone_number"),
+      phone_number: phoneForm.getValues("phone_number"), // Include phone number in the request.
     });
     try {
       const response = await axios.post(
-        "https://nazronlinetest.liara.run/user/login/phone/",
+        "https://nazronlinetest.liara.run/user/login/phone/", // API endpoint for OTP verification.
         {
           ...data,
-          phone_number: phoneForm.getValues("phone_number"),
+          phone_number: phoneForm.getValues("phone_number"), // Include the phone number in the data.
         }
       );
-      console.log(response, "log in successfuly");
+      console.log(response, "log in successfuly"); // Log the successful login response.
+      // Save the access and refresh tokens to localStorage.
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
-      updateAccessToken();
-      navigate("/");
+      updateAccessToken(); // Update the access token using the context function.
+      navigate("/"); // Navigate to the home page after successful login.
     } catch (error: any) {
-      console.log(error);
+      console.log(error); // Log any error for debugging.
+      // Handle error responses from the server.
       if (error.response && error.response.status === 400) {
         const serverErrors =
           error.response.data.error || error.response.data.phone_number;
@@ -85,26 +88,26 @@ const LoginOTP = () => {
         });
       }
     } finally {
-      setLoading(false);
+      setLoading(false); // Set loading state to false after the request finishes.
     }
   };
 
   useEffect(() => {
-    console.log(OTPSent);
-    document.title = "ورود";
-  }, [OTPSent]);
+    console.log(OTPSent); // Log OTP sent status for debugging.
+    document.title = "ورود"; // Set the document title to "ورود" (Login) when the component mounts or when OTP status changes.
+  }, [OTPSent]); // Effect will run whenever the OTP sent status changes.
 
   return (
     <section className="h-screen sm:h-full flex justify-center items-center">
       <div className="w-full min-h-[400px] flex items-center justify-center border rounded-2xl overflow-hidden sm:min-h-[460px] ">
         {OTPSent ? (
-          // form for get OTP code
+          // Form to enter OTP after it has been sent
           <form
             key="otp-form"
             onSubmit={(e) => {
-              e.preventDefault();
-              otpForm.clearErrors();
-              otpForm.handleSubmit(handleVerifyOTP)(e);
+              e.preventDefault(); // Prevent default form submission behavior.
+              otpForm.clearErrors(); // Clear any existing errors.
+              otpForm.handleSubmit(handleVerifyOTP)(e); // Handle OTP form submission.
             }}
             className="w-full  py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5"
           >
@@ -113,25 +116,28 @@ const LoginOTP = () => {
             {otpForm.formState.errors.server && (
               <p className="text-red-500">
                 {otpForm.formState.errors.server.message?.toString()}
+                {/* Display error message if any. */}
               </p>
             )}
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
               <input
-                {...otpForm.register("otp")}
+                {...otpForm.register("otp")} // Register the OTP input with react-hook-form.
                 id="otp_input"
                 required
-                type={otpType}
+                type={otpType} // OTP input type (either password or text).
                 className="w-[90%] h-full bg-transparent outline-none border-none"
               />
               <button
                 type="button"
-                onClick={() =>
-                  setOTPType((prev) =>
-                    prev === "password" ? "text" : "password"
-                  )
+                onClick={
+                  () =>
+                    setOTPType((prev) =>
+                      prev === "password" ? "text" : "password"
+                    ) // Toggle between password and text input for OTP visibility.
                 }
               >
                 {otpType === "text" ? <FaEye /> : <FaEyeSlash />}
+                {/* Toggle eye icon based on input type. */}
               </button>
             </div>
 
@@ -146,12 +152,13 @@ const LoginOTP = () => {
               disabled={loading}
             >
               {loading ? "بررسی کد وارد شده" : "تایید"}
+              {/* Button text based on loading state. */}
             </button>
 
             <button
               className="w-full h-12 bg-gray-600 rounded-2xl duration-200 text-white hover:opacity-90"
               onClick={() => {
-                setOTPSent(false);
+                setOTPSent(false); // Reset to phone number form if user wants to change phone number.
                 phoneForm.clearErrors();
                 otpForm.reset();
               }}
@@ -161,19 +168,18 @@ const LoginOTP = () => {
 
             <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
               <Link to="/login" className=" text-primary">
-                ورود با نام کاربری
+                ورود با نام کاربری {/* Link to login page with username */}
               </Link>
             </div>
           </form>
         ) : (
-          // form to get phone number
+          // Form to enter phone number before sending OTP
           <form
             key="phone-form"
-            // onSubmit={phoneForm.handleSubmit(handleSendOTP)}
             onSubmit={(e) => {
-              e.preventDefault();
-              phoneForm.clearErrors();
-              phoneForm.handleSubmit(handleSendOTP)(e);
+              e.preventDefault(); // Prevent default form submission.
+              phoneForm.clearErrors(); // Clear any existing errors.
+              phoneForm.handleSubmit(handleSendOTP)(e); // Handle phone number form submission.
             }}
             className="w-full py-8 px-6 flex flex-col gap-8 mx-auto lg:w-1/2 sm:gap-5"
           >
@@ -185,12 +191,13 @@ const LoginOTP = () => {
             {phoneForm.formState.errors.server && (
               <p className="text-red-500">
                 {phoneForm.formState.errors.server.message?.toString()}
+                {/* Display error message if any. */}
               </p>
             )}
 
             <div className="flex justify-between items-center border border-gray-300 bg-gray-100 rounded-2xl h-12 p-2 duration-200 focus:border-gray-800">
               <input
-                {...phoneForm.register("phone_number")}
+                {...phoneForm.register("phone_number")} // Register the phone number input with react-hook-form.
                 id="phone_input"
                 placeholder="09XXXXXXXXX"
                 required
@@ -205,15 +212,16 @@ const LoginOTP = () => {
               disabled={loading}
             >
               {loading ? "بررسی شماره تلفن" : "ارسال کد یک بار مصرف"}
+              {/* Button text based on loading state. */}
             </button>
             <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-0">
               <Link to="/login" className=" text-primary">
-                ورود با نام کاربری
+                ورود با نام کاربری {/* Link to login page with username */}
               </Link>
               <div className="flex gap-2">
                 حساب کاربری ندارید؟
                 <Link to="/register" className=" text-primary">
-                  عضویت
+                  عضویت {/* Link to registration page */}
                 </Link>
               </div>
             </div>
