@@ -33,8 +33,10 @@ const BottomProfileLink = ({
       onClick={action} // Trigger the action when the button is clicked
       disabled={loading} // Disable the button when loading
     >
-      {icon} // Display the icon for the link
-      <span>{title}</span> // Display the title of the link
+      {/*  Display the icon for the link */}
+      {icon}
+      {/* Display the title of the link */}
+      <span>{title}</span>
     </button>
   );
 };

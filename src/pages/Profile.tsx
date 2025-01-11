@@ -54,13 +54,16 @@ const Profile = () => {
     <div className="flex justify-between mt-10 mb-32">
       {/* Rendering the BottomProfileLinks component for navigating between profile sections. */}
       <BottomProfileLinks
-        setProfileDisplay={setProfileDisplay} // Passing the state updater function to allow navigation between sections.
-        profileDisplay={profileDisplay} // Passing the current display state (profile or donations).
+        // Passing the state updater function to allow navigation between sections.
+        setProfileDisplay={setProfileDisplay}
+        // Passing the current display state (profile or donations).
+        profileDisplay={profileDisplay}
       />
 
       {/* Conditionally rendering the profile or donations section based on profileDisplay state. */}
       {profileDisplay === "profile" ? (
-        renderProfileInfo() // If profileDisplay is "profile", render the user's profile information.
+        // If profileDisplay is "profile", render the user's profile information.
+        renderProfileInfo()
       ) : (
         // If profileDisplay is "donations", display a placeholder text for donations.
         <h1 className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
