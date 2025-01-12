@@ -2,7 +2,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, A11y, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/pagination";
-import handleGetSliderSliders from "../../utils/api/content/handleGetSliderSliders";
+import handleGetHomeSliderContent from "../../utils/api/content/handleGetHomeSliderContent";
 import { useEffect, useState } from "react";
 
 const Slider = () => {
@@ -10,8 +10,8 @@ const Slider = () => {
 
   useEffect(() => {
     const getData = async () => {
-      const req = await handleGetSliderSliders();
-      console.log(req.status, req.data, "slider");
+      const req = await handleGetHomeSliderContent();
+      console.log(req.data, "اسلایدر");
       setSliderContents(req.data);
     };
     getData();
@@ -37,10 +37,10 @@ const Slider = () => {
           return (
             <SwiperSlide key={slider.id}>
               <img
-                src={`https://nazronlinetest.liara.run${slider.media}`}
+                src={`https://nazronline.ir/${slider.media}`}
                 alt={slider.alt_text}
                 title={slider.display_text}
-                className="object-fill bg-black w-full h-full text-white"
+                className=" object-fill bg-black w-full h-full text-white"
               />
             </SwiperSlide>
           );

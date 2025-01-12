@@ -1,8 +1,8 @@
 import axios from "axios";
-const handleGetSliderSliders = async () => {
+const handleGetHomeSliderContent = async () => {
   try {
     const response = await axios.get(
-      "https://nazronlinetest.liara.run/content/slider/"
+      "https://nazronline.ir/api/content/slider/"
     );
     return response;
   } catch (error: any) {
@@ -11,4 +11,4 @@ const handleGetSliderSliders = async () => {
   }
 };
 
-export default handleGetSliderSliders;
+export default handleGetHomeSliderContent;

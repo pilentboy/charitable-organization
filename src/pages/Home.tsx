@@ -138,7 +138,6 @@ const Home = () => {
 
   useEffect(() => {
     const handleGetSocialMedias = async () => {
-      console.log("social medias");
       try {
         const response = await axios(
           "https://nazronlinetest.liara.run/sacrifices/messaging-apps/"
@@ -158,12 +157,10 @@ const Home = () => {
 
   const getDedications = async () => {
     const res = await handleGetDedications();
-    console.log(res, "dedications ");
   };
 
   const getQuotes = async () => {
     const res = await handleGetQuotes();
-    console.log(res, "quotes ");
   };
 
   useEffect(() => {
