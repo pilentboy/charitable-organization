@@ -66,7 +66,7 @@ const Register = () => {
     console.log("wait for register", data);
     setLoading(true);
     try {
-      await axios.post("https://nazronlinetest.liara.run/user/register/", {
+      await axios.post("https://nazronline.ir/api/user/register/", {
         username: data.username,
         password: data.password,
         first_name: data.first_name,
