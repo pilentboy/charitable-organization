@@ -9,7 +9,7 @@ import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import moment from "jalali-moment";
 import axios from "axios";
-import convertDateToFAEN from "../utils/convertDateToFAEN";
+import convertDateToFAEN from "../utils/convertDateNumbersToFAEN";
 
 type FormData = {
   username: string;

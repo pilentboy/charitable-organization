@@ -1,4 +1,4 @@
-const convertDateToFAEN = (date: string, expectedType: string) => {
+const convertDateNumbersToFAEN = (date: string, expectedType: string) => {
   const persianNumbers = "۰۱۲۳۴۵۶۷۸۹";
   const englishNumbers = "0123456789";
   // Defining Persian and English number sets
@@ -28,5 +28,5 @@ const convertDateToFAEN = (date: string, expectedType: string) => {
   }
 };
 
-export default convertDateToFAEN;
+export default convertDateNumbersToFAEN;
 // Exporting the convertDateToFAEN function as the default export

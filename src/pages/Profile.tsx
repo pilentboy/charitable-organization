@@ -2,7 +2,9 @@ import { useEffect, useState } from "react"; // Importing React hooks: useEffect
 import UserInfoBox from "../components/Profile/UserInfoBox"; // Importing UserInfoBox component for displaying individual user info.
 import BottomProfileLinks from "../components/Profile/BottomProfileLinks"; // Importing BottomProfileLinks component for navigation between profile sections.
 import useAuth from "../context/AuthProvider"; // Importing custom hook to access the authenticated user's information.
-import convertDateToFAEN from "../utils/convertDateToFAEN"; // Importing utility function to convert dates to Persian format.
+import convertDateToFAEN from "../utils/convertDateNumbersToFAEN"; // Importing utility function to convert dates to Persian format.
+import convertDateToPersian from "../utils/convertDateToPersian";
+import convertDateYearToPersian from "../utils/convertDateYearToPersian";
 
 const Profile = () => {
   // Destructuring user information (first_name, last_name, etc.) from the context.
@@ -16,7 +18,7 @@ const Profile = () => {
       birth_date,
       city,
       province,
-      join_date,
+      date_joined,
     },
   } = useAuth(); // Using useAuth to access the authenticated user's profile data.
 
@@ -39,11 +41,20 @@ const Profile = () => {
         <UserInfoBox title={"شماره تلفن"} value={phone_number} />
         <UserInfoBox title={"شهر"} value={city} />
         <UserInfoBox title={"استان"} value={province} />
-        <UserInfoBox title={"تاریخ تولد"} value={birth_date} />
+        <UserInfoBox
+          title={"تاریخ تولد"}
+          value={convertDateToFAEN(
+            convertDateYearToPersian(birth_date),
+            "persian"
+          )}
+        />
         {/* Formatting the join date to Persian and displaying it. */}
         <UserInfoBox
           title={"تاریخ عضویت"}
-          value={convertDateToFAEN(join_date.split("T")[0], "persian")}
+          value={convertDateToFAEN(
+            convertDateToPersian(date_joined),
+            "persian"
+          )}
         />
         <UserInfoBox title={"آدرس"} value={address} />
       </div>

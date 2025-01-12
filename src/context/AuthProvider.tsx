@@ -40,7 +40,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       try {
         // Send a POST request to refresh the access token using the refresh token
         const response = await axios.post(
-          "https://nazronlinetest.liara.run/user/refresh/",
+          "https://nazronline.ir/api/user/refresh/",
           { refresh: refreshToken }
         );
 

@@ -4,7 +4,7 @@ import axios from "axios";
 const handleGetUserProfileInfo = async (accessToken: string) => {
   try {
     const res = await axios(
-      "https://nazronlinetest.liara.run/user/profile/personal-info/",
+      "https://nazronline.ir/api/user/profile/personal-info/",
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
