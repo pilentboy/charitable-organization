@@ -140,7 +140,7 @@ const Home = () => {
     const handleGetSocialMedias = async () => {
       try {
         const response = await axios(
-          "https://nazronlinetest.liara.run/sacrifices/messaging-apps/"
+          "https://nazronline.ir/api/sacrifices/messaging-apps/"
         );
         setSelectedSocialMedia("خیر تمایلی ندارم");
         setSocialMediaOptions(response.data);
