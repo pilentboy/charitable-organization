@@ -35,13 +35,16 @@ const Slider = () => {
         {sliderContents.map((slider: any) => {
           console.log(slider.media);
           return (
-            <SwiperSlide key={slider.id}>
+            <SwiperSlide key={slider.id} className="relative">
               <img
                 src={`https://nazronline.ir/${slider.media}`}
                 alt={slider.alt_text}
                 title={slider.display_text}
                 className=" object-fill bg-black w-full h-full text-white"
               />
+              {/* <span className="text-white absolute bottom-2 font-bold left-1/2 translate-x-[-50%]">
+                متن تستی
+              </span> */}
             </SwiperSlide>
           );
         })}

@@ -4,10 +4,10 @@ import Select, { components } from "react-select";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { TiTick } from "react-icons/ti";
 import useAuth from "../context/AuthProvider";
-import handleGetDedications from "../utils/api/content/handleGetDedications";
 import handleGetQuotes from "../utils/api/content/handleGetQuotes";
 import SocialMediaRadioBTN from "../components/Home/SocialMediaRadioBTN";
 import axios from "axios";
+import Dedications from "../components/Home/Dedications";
 
 const Home = () => {
   const { loggedIn } = useAuth();
@@ -156,16 +156,11 @@ const Home = () => {
     setofferingRadio(e.target.value);
   };
 
-  const getDedications = async () => {
-    const res = await handleGetDedications();
-  };
-
   const getQuotes = async () => {
     const res = await handleGetQuotes();
   };
 
   useEffect(() => {
-    getDedications();
     getQuotes();
     setofferingRadio(offeringRadioOptions[0]?.title);
     document.title = "نذر آنلاین";
@@ -347,14 +342,8 @@ const Home = () => {
                   )}
                 </div>
 
-                {/* warning text */}
-                <p className="py-2">
-                  نکته مهم
-                  <br />
-                  در عقیقه ، متولیان عقیقه ،فقط دعای عقیقه را می‌خوانند و بقیه
-                  آداب آن را انجام نمی‌دهند، اصل هم همین دعاست و پس از ذبح ، بین
-                  فقرا توزیع می شود
-                </p>
+                {/* dedication text */}
+                <Dedications />
               </>
             ) : (
               <>
