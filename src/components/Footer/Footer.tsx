@@ -13,7 +13,7 @@ const Footer = () => {
       <div className="flex flex-col flex-wrap sm:flex-row sm:items-center justify-between w-full">
         {/* links */}
         <div className="flex flex-col gap-3 items-start ">
-          <h1 className="text-primary font-bold ">ندر آنلاین</h1>
+          <h1 className="text-primary font-bold ">نذر آنلاین</h1>
           <ul className="flex flex-col   justify-center text-black gap-5 md:flex-row ">
             <FooterLink title="نذر آنلاین" link="/" icon={<FaRegHeart />} />
             <FooterLink
