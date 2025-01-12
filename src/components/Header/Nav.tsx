@@ -5,7 +5,6 @@ import { CiLocationOn } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
 import { FiMenu } from "react-icons/fi";
 import { useEffect, useState, useRef } from "react";
-import logo from "../../assets/images/logo.png";
 import useAuth from "../../context/AuthProvider";
 import Logo from "../Logo";
 
