@@ -139,7 +139,7 @@ const ResetPassword = () => {
   }, []);
 
   return (
-    <section className="h-screen sm:h-full flex justify-center items-center">
+    <section className="h-[90vh] sm:h-fulk  xl:h-[80vh] flex justify-center items-center">
       <div className="w-full min-h-[400px] flex items-center justify-center border rounded-2xl overflow-hidden sm:min-h-[460px] ">
         {/* Form for sending OTP */}
         {OTPSent && (

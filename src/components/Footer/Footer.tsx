@@ -10,7 +10,7 @@ import { Link } from "react-router";
 const Footer = () => {
   return (
     <footer className="min-h-40 border-t w-full mt-10 flex flex-col  sm:items-center justify-between p-2">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between w-full">
+      <div className="flex flex-col flex-wrap sm:flex-row sm:items-center justify-between w-full">
         {/* links */}
         <div className="flex flex-col gap-3 items-start ">
           <h1 className="text-primary font-bold ">ندر آنلاین</h1>
@@ -34,7 +34,7 @@ const Footer = () => {
           </ul>
         </div>
         {/* logos */}
-        <div className="flex flex-col gap-2 items-center sm:flex-row">
+        <div className="flex flex-col gap-2 items-center justify-center w-full lg:w-fit sm:flex-row">
           <Logo size="w-40" />
           <Link to={"/"}>
             <img src={enamad} alt="logo" className="w-40" />

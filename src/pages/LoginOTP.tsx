@@ -98,7 +98,7 @@ const LoginOTP = () => {
   }, [OTPSent]); // Effect will run whenever the OTP sent status changes.
 
   return (
-    <section className="h-screen sm:h-full flex justify-center items-center">
+    <section className="h-[90vh] sm:h-fulk  xl:h-[80vh] flex justify-center items-center">
       <div className="w-full min-h-[400px] flex items-center justify-center border rounded-2xl overflow-hidden sm:min-h-[460px] ">
         {OTPSent ? (
           // Form to enter OTP after it has been sent

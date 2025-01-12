@@ -69,7 +69,7 @@ const Login = () => {
   }, []); // Empty dependency array ensures this effect runs only once on component mount.
 
   return (
-    <section className="h-screen sm:h-full flex justify-center items-center">
+    <section className="h-[90vh] sm:h-fulk  xl:h-[80vh] flex justify-center items-center">
       <div className="w-full min-h-[400px] flex items-center justify-between border rounded-2xl overflow-hidden">
         <div className="w-full h-full py-8 px-6">
           <form
@@ -112,7 +112,7 @@ const Login = () => {
               }`}
               disabled={loading} // Disabling the button when loading.
             >
-              {loading ? "لطفا صبر کنید" : "ورود"}
+              {loading ? "لطفا صبر کنید" : "ورود"}{" "}
               {/* Button text changes based on loading state. */}
             </button>
 
