@@ -20,7 +20,7 @@ const LoginOTP = () => {
     try {
       console.log(data); // Log the data for debugging.
       const response = await axios.post(
-        "https://nazronlinetest.liara.run/user/login/phone/", // API endpoint for sending OTP.
+        "https://nazronline.ir/api/user/login/phone/", // API endpoint for sending OTP.
         data // Sending phone number data to the backend.
       );
       console.log(response, "login otp response"); // Log the response for debugging.
@@ -57,7 +57,7 @@ const LoginOTP = () => {
     });
     try {
       const response = await axios.post(
-        "https://nazronlinetest.liara.run/user/login/phone/", // API endpoint for OTP verification.
+        "https://nazronline.ir/api/user/login/phone/", // API endpoint for OTP verification.
         {
           ...data,
           phone_number: phoneForm.getValues("phone_number"), // Include the phone number in the data.

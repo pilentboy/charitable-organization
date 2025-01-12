@@ -27,7 +27,7 @@ const BottomProfileLinks = ({
     try {
       // Make a POST request to the logout endpoint with the refresh token
       const response = await axios.post(
-        "https://nazronlinetest.liara.run/user/logout/",
+        "https://nazronline.ir/api/user/logout/",
         { refresh: localStorage.getItem("refreshToken") },
         {
           headers: {
@@ -36,7 +36,8 @@ const BottomProfileLinks = ({
         }
       );
       // Show the logout success message from the API response
-      alert(response.data.message);
+      // alert(response.data.message);
+      
       // Clear the tokens from localStorage
       localStorage.removeItem("refreshToken");
       localStorage.removeItem("accessToken");

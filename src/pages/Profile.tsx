@@ -2,9 +2,9 @@ import { useEffect, useState } from "react"; // Importing React hooks: useEffect
 import UserInfoBox from "../components/Profile/UserInfoBox"; // Importing UserInfoBox component for displaying individual user info.
 import BottomProfileLinks from "../components/Profile/BottomProfileLinks"; // Importing BottomProfileLinks component for navigation between profile sections.
 import useAuth from "../context/AuthProvider"; // Importing custom hook to access the authenticated user's information.
-import convertDateToFAEN from "../utils/convertDateNumbersToFAEN"; // Importing utility function to convert dates to Persian format.
-import convertDateToPersian from "../utils/convertDateToPersian";
-import convertDateYearToPersian from "../utils/convertDateYearToPersian";
+import convertDateToFAEN from "../utils/Date&NumberConvertors/convertDateNumbersToFAEN"; // Importing utility function to convert dates to Persian format.
+import convertDateToPersian from "../utils/Date&NumberConvertors/convertDateToPersian";
+import convertDateYearToPersian from "../utils/Date&NumberConvertors/convertDateYearToPersian";
 
 const Profile = () => {
   // Destructuring user information (first_name, last_name, etc.) from the context.
