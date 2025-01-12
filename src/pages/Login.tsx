@@ -24,7 +24,7 @@ const Login = () => {
 
     try {
       const response = await axios.post(
-        "https://nazronlinetest.liara.run/user/login/username/", // API endpoint to send the login request.
+        "https://nazronline.ir/api/user/login/username/", // API endpoint to send the login request.
         data // Sending the form data (username and password).
       );
 
