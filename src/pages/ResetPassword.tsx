@@ -22,7 +22,7 @@ const ResetPassword = () => {
     setLoading(true); // Set loading state to true while sending the request.
     try {
       await axios.post(
-        "https://nazronlinetest.liara.run/user/password-reset/request/",
+        "https://nazronline.ir/api/user/password-reset/request/",
         data
       );
       setOTPSent(true); // Mark OTP as sent after a successful request.
@@ -58,7 +58,7 @@ const ResetPassword = () => {
     setLoading(true); // Set loading state to true while verifying OTP.
     try {
       await axios.post(
-        "https://nazronlinetest.liara.run/user/password-reset/verify/",
+        "https://nazronline.ir/api/user/password-reset/verify/",
         { phone_number: phoneForm.getValues("phone_number"), otp: data.otp },
         { headers: { "Content-Type": "application/json" } }
       );
@@ -96,7 +96,7 @@ const ResetPassword = () => {
     setLoading(true); // Set loading state to true while resetting password.
     try {
       const response = await axios.post(
-        "https://nazronlinetest.liara.run/user/password-reset/confirm/",
+        "https://nazronline.ir/api/user/password-reset/confirm/",
         {
           ...data,
           phone_number: phoneForm.getValues("phone_number"),
