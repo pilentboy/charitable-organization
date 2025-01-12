@@ -13,10 +13,11 @@ import Quotes from "../components/Home/Quotes";
 const Home = () => {
   const { loggedIn } = useAuth();
 
-  // offering form inputs states
-  const [offeringRadio, setofferingRadio] = useState<string>();
-  const [offeringType, setOfferingType] = useState<any>();
-  const [offeringTypeCount, setOfferingTypeCount] = useState<any>();
+  // selected offering form inputs states
+  const [selectedofferingRadio, setselectedofferingRadio] = useState<string>();
+  const [selectedOfferingType, setselectedOfferingType] = useState<any>();
+  const [selectedOfferingTypeCount, setselectedOfferingTypeCount] =
+    useState<any>();
   const [selectedSocialMedia, setSelectedSocialMedia] = useState<
     string | undefined
   >();
@@ -29,73 +30,26 @@ const Home = () => {
   const [socialMediaOptions, setSocialMediaOptions] = useState<any>();
 
   // selects values
-  const [offeringTypeOptions, setOfferingTypeOptions] = useState<[] | null>();
+  const [selectedOfferingTypeOptions, setselectedOfferingTypeOptions] =
+    useState<{ value: number; label: number }[] | null>();
 
   // select counts
-  const [offeringTypeCountOptions, setOfferingTypeCountOptions] = useState<
-    { value: number; label: number }[] | null
-  >();
+  const [
+    selectedOfferingTypeCountOptions,
+    setselectedOfferingTypeCountOptions,
+  ] = useState<{ value: number; label: number }[] | null>();
 
   // radio button options
-  const [offeringRadioOptions] = useState<any>([
-    {
-      title: "قربانی بز",
-      id: 1,
-      types: [
-        {
-          value: "گوسفند 10 میلیونی",
-          label: "گوسفند 10 میلیونی",
-          count: 5,
-        },
-        {
-          value: "گوسفند 20 میلیونی",
-          label: "گوسفند 20 میلیونی",
-          count: 35,
-        },
-      ],
-    },
-    {
-      title: "قربانی مرغ",
-      id: 2,
-      types: [
-        {
-          value: "ذبح خروس",
-          label: "ذبح خروس",
-          count: 6,
-        },
-        {
-          value: "ذبح مرغ",
-          label: "ذبح مرغ",
-          count: 5,
-        },
-      ],
-    },
-    {
-      title: "قربانی گوسفند",
-      id: 3,
-    },
-    {
-      title: "قربانی x",
-      id: 4,
-      types: [
-        {
-          value: "x خروس",
-          label: "x خروس",
-          count: 2,
-        },
-        {
-          value: "y مرغ",
-          label: "y مرغ",
-          count: 1,
-        },
-      ],
-    },
-  ]);
+  const [offeringRadioOptinos, setOfferingRadioOptions] = useState<any>([]);
 
+  // offering form data
+  const [offeringFormData, setOfferingFormData] = useState<any>();
+
+  // control form step change from selecting offering to pay
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
     useState<boolean>(true);
 
-  const handleSetOfferingTypeRange = (count: number) => {
+  const handleSetselectedOfferingTypeRange = (count: number) => {
     const result = [];
 
     for (let i = 1; i <= count; i++) {
@@ -104,38 +58,64 @@ const Home = () => {
     return result;
   };
 
+  // get offering form data
   useEffect(() => {
-    if (offeringRadio) {
-      const selectedOption = offeringRadioOptions.find(
-        (option: any) => option.title === offeringRadio
+    const handleGettingOfferingFormData = async () => {
+      const response = await axios(
+        "https://nazronline.ir/api/sacrifices/types/"
+      );
+      setOfferingFormData(response.data);
+      setselectedofferingRadio(response.data[0].name);
+      setOfferingRadioOptions(
+        response.data.map((options: any) => options.name)
+      );
+    };
+    handleGettingOfferingFormData();
+  }, []);
+  useEffect(() => {
+    console.log(offeringFormData, "xx");
+    console.log(selectedofferingRadio, "offering radio selected");
+    console.log(offeringRadioOptinos, "offering radio options");
+  }, [offeringFormData, selectedofferingRadio, offeringRadioOptinos]);
+
+  useEffect(() => {
+    if (selectedofferingRadio) {
+      const selectedOption = offeringRadioOptinos.find(
+        (option: any) => option.title === selectedofferingRadio
       );
       const selectedTypes =
-        selectedOption && selectedOption.types ? selectedOption.types : null;
+        selectedOption && selectedOption.types
+          ? selectedOption.aqigah_types
+          : null;
 
       if (selectedTypes) {
-        setOfferingTypeOptions(selectedTypes);
-        setOfferingType(selectedTypes[0]);
-        const optionTypeOrderRange = handleSetOfferingTypeRange(
+        setselectedOfferingTypeOptions(selectedTypes);
+        setselectedOfferingType(selectedTypes[0]);
+        const optionTypeOrderRange = handleSetselectedOfferingTypeRange(
           selectedTypes[0].count
         );
-        setOfferingTypeCountOptions(optionTypeOrderRange);
-        setOfferingTypeCount(optionTypeOrderRange[0]);
+        setselectedOfferingTypeCountOptions(optionTypeOrderRange);
+        setselectedOfferingTypeCount(optionTypeOrderRange[0]);
       } else {
-        setOfferingTypeOptions(null);
-        setOfferingTypeCountOptions(null);
+        setselectedOfferingTypeOptions(null);
+        setselectedOfferingTypeCountOptions(null);
       }
     }
-  }, [offeringRadio]);
+  }, [selectedofferingRadio]);
 
-  useEffect(() => {
-    if (offeringType) {
-      const optionTypeOrderRange = handleSetOfferingTypeRange(
-        offeringType.count
-      );
-      setOfferingTypeCountOptions(optionTypeOrderRange);
-      setOfferingTypeCount(optionTypeOrderRange[0]);
-    }
-  }, [offeringType]);
+  // useEffect(() => {
+  //   if (selectedOfferingType) {
+  //     const optionTypeOrderRange = handleSetselectedOfferingTypeRange(
+  //       selectedOfferingType.count
+  //     );
+  //     setselectedOfferingTypeCountOptions(optionTypeOrderRange);
+  //     setselectedOfferingTypeCount(optionTypeOrderRange[0]);
+  //   }
+  // }, [selectedOfferingType]);
+
+  const handleselectedofferingRadioChange = (e: any) => {
+    setselectedofferingRadio(e.target.value);
+  };
 
   // getting social media
   useEffect(() => {
@@ -153,17 +133,13 @@ const Home = () => {
     handleGetSocialMedias();
   }, []);
 
-  const handleOfferingRadioChange = (e: any) => {
-    setofferingRadio(e.target.value);
-  };
-
   const getQuotes = async () => {
     const res = await handleGetQuotes();
   };
 
   useEffect(() => {
     getQuotes();
-    setofferingRadio(offeringRadioOptions[0]?.title);
+    setselectedofferingRadio(offeringRadioOptinos[0]?.title);
     document.title = "نذر آنلاین";
   }, []);
 
@@ -215,29 +191,29 @@ const Home = () => {
               <>
                 {/* offering type */}
                 <div className="flex w-full  items-center flex-col gap-4 font-bold md:flex-row md:flex-wrap">
-                  {offeringRadioOptions.map((option: any) => (
+                  {offeringRadioOptinos.map((option: any, index: any) => (
                     <label
-                      key={option.id}
+                      key={index}
                       className="flex gap-2 w-full md:w-56 h-14 rounded-2xl border border-primary bg-[#13a89e36] items-center p-3 cursor-pointer"
                     >
                       <input
                         type="radio"
-                        name={option.title}
-                        value={option.title}
-                        checked={offeringRadio === option.title}
-                        onChange={handleOfferingRadioChange}
+                        name={option}
+                        value={option}
+                        checked={selectedofferingRadio === option}
+                        onChange={handleselectedofferingRadioChange}
                         className="hidden peer"
                       />
                       <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
                         <span
                           className={`w-3/4 h-3/4 test rounded-md transition-colors ${
-                            offeringRadio === option.title
+                            selectedofferingRadio === option
                               ? "bg-primary"
                               : "bg-white"
                           }`}
                         ></span>
                       </div>
-                      <span>{option.title}</span>
+                      <span>{option}</span>
                     </label>
                   ))}
                 </div>
@@ -245,19 +221,19 @@ const Home = () => {
                 {/* selection */}
                 <div className="flex flex-col gap-4 mt-10 mb-6 items-center justify-between  w-full md:flex-row">
                   {/* type */}
-                  {offeringTypeOptions && (
+                  {selectedOfferingTypeOptions && (
                     <div className="w-full md:w-5/6 flex flex-col gap-1">
                       <span className="font-bold text-gray-700 pr-1">نوع </span>
                       <Select
                         required
                         inputId="type"
                         placeholder="نوع"
-                        options={offeringTypeOptions}
+                        options={selectedOfferingTypeOptions}
                         onChange={(e: any) => {
-                          setOfferingType(e);
+                          setselectedOfferingType(e);
                           console.log(e);
                         }}
-                        value={offeringType}
+                        value={selectedOfferingType}
                         components={{
                           DropdownIndicator: (props) => (
                             <components.DropdownIndicator {...props}>
@@ -294,7 +270,7 @@ const Home = () => {
                     </div>
                   )}
                   {/* count */}
-                  {offeringTypeCountOptions && (
+                  {selectedOfferingTypeCountOptions && (
                     <div className="w-full  md:w-5/6 flex flex-col gap-1">
                       <span className="font-bold text-gray-700 pr-1">
                         تعداد
@@ -303,9 +279,9 @@ const Home = () => {
                         required
                         inputId="count"
                         placeholder="تعداد"
-                        options={offeringTypeCountOptions}
-                        onChange={(e: any) => setOfferingTypeCount(e)}
-                        value={offeringTypeCount}
+                        options={selectedOfferingTypeCountOptions}
+                        onChange={(e: any) => setselectedOfferingTypeCount(e)}
+                        value={selectedOfferingTypeCount}
                         components={{
                           DropdownIndicator: (props) => (
                             <components.DropdownIndicator {...props}>
