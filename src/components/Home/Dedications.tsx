@@ -20,9 +20,6 @@ const Dedications = () => {
     handleGetDedications();
   }, []);
 
-  useEffect(() => {
-    console.log(dedicationContent);
-  }, [dedicationContent]);
 
   if (dedicationContent)
     return dedicationContent?.map((content: any) => (

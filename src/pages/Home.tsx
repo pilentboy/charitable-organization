@@ -8,6 +8,7 @@ import handleGetQuotes from "../utils/api/content/handleGetQuotes";
 import SocialMediaRadioBTN from "../components/Home/SocialMediaRadioBTN";
 import axios from "axios";
 import Dedications from "../components/Home/Dedications";
+import Quotes from "../components/Home/Quotes";
 
 const Home = () => {
   const { loggedIn } = useAuth();
@@ -473,20 +474,8 @@ const Home = () => {
           </form>
         </div>
 
-        {/* daily message */}
-        <section className="flex  w-full h-fit items-center justify-center">
-          <div className="w-full   items-center lg:w-[65%] gap-1   flex flex-col ">
-            <p className="sm:w-5/6 text-justify sm:text-start ">
-              از امام رضا علیه السلام سوال شد که اگر قرباني در منا براي ما كمياب
-              شد، آيا جايز است كه دو نفر، يك گوسفند را قرباني كنند؟ حضرت فرمودند
-              : بله، هفتاد نفر هم با هم میتوانند.
-            </p>
-            <span className="text-gray-700   text-sm">
-              استبصار، شيخ طوسي، ج2، ص 267
-            </span>
-          </div>
-        </section>
-
+        {/* quotes */}
+        <Quotes />
         <div className="w-full  h-72 bg-gray-200 flex items-center justify-center mt-5"></div>
       </main>
     </>
