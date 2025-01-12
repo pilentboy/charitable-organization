@@ -26,7 +26,7 @@ const AboutUs = () => {
               <div key={content.id} className="flex flex-col ">
                 <span>{content.title}</span>
                 {/* Displaying the title of each "About Us" section. */}
-                <span>{content.content}</span>
+                <p className="text-justify">{content.content}</p>
                 {/* Displaying the content of each "About Us" section. */}
               </div>
             )

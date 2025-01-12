@@ -136,6 +136,7 @@ const Home = () => {
     }
   }, [offeringType]);
 
+  // getting social media
   useEffect(() => {
     const handleGetSocialMedias = async () => {
       try {

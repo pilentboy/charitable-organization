@@ -2,7 +2,7 @@ import axios from "axios";
 const handleGetAboutUs = async () => {
   try {
     const response = await axios.get(
-      "https://nazronlinetest.liara.run/content/about-us/"
+      "https://nazronline.ir/api/content/about-us/"
     );
     return response;
   } catch (error: any) {
