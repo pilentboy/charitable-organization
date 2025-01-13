@@ -11,16 +11,18 @@ const DonationInfoBox = ({
 }) => {
   return (
     <div
-      className="flex items-center flex-wrap justify-between  gap-2"
+      className={`items-center flex-wrap justify-between  gap-2 ${
+        boldValue ? "hidden sm:flex" : "flex"
+      }`}
       title={toolTip}
     >
       <div
         className={`w-fit p-2  cursor-pointer ${
           boldValue ? "bg-transparent" : "bg-gray-50"
-        }  flex items-center justify-between text-[14px] rounded-lg   gap-2`}
+        }  flex items-center justify-between text-sm rounded-lg   gap-2`}
       >
         <span className="text-gray-600">{title}</span>
-        <span className={`${boldValue ? "font-bold text-[12px]" : ""}`}>
+        <span className={`${boldValue ? "font-bold  text-[15px]" : ""}`}>
           {value}
         </span>
       </div>

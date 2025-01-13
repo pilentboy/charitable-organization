@@ -58,33 +58,34 @@ const DonationItem = ({
 
       {/* donation created date and status info */}
       <div
-        className={`flex flex-wrap justify-center gap-1 py-1 w-full ${
-          displayInfo ? "border-t" : "border-none"
+        className={`flex flex-wrappy-1 text-[15px] w-full ${
+          displayInfo ? "border-t  justify-center gap-2 " : "border-none  justify-between "
         }`}
         onClick={() => setDisplayInfo((e) => !e)}
       >
-        <div className="w-fit p-2 cursor-pointer  flex items-center justify-between text-sm  gap-2">
-          {!displayInfo && (
-            <DonationInfoBox
-              title={"نوع قربانی"}
-              value={sacrifice_type_name}
-              boldValue={true}
-            />
-          )}
+        {!displayInfo && (
+          <DonationInfoBox
+            title={"نوع قربانی"}
+            value={sacrifice_type_name}
+            boldValue={true}
+          />
+        )}
+        <div className="w-fit p-2 cursor-pointer  flex items-center justify-between  gap-2">
           <span className="text-gray-600">تاریخ ایجاد </span>
-          <span className="text-black font-bold text-[12px] ">
+          <span className="text-black font-bold ">
             {convertDateNumbersToFAEN(
               convertDateToPersian(jalali_created_at),
               "persian"
             )}
           </span>
         </div>
-        <div className="w-fit p-2 cursor-pointer  flex items-center  text-sm  gap-2">
+
+        <div className="w-fit p-2 cursor-pointer  flex items-center    gap-2">
           <span className="text-gray-600">وضعیت</span>
           <span
-            className={`font-bold text-[12px] ${
+            className={`font-bold  ${
               status_display === "تحویل داده شده"
-                ? "text-green-600"
+                ? "text-primary"
                 : "text-black"
             } `}
           >

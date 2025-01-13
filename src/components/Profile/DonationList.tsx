@@ -29,9 +29,7 @@ const DonationList = () => {
     handleDonationList();
   }, []);
 
-  useEffect(() => {
-    console.log(donationsList, "xx");
-  }, [donationsList]);
+
 
   if (loading) return <h1>درحال دریافت اطلاعات</h1>;
 
