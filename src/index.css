@@ -30,6 +30,10 @@ body {
   background-color: white;
 }
 
+pre{
+  font-family: 'vazir';
+}
+
 ::-webkit-scrollbar {
   display: none;
 }
