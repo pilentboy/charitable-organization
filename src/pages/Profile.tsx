@@ -5,6 +5,7 @@ import useAuth from "../context/AuthProvider"; // Importing custom hook to acces
 import convertDateToFAEN from "../utils/Date&NumberConvertors/convertDateNumbersToFAEN"; // Importing utility function to convert dates to Persian format.
 import convertDateToPersian from "../utils/Date&NumberConvertors/convertDateToPersian";
 import convertDateYearToPersian from "../utils/Date&NumberConvertors/convertDateYearToPersian";
+import DonationList from "../components/Profile/DonationList";
 
 const Profile = () => {
   // Destructuring user information (first_name, last_name, etc.) from the context.
@@ -20,6 +21,7 @@ const Profile = () => {
       province,
       date_joined,
     },
+    profileInfo,
   } = useAuth(); // Using useAuth to access the authenticated user's profile data.
 
   const [profileDisplay, setProfileDisplay] = useState<"profile" | "donations">(
@@ -27,6 +29,7 @@ const Profile = () => {
   ); // State to track which section to display: 'profile' or 'donations'.
 
   useEffect(() => {
+    console.log(profileInfo);
     document.title = "حساب کاربری"; // Set the document title to "حساب کاربری" (User Account) when the component is mounted.
   }, []); // Empty dependency array means this effect runs once when the component is mounted.
 
@@ -62,7 +65,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex justify-between mt-10 mb-32">
+    <div className="flex justify-between mt-6 mb-32">
       {/* Rendering the BottomProfileLinks component for navigating between profile sections. */}
       <BottomProfileLinks
         // Passing the state updater function to allow navigation between sections.
@@ -76,10 +79,8 @@ const Profile = () => {
         // If profileDisplay is "profile", render the user's profile information.
         renderProfileInfo()
       ) : (
-        // If profileDisplay is "donations", display a placeholder text for donations.
-        <h1 className="text-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-          وضعیت نذری ها
-        </h1>
+        // user donations
+        <DonationList />
       )}
     </div>
   );
