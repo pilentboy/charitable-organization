@@ -20,12 +20,20 @@ const Dedications = () => {
     handleGetDedications();
   }, []);
 
-
   if (dedicationContent)
     return dedicationContent?.map((content: any) => (
       <div className="flex flex-col gap-1 pb-4" key={content.id}>
         <h3>{content.title}</h3>
-        <p className="text-gray-500 text-sm  text-justify"> {content.description}</p>
+        <pre className="text-gray-500 text-wrap text-sm  text-justify">
+          {content.description}
+        </pre>
+        {content.media && (
+          <img
+            src={`https://nazronline.ir/${content.media}`}
+            className="w-full sm:w-[800px] rounded-md"
+            alt={content.title}
+          />
+        )}
       </div>
     ));
 };
