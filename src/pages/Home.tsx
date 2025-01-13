@@ -172,7 +172,7 @@ const Home = () => {
 
   // Fetch quotes (dummy implementation for now)
   const getQuotes = async () => {
-    const res = await handleGetQuotes();
+    await handleGetQuotes();
   };
 
   // Initialize offering radio options and set the document title
