@@ -43,6 +43,16 @@ const Home = () => {
     { value: number; label: number; price: number; id: number }[] | null
   >();
 
+  // loading
+  const [loading, setLoading] = useState<boolean>(false);
+
+  // erros states
+  const [reportNumberError, setReportNumberError] = useState<
+    string | undefined
+  >();
+  const [acceptPPError, setAcceptPPError] = useState<string | undefined>();
+  // const [payError, setPayError] = useState<string | undefined>();
+
   // Dropdown options for offering type count
   const [
     selectedOfferingTypeCountOptions,
@@ -208,6 +218,11 @@ const Home = () => {
   }, [selectedOfferingType, selectedOfferingTypeCount, totalPrice]);
 
   const handleSubmitOfferingForm = async (e: any) => {
+    // setPayError(undefined);
+    setAcceptPPError(undefined);
+    setReportNumberError(undefined);
+    setLoading(true);
+
     e.preventDefault();
     if (loggedIn) {
       const selectedOfferingData = offeringFormData.find(
@@ -249,13 +264,48 @@ const Home = () => {
           }
         );
         console.log(response);
-      } catch (error) {
+
+        // reset some state values after a successfull submiting
+        setDisplayMessageBox(false);
+        setUserMessage("");
+        setSocaiMediaPhoneNumber(undefined);
+        setDisplayFirstOfferingForm(true);
+        setSelectedSocialMedia("خیر تمایلی ندارم");
+
+        if (response.status === 201) alert("ثبت شد");
+      } catch (error: any) {
+        // the resason why I'd to write these conditions for the errors in this form is that the server error fileds are different even for a same input value error!
+
+        const { data } = error.response;
+        const non_field_errors = error.response.data.non_field_errors; // erros for AcceptPP && another type of error for phoenumber when the phonenumber input is empty
+        const report_phone_number = error.response.data.report_phone_number; // when user's phone entered doesn't start with 09 and it's not a valid phonenumber
+
+        // error.response.data.report_phone_number
+        if (non_field_errors) {
+          if (data.non_field_errors[0] === "پذیرش قوانین اجباری است") {
+            setAcceptPPError(data.non_field_errors[0]);
+          } else {
+            setReportNumberError(data.non_field_errors[0]);
+          }
+        } else {
+          setReportNumberError(report_phone_number[0]);
+        }
+
         console.log(error, "خطا در خرید");
+      } finally {
+        setLoading(false);
       }
     } else {
       alert("برای پرداخت باید به حساب کاربری خود وارد شوید");
     }
   };
+
+  {
+    /* <p className="text-red-500">
+                {errors.server.message?.toString()}
+              
+              </p> */
+  }
 
   return (
     <>
@@ -468,21 +518,28 @@ const Home = () => {
                       ))}
                     </div>
                     {selectedSocialMedia !== "خیر تمایلی ندارم" && (
-                      <input
-                        className="w-48 h-9 rounded-md text-black border-gray-300 border outline-none p-2 placeholder:text-sm"
-                        placeholder="شماره تلفن"
-                        type="tell"
-                        value={socialMediPhoneNumber}
-                        onChange={(e) =>
-                          setSocaiMediaPhoneNumber(e.target.value)
-                        }
-                      />
+                      <>
+                        {reportNumberError && (
+                          <p className="text-red-500">
+                            {reportNumberError.toString()}
+                          </p>
+                        )}
+                        <input
+                          className="w-48 h-9 rounded-md text-black border-gray-300 border outline-none p-2 placeholder:text-sm"
+                          placeholder="شماره تلفن"
+                          type="tell"
+                          value={socialMediPhoneNumber}
+                          onChange={(e) =>
+                            setSocaiMediaPhoneNumber(e.target.value)
+                          }
+                        />
+                      </>
                     )}
-                    <p className="text-gray-600 font-normal text-sm my-2 text-justify">
+                    {/* <p className="text-gray-600 font-normal text-sm my-2 text-justify">
                       فقط در قربانی گوسفند و بز کامل و یا مرغ و خروس کامل گزارش
                       قابلیت ارسال را دارد و موارد مشارکت جمعی بصورت عمومی اطلاع
                       رسانی می شود .
-                    </p>
+                    </p> */}
                   </div>
                 )}
 
@@ -522,24 +579,30 @@ const Home = () => {
 
                 {/* accept P&P */}
                 <div className="flex gap-3 flex-col  my-6">
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setAcceptPP((pre) => !pre)}
-                      type="button"
-                      className={`w-6 h-6 flex  items-center  justify-center  ${
-                        acceptPP
-                          ? "bg-primary border-none"
-                          : "bg-white border border-gray-600"
-                      }`}
-                    >
-                      {acceptPP && <TiTick color="white" size={"20px"} />}
-                    </button>
-                    <span
-                      onClick={() => setAcceptPP((pre) => !pre)}
-                      className="text-gray-950  text-[15px]  font-medium cursor-pointer"
-                    >
-                      با قوانین و شرایط نذر آنلاین موافق هستم.
-                    </span>
+                  <div className="flex flex-col   gap-2">
+                    {acceptPPError && (
+                      <p className="text-red-500">{acceptPPError.toString()}</p>
+                    )}
+
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setAcceptPP((pre) => !pre)}
+                        type="button"
+                        className={`w-6 h-6 flex  items-center  justify-center  ${
+                          acceptPP
+                            ? "bg-primary border-none"
+                            : "bg-white border border-gray-600"
+                        }`}
+                      >
+                        {acceptPP && <TiTick color="white" size={"20px"} />}
+                      </button>
+                      <span
+                        onClick={() => setAcceptPP((pre) => !pre)}
+                        className="text-gray-950  text-[15px]  font-medium cursor-pointer"
+                      >
+                        با قوانین و شرایط نذر آنلاین موافق هستم.
+                      </span>
+                    </div>
                   </div>
                 </div>
               </>
@@ -574,8 +637,13 @@ const Home = () => {
                 {displayFirstOfferingForm ? "ادامه" : "قبلی"}
               </button>
               {!displayFirstOfferingForm && (
-                <button className="w-full sm:w-40 h-11  bg-primary  rounded-2xl text-white  text-center hover:opacity-80 duration-150 font-vazirBold ">
-                  پرداخت
+                <button
+                  className={`w-full sm:w-40 h-11  bg-primary  rounded-2xl text-white  text-centerduration-150 font-vazirBold  ${
+                    loading ? "opacity-50" : " hover:opacity-80 "
+                  }`}
+                  disabled={loading}
+                >
+                  {loading ? "لطفا صبر کنید" : "پرداخت"}
                 </button>
               )}
             </div>
