@@ -25,6 +25,9 @@ const Home = () => {
     string | undefined
   >(); // Selected social media option
   const [displayMessageBox, setDisplayMessageBox] = useState<boolean>(false); // Controls visibility of the message box
+  const [socialMediPhoneNumber, setSocaiMediaPhoneNumber] = useState<
+    string | undefined
+  >();
   const [userMessage, setUserMessage] = useState<string>(""); // Message entered by the user
   const [acceptPP, setAcceptPP] = useState<boolean>(false); // Tracks if privacy policy is accepted
   // End of offering form input states
@@ -460,6 +463,17 @@ const Home = () => {
                         />
                       ))}
                     </div>
+                    {selectedSocialMedia !== "خیر تمایلی ندارم" && (
+                      <input
+                        className="w-48 h-8 rounded-md text-black outline-none p-2 placeholder:text-sm"
+                        placeholder="شماره تلفن"
+                        type="tell"
+                        value={socialMediPhoneNumber}
+                        onChange={(e) =>
+                          setSocaiMediaPhoneNumber(e.target.value)
+                        }
+                      />
+                    )}
                     <p className="text-gray-600 font-normal text-sm my-2 text-justify">
                       فقط در قربانی گوسفند و بز کامل و یا مرغ و خروس کامل گزارش
                       قابلیت ارسال را دارد و موارد مشارکت جمعی بصورت عمومی اطلاع
