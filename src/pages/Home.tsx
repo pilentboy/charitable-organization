@@ -496,7 +496,7 @@ const Home = () => {
                 {/* social media */}
 
                 {socialMediaOptions?.length > 0 && (
-                  <div className="flex flex-col gap-4 my-2">
+                  <div className="flex flex-col gap-3 my-6">
                     <span className="font-bold text-gray-700">
                       آیا میخواهید نذر آنلاین برایتان گزارش قربانی را ارسال کند؟
                     </span>
