@@ -65,15 +65,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="flex justify-between mt-6 mb-32">
-      {/* Rendering the BottomProfileLinks component for navigating between profile sections. */}
-      <BottomProfileLinks
-        // Passing the state updater function to allow navigation between sections.
-        setProfileDisplay={setProfileDisplay}
-        // Passing the current display state (profile or donations).
-        profileDisplay={profileDisplay}
-      />
-
+    <div className="flex justify-between   mt-6 mb-32">
       {/* Conditionally rendering the profile or donations section based on profileDisplay state. */}
       {profileDisplay === "profile" ? (
         // If profileDisplay is "profile", render the user's profile information.
@@ -82,6 +74,14 @@ const Profile = () => {
         // user donations
         <DonationList />
       )}
+
+      {/* Rendering the BottomProfileLinks component for navigating between profile sections. */}
+      <BottomProfileLinks
+        // Passing the state updater function to allow navigation between sections.
+        setProfileDisplay={setProfileDisplay}
+        // Passing the current display state (profile or donations).
+        profileDisplay={profileDisplay}
+      />
     </div>
   );
 };

@@ -77,7 +77,7 @@ const BottomProfileLinks = ({
   ];
 
   return (
-    <div className="fixed bottom-6 left-1/2 translate-x-[-50%] w-[90%] h-20 sm:w-96 border bg-white border-gray-300 flex items-center justify-between p-2 rounded-md">
+    <div className=" fixed bottom-6 left-1/2 z-[888] translate-x-[-50%] w-[90%] h-20 sm:w-96 border bg-white border-gray-300 flex items-center justify-between p-2 rounded-md">
       {links.map(({ title, icon, id, action }) => (
         <BottomProfileLink
           key={id} // Unique key for each link
