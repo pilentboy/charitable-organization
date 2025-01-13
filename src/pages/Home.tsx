@@ -9,139 +9,196 @@ import SocialMediaRadioBTN from "../components/Home/SocialMediaRadioBTN";
 import axios from "axios";
 import Dedications from "../components/Home/Dedications";
 import Quotes from "../components/Home/Quotes";
+import convertDateNumbersToFAEN from "../utils/Date&NumberConvertors/convertDateNumbersToFAEN";
+import addCommasToNumber from "./../utils/Date&NumberConvertors/addCommasToNumber";
+import removeCommasFromPersianNumber from "../utils/Date&NumberConvertors/removeCommasFromPersianNumber";
 
 const Home = () => {
-  const { loggedIn } = useAuth();
+  const { loggedIn } = useAuth(); // Get user authentication status
 
-  // selected offering form inputs states
-  const [selectedofferingRadio, setselectedofferingRadio] = useState<string>();
-  const [selectedOfferingType, setselectedOfferingType] = useState<any>();
+  // Selected offering form input states
+  const [selectedofferingRadio, setselectedofferingRadio] = useState<any>(); // Selected radio button value for offerings
+  const [selectedOfferingType, setselectedOfferingType] = useState<any>(); // Selected type of offering
   const [selectedOfferingTypeCount, setselectedOfferingTypeCount] =
-    useState<any>();
+    useState<any>(); // Selected count for the offering type
   const [selectedSocialMedia, setSelectedSocialMedia] = useState<
     string | undefined
+  >(); // Selected social media option
+  const [displayMessageBox, setDisplayMessageBox] = useState<boolean>(false); // Controls visibility of the message box
+  const [userMessage, setUserMessage] = useState<string>(""); // Message entered by the user
+  const [acceptPP, setAcceptPP] = useState<boolean>(false); // Tracks if privacy policy is accepted
+  // End of offering form input states
+
+  const [totalPrice, setTotalPrice] = useState<any>(""); // Total price for the selected offering type
+  const [calculatedTotalPrice, setCalculatedTotalPrice] = useState<any>(""); // Final calculated total price
+
+  // Social media options state
+  const [socialMediaOptions, setSocialMediaOptions] = useState<any>(); // List of social media options
+
+  // Dropdown options for offering types
+  const [offeringTypeOptionsData, setOfferingTypeOptionsData] = useState<
+    { value: number; label: number; price: number }[] | null
   >();
-  const [displayMessageBox, setDisplayMessageBox] = useState<boolean>(false);
-  const [userMessage, setUserMessage] = useState<string>("");
-  const [acceptPP, setAcceptPP] = useState<boolean>(false);
-  // end
 
-  // social media list
-  const [socialMediaOptions, setSocialMediaOptions] = useState<any>();
-
-  // selects values
-  const [selectedOfferingTypeOptions, setselectedOfferingTypeOptions] =
-    useState<{ value: number; label: number }[] | null>();
-
-  // select counts
+  // Dropdown options for offering type count
   const [
     selectedOfferingTypeCountOptions,
     setselectedOfferingTypeCountOptions,
-  ] = useState<{ value: number; label: number }[] | null>();
+  ] = useState<{ value: number; label: number; price: any }[] | null>();
 
-  // radio button options
-  const [offeringRadioOptinos, setOfferingRadioOptions] = useState<any>([]);
+  // Radio button options for offerings
+  const [offeringRadioOptinos, setOfferingRadioOptions] = useState<any>([]); // Radio button options
 
-  // offering form data
-  const [offeringFormData, setOfferingFormData] = useState<any>();
+  // Full data of the offering form
+  const [offeringFormData, setOfferingFormData] = useState<any>(); // Form data fetched from the API
 
-  // control form step change from selecting offering to pay
+  // Control visibility of the offering form step
   const [displayFirstOfferingForm, setDisplayFirstOfferingForm] =
-    useState<boolean>(true);
+    useState<boolean>(true); // Controls form visibility
 
+  // Generate a range of offering type count options
   const handleSetselectedOfferingTypeRange = (count: number) => {
     const result = [];
-
     for (let i = 1; i <= count; i++) {
-      result.push({ value: i, label: i });
+      result.push({ value: i, label: i, price: null }); // Add count options
     }
     return result;
   };
 
-  // get offering form data
+  // Fetch offering form data from the API
   useEffect(() => {
     const handleGettingOfferingFormData = async () => {
       const response = await axios(
         "https://nazronline.ir/api/sacrifices/types/"
       );
-      setOfferingFormData(response.data);
-      setselectedofferingRadio(response.data[0].name);
+      setOfferingFormData(response.data); // Store form data
+
       setOfferingRadioOptions(
-        response.data.map((options: any) => options.name)
+        response.data.map((options: any) => options.name) // Populate radio button options
       );
+
+      setselectedofferingRadio(response.data[0].name); // Set default radio selection
+
+      if (response.data[0].has_aqiqah) {
+        setOfferingTypeOptionsData(
+          response.data[0]["aqiqah_types"].map((types: any) => ({
+            value: types.name,
+            label: types.name,
+            price: types.price,
+          }))
+        );
+        const firstOfferingType = response.data[0]["aqiqah_types"][0]; // Default selected type
+        setselectedOfferingType({
+          value: firstOfferingType.name,
+          label: firstOfferingType.name,
+          price: firstOfferingType.price,
+        });
+        setTotalPrice(firstOfferingType.price); // Set initial price
+      } else {
+        setTotalPrice(response.data[0].price); // Set price for non-Aqiqah offerings
+      }
     };
     handleGettingOfferingFormData();
   }, []);
-  useEffect(() => {
-    console.log(offeringFormData, "xx");
-    console.log(selectedofferingRadio, "offering radio selected");
-    console.log(offeringRadioOptinos, "offering radio options");
-  }, [offeringFormData, selectedofferingRadio, offeringRadioOptinos]);
 
+  // Update form data and related states when selected radio changes
   useEffect(() => {
     if (selectedofferingRadio) {
-      const selectedOption = offeringRadioOptinos.find(
-        (option: any) => option.title === selectedofferingRadio
+      const selectedRadioOption = offeringRadioOptinos.find(
+        (option: any) => option === selectedofferingRadio
       );
+
+      const selectedRadioOptionData = offeringFormData.find(
+        (offering: any) => offering.name === selectedRadioOption // Get full data for the selected radio
+      );
+
       const selectedTypes =
-        selectedOption && selectedOption.types
-          ? selectedOption.aqigah_types
+        selectedRadioOption && selectedRadioOptionData.has_aqiqah
+          ? selectedRadioOptionData.aqiqah_types.map((aqigahInfo: any) => ({
+              value: aqigahInfo.name,
+              label: aqigahInfo.name,
+              price: aqigahInfo.price,
+            }))
           : null;
 
       if (selectedTypes) {
-        setselectedOfferingTypeOptions(selectedTypes);
-        setselectedOfferingType(selectedTypes[0]);
-        const optionTypeOrderRange = handleSetselectedOfferingTypeRange(
-          selectedTypes[0].count
-        );
-        setselectedOfferingTypeCountOptions(optionTypeOrderRange);
-        setselectedOfferingTypeCount(optionTypeOrderRange[0]);
+        setOfferingTypeOptionsData(selectedTypes); // Update type options
+        setselectedOfferingType(selectedTypes[0]); // Default selected type
+        setTotalPrice(selectedRadioOptionData.aqiqah_types[0].price); // Update price
       } else {
-        setselectedOfferingTypeOptions(null);
-        setselectedOfferingTypeCountOptions(null);
+        setOfferingTypeOptionsData(null);
+        setselectedOfferingType(null);
+        setTotalPrice(selectedRadioOptionData.price); // Update price for non-Aqiqah
       }
+      const optionTypeOrderRange = handleSetselectedOfferingTypeRange(
+        selectedRadioOptionData.max_quantity
+      );
+      setselectedOfferingTypeCountOptions(optionTypeOrderRange); // Update count options
+      setselectedOfferingTypeCount(optionTypeOrderRange[0]); // Default selected count
     }
   }, [selectedofferingRadio]);
 
-  // useEffect(() => {
-  //   if (selectedOfferingType) {
-  //     const optionTypeOrderRange = handleSetselectedOfferingTypeRange(
-  //       selectedOfferingType.count
-  //     );
-  //     setselectedOfferingTypeCountOptions(optionTypeOrderRange);
-  //     setselectedOfferingTypeCount(optionTypeOrderRange[0]);
-  //   }
-  // }, [selectedOfferingType]);
+  // Update total price when selected offering type changes
+  useEffect(() => {
+    if (selectedOfferingType) {
+      setTotalPrice(selectedOfferingType.price); // Update price based on the selected type
+    }
+  }, [selectedOfferingType]);
 
+  // Handle changes to the selected offering radio input
   const handleselectedofferingRadioChange = (e: any) => {
-    setselectedofferingRadio(e.target.value);
+    setselectedofferingRadio(e.target.value); // Update selected radio value
   };
 
-  // getting social media
+  // Fetch social media options from the API
   useEffect(() => {
     const handleGetSocialMedias = async () => {
       try {
         const response = await axios(
           "https://nazronline.ir/api/sacrifices/messaging-apps/"
         );
-        setSelectedSocialMedia("خیر تمایلی ندارم");
-        setSocialMediaOptions(response.data);
+        setSelectedSocialMedia("خیر تمایلی ندارم"); // Default selection
+        setSocialMediaOptions(response.data); // Store social media options
       } catch (error) {
-        console.log("خطا در دریافت لیست شبکه های اجتماعی");
+        console.log("خطا در دریافت لیست شبکه های اجتماعی"); // Log error message
       }
     };
     handleGetSocialMedias();
   }, []);
 
+  // Fetch quotes (dummy implementation for now)
   const getQuotes = async () => {
     const res = await handleGetQuotes();
   };
 
+  // Initialize offering radio options and set the document title
   useEffect(() => {
     getQuotes();
-    setselectedofferingRadio(offeringRadioOptinos[0]?.title);
-    document.title = "نذر آنلاین";
+    setselectedofferingRadio(offeringRadioOptinos[0]?.title); // Default selection
+    document.title = "نذر آنلاین"; // Set page title
   }, []);
+
+  // Recalculate total price whenever type or count changes
+  useEffect(() => {
+    if (selectedOfferingType || selectedOfferingTypeCount) {
+      const calculatedPrice =
+        Number(
+          convertDateNumbersToFAEN(
+            removeCommasFromPersianNumber(totalPrice.toString()),
+            "english"
+          )
+        ) * selectedOfferingTypeCount?.value;
+
+      setCalculatedTotalPrice(
+        convertDateNumbersToFAEN(
+          addCommasToNumber(
+            convertDateNumbersToFAEN(calculatedPrice.toString(), "english")
+          ),
+          "persian"
+        )
+      ); // Update calculated total price
+    }
+  }, [selectedOfferingType, selectedOfferingTypeCount, totalPrice]);
 
   return (
     <>
@@ -200,8 +257,10 @@ const Home = () => {
                         type="radio"
                         name={option}
                         value={option}
-                        checked={selectedofferingRadio === option}
-                        onChange={handleselectedofferingRadioChange}
+                        checked={selectedofferingRadio.value === option}
+                        onChange={(e: any) =>
+                          handleselectedofferingRadioChange(e)
+                        }
                         className="hidden peer"
                       />
                       <div className="w-6 h-6 rounded-lg border border-gray-400 flex items-center justify-center bg-white  ">
@@ -221,14 +280,14 @@ const Home = () => {
                 {/* selection */}
                 <div className="flex flex-col gap-4 mt-10 mb-6 items-center justify-between  w-full md:flex-row">
                   {/* type */}
-                  {selectedOfferingTypeOptions && (
-                    <div className="w-full md:w-5/6 flex flex-col gap-1">
+                  {offeringTypeOptionsData && (
+                    <div className="w-full md:w-1/2 flex flex-col gap-1">
                       <span className="font-bold text-gray-700 pr-1">نوع </span>
                       <Select
                         required
                         inputId="type"
                         placeholder="نوع"
-                        options={selectedOfferingTypeOptions}
+                        options={offeringTypeOptionsData}
                         onChange={(e: any) => {
                           setselectedOfferingType(e);
                           console.log(e);
@@ -271,7 +330,7 @@ const Home = () => {
                   )}
                   {/* count */}
                   {selectedOfferingTypeCountOptions && (
-                    <div className="w-full  md:w-5/6 flex flex-col gap-1">
+                    <div className="w-full  md:w-1/2 flex flex-col gap-1">
                       <span className="font-bold text-gray-700 pr-1">
                         تعداد
                       </span>
@@ -418,7 +477,19 @@ const Home = () => {
             <div className=" w-full flex-wrap justify-center gap-4 items-center flex py-10 border-y border-dotted font-bold text-gray-700  border-gray-300 text-xl font-vazirBold">
               {/* total cost */}
               <h1>مجموع پرداختی قربانی</h1>
-              <span className="text-red-600">۲۶۰,۰۰۰ تومان </span>
+              <span className="text-red-600 flex gap-1">
+                {totalPrice &&
+                  convertDateNumbersToFAEN(
+                    addCommasToNumber(
+                      convertDateNumbersToFAEN(
+                        calculatedTotalPrice.toString(),
+                        "english"
+                      )
+                    ),
+                    "persian"
+                  )}
+                <span> تومان</span>
+              </span>
             </div>
 
             <div className="flex items-center flex-col sm:flex-row pt-2 gap-2">
