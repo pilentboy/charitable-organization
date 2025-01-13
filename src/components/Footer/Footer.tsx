@@ -5,6 +5,7 @@ import { CiLocationOn } from "react-icons/ci";
 import { FaRegHeart } from "react-icons/fa";
 import enamad from "../../assets/images/enamad.png";
 import Logo from "../Logo";
+import PatterLogo from "../../assets/images/logo-pattern.png";
 import { Link } from "react-router";
 
 const Footer = () => {
@@ -35,9 +36,12 @@ const Footer = () => {
         </div>
         {/* logos */}
         <div className="flex flex-col gap-2 items-center justify-center w-full lg:w-fit sm:flex-row">
+          <Link to={"/"}>
+            <img src={PatterLogo} alt="PatterLogo" className="w-40" />
+          </Link>
           <Logo size="w-40" />
           <Link to={"/"}>
-            <img src={enamad} alt="logo" className="w-40" />
+            <img src={enamad} alt="enamad" className="w-40" />
           </Link>
         </div>
       </div>
