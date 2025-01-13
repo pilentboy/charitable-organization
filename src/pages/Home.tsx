@@ -14,7 +14,7 @@ import addCommasToNumber from "./../utils/Date&NumberConvertors/addCommasToNumbe
 import removeCommasFromPersianNumber from "../utils/Date&NumberConvertors/removeCommasFromPersianNumber";
 
 const Home = () => {
-  const { loggedIn } = useAuth(); // Get user authentication status
+  const { loggedIn, accessToken } = useAuth(); // Get user authentication status
 
   // Selected offering form input states
   const [selectedofferingRadio, setselectedofferingRadio] = useState<any>(); // Selected radio button value for offerings
@@ -37,7 +37,7 @@ const Home = () => {
 
   // Dropdown options for offering types
   const [offeringTypeOptionsData, setOfferingTypeOptionsData] = useState<
-    { value: number; label: number; price: number }[] | null
+    { value: number; label: number; price: number; id: number }[] | null
   >();
 
   // Dropdown options for offering type count
@@ -85,6 +85,7 @@ const Home = () => {
             value: types.name,
             label: types.name,
             price: types.price,
+            id: types.id,
           }))
         );
         const firstOfferingType = response.data[0]["aqiqah_types"][0]; // Default selected type
@@ -92,6 +93,7 @@ const Home = () => {
           value: firstOfferingType.name,
           label: firstOfferingType.name,
           price: firstOfferingType.price,
+          id: firstOfferingType.id,
         });
         setTotalPrice(firstOfferingType.price); // Set initial price
       } else {
@@ -118,6 +120,7 @@ const Home = () => {
               value: aqigahInfo.name,
               label: aqigahInfo.name,
               price: aqigahInfo.price,
+              id: aqigahInfo.id,
             }))
           : null;
 
@@ -157,6 +160,7 @@ const Home = () => {
         const response = await axios(
           "https://nazronline.ir/api/sacrifices/messaging-apps/"
         );
+        console.log(response);
         setSelectedSocialMedia("خیر تمایلی ندارم"); // Default selection
         setSocialMediaOptions(response.data); // Store social media options
       } catch (error) {
@@ -199,6 +203,52 @@ const Home = () => {
       ); // Update calculated total price
     }
   }, [selectedOfferingType, selectedOfferingTypeCount, totalPrice]);
+
+  const handleSubmitOfferingForm = async (e: any) => {
+    e.preventDefault();
+    if (loggedIn) {
+      const selectedOfferingData = offeringFormData.find(
+        (offering: any) => offering.name === selectedofferingRadio
+      );
+
+      console.log(selectedOfferingType, "t");
+
+      const selectedSocialMediaId =
+        selectedSocialMedia === "خیر تمایلی ندارم"
+          ? false
+          : socialMediaOptions.find(
+              (socialMedia: any) => socialMedia.name === selectedSocialMedia
+            );
+
+      try {
+        const response = await axios.post(
+          "https://nazronline.ir/api/sacrifices/orders/",
+          {
+            sacrifice_type: selectedOfferingData.id,
+            aqiqah_type: selectedOfferingType ? selectedOfferingType.id : null,
+            quantity: selectedOfferingTypeCount.value,
+            want_photo_report:
+              selectedSocialMedia === "خیر تمایلی ندارم" ? false : true,
+            messaging_app: !selectedSocialMediaId
+              ? null
+              : selectedSocialMediaId?.id,
+            order_note: userMessage === "" ? null : userMessage,
+            accept_terms: acceptPP,
+          },
+          {
+            headers: {
+              Authorization: `Bearer ${accessToken}`,
+            },
+          }
+        );
+        console.log(response);
+      } catch (error) {
+        console.log(error, "خطا در خرید");
+      }
+    } else {
+      alert("برای پرداخت باید به حساب کاربری خود وارد شوید");
+    }
+  };
 
   return (
     <>
@@ -243,7 +293,10 @@ const Home = () => {
             </span>
           </div>
 
-          <form className="pt-4 w-full px-2">
+          <form
+            className="pt-4 w-full px-2"
+            onSubmit={handleSubmitOfferingForm}
+          >
             {displayFirstOfferingForm ? (
               <>
                 {/* offering type */}
@@ -503,17 +556,7 @@ const Home = () => {
                 {displayFirstOfferingForm ? "ادامه" : "قبلی"}
               </button>
               {!displayFirstOfferingForm && (
-                <button
-                  type={loggedIn ? "submit" : "button"}
-                  onClick={() => {
-                    loggedIn
-                      ? alert("پرداخت")
-                      : alert(
-                          "لطفا جهت پرداخت ابتدا به حساب کاربری خود وارد شوید"
-                        );
-                  }}
-                  className="w-full sm:w-40 h-11  bg-primary  rounded-2xl text-white  text-center hover:opacity-80 duration-150 font-vazirBold "
-                >
+                <button className="w-full sm:w-40 h-11  bg-primary  rounded-2xl text-white  text-center hover:opacity-80 duration-150 font-vazirBold ">
                   پرداخت
                 </button>
               )}
