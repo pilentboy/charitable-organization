@@ -235,6 +235,10 @@ const Home = () => {
             messaging_app: !selectedSocialMediaId
               ? null
               : selectedSocialMediaId?.id,
+            report_phone_number:
+              selectedSocialMedia !== "خیر تمایلی ندارم"
+                ? socialMediPhoneNumber
+                : null,
             order_note: userMessage === "" ? null : userMessage,
             accept_terms: acceptPP,
           },
