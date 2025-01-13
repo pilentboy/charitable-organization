@@ -465,7 +465,7 @@ const Home = () => {
                     </div>
                     {selectedSocialMedia !== "خیر تمایلی ندارم" && (
                       <input
-                        className="w-48 h-8 rounded-md text-black outline-none p-2 placeholder:text-sm"
+                        className="w-48 h-9 rounded-md text-black border-gray-300 border outline-none p-2 placeholder:text-sm"
                         placeholder="شماره تلفن"
                         type="tell"
                         value={socialMediPhoneNumber}
