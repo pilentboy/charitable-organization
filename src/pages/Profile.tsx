@@ -22,7 +22,7 @@ const Profile = () => {
       province,
       date_joined,
     },
-    profileInfo,
+  
   } = useAuth(); // Using useAuth to access the authenticated user's profile data.
 
   const [profileDisplay, setProfileDisplay] = useState<"profile" | "donations">(

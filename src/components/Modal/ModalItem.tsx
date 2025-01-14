@@ -33,7 +33,7 @@ const ModalItem = ({
         };
 
 
-        const response = await axios.patch(
+         await axios.patch(
           "https://nazronline.ir/api/user/profile/personal-info/",
           updatedField,
           {

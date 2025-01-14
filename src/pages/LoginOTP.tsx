@@ -18,7 +18,7 @@ const LoginOTP = () => {
   const handleSendOTP = async (data: any) => {
     setLoading(true); // Set loading state to true when sending OTP.
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://nazronline.ir/api/user/login/phone/", // API endpoint for sending OTP.
         data // Sending phone number data to the backend.
       );
