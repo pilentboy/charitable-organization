@@ -229,8 +229,6 @@ const Home = () => {
         (offering: any) => offering.name === selectedofferingRadio
       );
 
-      console.log(selectedOfferingType, "t");
-
       const selectedSocialMediaId =
         selectedSocialMedia === "خیر تمایلی ندارم"
           ? false
@@ -292,12 +290,11 @@ const Home = () => {
         }
 
         console.log(error, "خطا در خرید");
-      } finally {
-        setLoading(false);
       }
     } else {
       alert("برای پرداخت باید به حساب کاربری خود وارد شوید");
     }
+    setLoading(false);
   };
 
   {
@@ -652,7 +649,6 @@ const Home = () => {
 
         {/* quotes */}
         <Quotes />
-   
       </main>
     </>
   );
