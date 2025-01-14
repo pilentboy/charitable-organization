@@ -42,7 +42,10 @@ const Profile = () => {
         <UserInfoBox title={"نام"} value={first_name} />
         <UserInfoBox title={"نام خانوادگی"} value={last_name} />
         <UserInfoBox title={"نام کاربری"} value={username} />
-        <UserInfoBox title={"شماره تلفن"} value={phone_number} />
+        <UserInfoBox
+          title={"شماره تلفن"}
+          value={convertDateToFAEN(phone_number, "persian")}
+        />
         <UserInfoBox title={"شهر"} value={city} />
         <UserInfoBox title={"استان"} value={province} />
         <UserInfoBox

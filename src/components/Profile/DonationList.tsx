@@ -34,7 +34,7 @@ const DonationList = () => {
 
   if (donationsList.length > 0) {
     return (
-      <div className="w-full sm:w-3/4 flex-col gap-2 flex   rounded-md  min-h-[70vh] ">
+      <div className="w-full sm:w-3/4 flex-col gap-2 flex   rounded-md   min-h-[70vh] ">
         {donationsList.map((donations: any) => (
           <div
             key={donations.id}

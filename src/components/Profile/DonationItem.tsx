@@ -58,10 +58,8 @@ const DonationItem = ({
 
       {/* donation created date and status info */}
       <div
-        className={`flex flex-wrappy-1 text-[12px] sm:text-[15px] w-full ${
-          displayInfo
-            ? "border-t  justify-center gap-2 "
-            : "border-  justify-between "
+        className={`flex flex-wrappy-1 items-center text-[12px] sm:text-[15px] w-full ${
+          displayInfo ? "border-t  justify-center gap-2 " : " justify-between "
         }`}
         onClick={() => setDisplayInfo((e) => !e)}
       >

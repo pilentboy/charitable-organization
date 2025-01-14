@@ -83,7 +83,7 @@ const BottomProfileLinks = ({
 
   return (
     <div
-      className={`h-fit w-full mb-4 border border-gray-400  bg-white z-[999]  gap-6 items-center justify-start py-2 px-8  rounded-md sm:w-48 sm:mb-0  flex-col  ${display} flex fixed -translate-x-1/2  left-1/2 -bottom-4 sm:translate-x-0 sm:translate-y-0 sm:static sm:left-0 sm:bottom-0  sm:px-2 duration-150`}
+      className={`h-fit w-full mb-4 border border-gray-400 sm:border-gray-200  bg-white z-[999]  gap-6 items-center justify-start py-2 px-8  rounded-md sm:w-48 sm:mb-0  flex-col  ${display} flex fixed -translate-x-1/2  left-1/2 -bottom-4 sm:translate-x-0 sm:translate-y-0 sm:static sm:left-0 sm:bottom-0  sm:px-2 duration-150`}
       ref={profileLinkRef}
       onClick={(e: any) => {
         if (
