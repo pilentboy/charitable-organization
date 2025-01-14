@@ -36,9 +36,6 @@ const Footer = () => {
         </div>
         {/* logos */}
         <div className="flex flex-col gap-2 items-center justify-center w-full lg:w-fit sm:flex-row">
-          <Link to={"/"}>
-            <img src={PatterLogo} alt="PatterLogo" className="w-40" />
-          </Link>
           <Logo size="w-40" />
           <Link to={"/"}>
             <img src={enamad} alt="enamad" className="w-40" />
@@ -46,8 +43,9 @@ const Footer = () => {
         </div>
       </div>
       {/* last text in footer */}
-      <div className="text-center text-gray-500 text-sm">
-        تمامی حقوق اين وب سايت برای <span>نذر آنلاین</span> محفوظ می باشد
+      <div className="text-center flex flex-col items-center justify-center gap-1 text-gray-500 text-sm">
+        <span>تمامی حقوق اين وب سايت برای نذر آنلاین محفوظ می باشد</span>
+        <img src={PatterLogo} alt="PatterLogo" className="w-40" />
       </div>
     </footer>
   );
