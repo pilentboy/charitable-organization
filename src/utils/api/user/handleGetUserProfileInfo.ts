@@ -1,7 +1,7 @@
 import axios from "axios";
 // Importing the axios library for making HTTP requests
 
-const handleGetUserProfileInfo = async (accessToken: string) => {
+const handleGetUserProfileInfo = async (accessToken: any) => {
   try {
     const res = await axios(
       "https://nazronline.ir/api/user/profile/personal-info/",

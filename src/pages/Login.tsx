@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router"; // Importing Link for navigati
 import useAuth from "../context/AuthProvider"; // Importing custom hook to manage authentication context (like updating the access token).
 import axios from "axios"; // Importing axios to handle HTTP requests.
 
+
 const Login = () => {
   const {
     register, // Register function to bind input fields to react-hook-form.
@@ -69,71 +70,74 @@ const Login = () => {
   }, []); // Empty dependency array ensures this effect runs only once on component mount.
 
   return (
-    <section className="h-[90vh] sm:h-fulk  xl:h-[80vh] flex justify-center items-center">
-      <div className="w-full min-h-[400px] flex items-center justify-between border rounded-2xl overflow-hidden">
-        <div className="w-full h-full py-8 px-6">
-          <form
-            onSubmit={(e) => {
-              clearErrors(); // Clear any existing errors before submitting the form.
-              handleSubmit(onSubmit)(e); // Handle form submission.
-            }}
-            className="flex flex-col gap-5 mx-auto md:w-1/2"
-          >
-            <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
-
-            {errors.server && (
-              <p className="text-red-500">
-                {errors.server.message?.toString()}
-                {/* Display any server-side error messages. */}
-              </p>
-            )}
-
-            <label htmlFor="username">نام کاربری</label>
-
-            <input
-              {...register("username")} // Registering the input for "username" field.
-              required
-              id="username"
-              className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
-            />
-
-            <label htmlFor="password">رمز عبور</label>
-            <input
-              {...register("password")} // Registering the input for "password" field.
-              type="password"
-              required
-              id="password"
-              className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
-            />
-
-            <button
-              className={`w-full h-12 bg-primary rounded-2xl duration-200 text-white ${
-                loading ? "opacity-50" : "hover:opacity-90"
-              }`}
-              disabled={loading} // Disabling the button when loading.
+      <section className="h-[90vh] sm:h-fulk  xl:h-[80vh] flex justify-center items-center">
+        <div className="w-full min-h-[400px] flex items-center justify-between border rounded-2xl overflow-hidden">
+          <div className="w-full h-full py-8 px-6">
+            <form
+              onSubmit={(e) => {
+                clearErrors(); // Clear any existing errors before submitting the form.
+                handleSubmit(onSubmit)(e); // Handle form submission.
+              }}
+              className="flex flex-col gap-5 mx-auto md:w-1/2"
             >
-              {loading ? "لطفا صبر کنید" : "ورود"}{" "}
-              {/* Button text changes based on loading state. */}
-            </button>
+              <h1 className="text-3xl font-bold mb-2 text-center">ورود</h1>
 
-            <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-2 sm:flex-wrap ">
-              <Link to="/login-otp" className=" text-primary">
-                ورود با شماره تلفن {/* Link to OTP login page. */}
-              </Link>
-              <Link to="/reset-password" className=" text-primary">
-                بازیابی رمز عبور {/* Link to password reset page. */}
-              </Link>
-              <div className="flex gap-2">
-                حساب کاربری ندارید؟
-                <Link to="/register" className=" text-primary">
-                  عضویت {/* Link to registration page. */}
+              {errors.server && (
+                <p className="text-red-500">
+                  {errors.server.message?.toString()}
+                  {/* Display any server-side error messages. */}
+                </p>
+              )}
+
+              <label htmlFor="username">نام کاربری</label>
+
+              <input
+                {...register("username")} // Registering the input for "username" field.
+                required
+                id="username"
+                className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
+              />
+
+              <label htmlFor="password">رمز عبور</label>
+              <input
+                {...register("password")} // Registering the input for "password" field.
+                type="password"
+                required
+                id="password"
+                className="border border-gray-300 bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800"
+              />
+
+              <button
+                className={`w-full h-12 bg-primary rounded-2xl duration-200 text-white ${
+                  loading ? "opacity-50" : "hover:opacity-90"
+                }`}
+                disabled={loading} // Disabling the button when loading.
+              >
+                {loading ? "لطفا صبر کنید" : "ورود"}{" "}
+                {/* Button text changes based on loading state. */}
+              </button>
+
+              <div className="flex flex-col gap-4 items-center justify-between w-full border-t pt-2 sm:flex-row sm:gap-2 sm:flex-wrap ">
+                <Link to="/login-otp" className=" text-primary">
+                  ورود با شماره تلفن {/* Link to OTP login page. */}
                 </Link>
+                <Link to="/reset-password" className=" text-primary">
+                  بازیابی رمز عبور {/* Link to password reset page. */}
+                </Link>
+                <div className="flex gap-2">
+                  حساب کاربری ندارید؟
+                  <Link to="/register" className=" text-primary">
+                    عضویت {/* Link to registration page. */}
+                  </Link>
+                </div>
               </div>
-            </div>
-          </form>
+            </form>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+
+      
+
   );
 };
 

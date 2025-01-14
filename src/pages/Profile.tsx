@@ -39,15 +39,15 @@ const Profile = () => {
     return (
       <div className="w-full sm:w-3/4 h-fit flex flex-wrap gap-2 md:gap-0 items-center justify-center md:justify-between">
         {/* Displaying various pieces of user information like first name, last name, username, etc. */}
-        <UserInfoBox title={"نام"} value={first_name} />
-        <UserInfoBox title={"نام خانوادگی"} value={last_name} />
+        <UserInfoBox title={"نام"} value={first_name} fieldName="first_name" editable />
+        <UserInfoBox title={"نام خانوادگی"} value={last_name} editable fieldName="last_name" />
         <UserInfoBox title={"نام کاربری"} value={username} />
         <UserInfoBox
           title={"شماره تلفن"}
           value={convertDateToFAEN(phone_number, "persian")}
         />
-        <UserInfoBox title={"شهر"} value={city} />
-        <UserInfoBox title={"استان"} value={province} />
+        <UserInfoBox title={"شهر"} value={city} editable fieldName="city"/>
+        <UserInfoBox title={"استان"} value={province} fieldName="province" editable />
         <UserInfoBox
           title={"تاریخ تولد"}
           value={convertDateToFAEN(
@@ -63,7 +63,7 @@ const Profile = () => {
             "persian"
           )}
         />
-        <UserInfoBox title={"آدرس"} value={address} />
+        <UserInfoBox title={"آدرس"} value={address} fieldName="address" editable />
       </div>
     );
   };

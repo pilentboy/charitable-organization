@@ -30,8 +30,8 @@ body {
   background-color: white;
 }
 
-pre{
-  font-family: 'vazir';
+pre {
+  font-family: "vazir";
 }
 
 ::-webkit-scrollbar {
@@ -40,4 +40,19 @@ pre{
 
 .nav-shadow {
   box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 10px;
+}
+
+.modal-open-anima {
+  animation-name: modalAnima;
+  animation-duration: 500ms;
+  animation-fill-mode: both;
+}
+
+@keyframes modalAnima {
+  from {
+    opacity: 0.5;
+  }
+  to {
+    opacity: 1;
+  }
 }
