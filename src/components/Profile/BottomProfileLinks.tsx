@@ -2,16 +2,20 @@ import { FaRegUser, FaRegHeart } from "react-icons/fa";
 import { CiLogout } from "react-icons/ci";
 import BottomProfileLink from "./BottomProfileLink"; // Import the BottomProfileLink component for rendering each individual link
 import useAuth from "../../context/AuthProvider"; // Custom hook to manage authentication state
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useNavigate } from "react-router"; // React Router hook to handle navigation
 import axios from "axios";
 
 const BottomProfileLinks = ({
+  setDisplay,
   setProfileDisplay, // Function to update the profile display state ("profile" or "donations")
   profileDisplay, // State to keep track of the current section displayed ("profile" or "donations")
+  display,
 }: {
   setProfileDisplay: (display: "profile" | "donations") => void;
   profileDisplay: "donations" | "profile";
+  display: string;
+  setDisplay: any;
 }) => {
   // State to manage the loading status during the logout process
   const [loading, setLoading] = useState<boolean>(false);
@@ -75,11 +79,24 @@ const BottomProfileLinks = ({
       action: () => handleLogOut(), // Action to trigger logout when clicked
     },
   ];
+  const profileLinkRef = useRef<HTMLDivElement | null>(null);
 
   return (
-    <div className=" fixed bottom-6 left-1/2 z-[888] translate-x-[-50%] w-[90%] h-20 sm:w-96 border bg-white border-gray-300 flex items-center justify-between p-2 rounded-md">
+    <div
+      className={`h-fit w-full mb-4 border border-gray-400  bg-white z-[999]  gap-6 items-center justify-start py-2 px-8  rounded-md sm:w-48 sm:mb-0  flex-col  ${display} flex fixed -translate-x-1/2  left-1/2 -bottom-4 sm:translate-x-0 sm:translate-y-0 sm:static sm:left-0 sm:bottom-0  sm:px-2 duration-150`}
+      ref={profileLinkRef}
+      onClick={(e: any) => {
+        if (
+          profileLinkRef.current &&
+          !profileLinkRef.current.contains(e.target as Node)
+        ) {
+          setDisplay("translate-y-[100%]");
+        }
+      }}
+    >
       {links.map(({ title, icon, id, action }) => (
         <BottomProfileLink
+          setDisplay={setDisplay}
           key={id} // Unique key for each link
           title={title} // Title of the link
           icon={icon} // Icon of the link

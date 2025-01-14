@@ -8,10 +8,12 @@ interface BottomProfileLinkProps {
   id?: string; // Optional ID to identify the link (useful for comparison with profileDisplay)
   action: () => void; // The action to be executed when the link is clicked
   loading?: boolean; // Optional loading state to show a disabled or dimmed button
+  setDisplay: any
 }
 
 const BottomProfileLink = ({
   icon,
+  setDisplay,
   title,
   action,
   profileDisplay,
@@ -25,12 +27,15 @@ const BottomProfileLink = ({
     <button
       id={id} // Assign the link's id to the button element
       type="button"
-      className={`flex flex-col items-center gap-1 duration-150 ${
+      className={`flex  gap-4 sm:justify-around w-full sm:items-center duration-150 ${
         loading ? "opacity-50" : "opacity-100" // Apply opacity based on loading state
       } ${
         title === "خروج از حساب" ? "hover:text-red-500" : "hover:text-primary" // Change hover color based on title (logout turns red)
       } ${isActive ? "text-primary" : ""}`} // Highlight active link with primary color
-      onClick={action} // Trigger the action when the button is clicked
+      onClick={() => {
+        action();
+        setDisplay(() => "translate-y-[100%]");
+      }} // Trigger the action when the button is clicked
       disabled={loading} // Disable the button when loading
     >
       {/*  Display the icon for the link */}
