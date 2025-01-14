@@ -58,8 +58,10 @@ const DonationItem = ({
 
       {/* donation created date and status info */}
       <div
-        className={`flex flex-wrappy-1 text-[14px] sm:text-[15px] w-full ${
-          displayInfo ? "border-t  justify-center gap-2 " : "border-none  justify-between "
+        className={`flex flex-wrappy-1 text-[12px] sm:text-[15px] w-full ${
+          displayInfo
+            ? "border-t  justify-center gap-2 "
+            : "border-  justify-between "
         }`}
         onClick={() => setDisplayInfo((e) => !e)}
       >
@@ -70,7 +72,7 @@ const DonationItem = ({
             boldValue={true}
           />
         )}
-        <div className="w-fit p-2 cursor-pointer  flex items-center justify-between  gap-2">
+        <div className="w-fit p-2 cursor-pointer  flex items-center text-nowrap justify-between  gap-2">
           <span className="text-gray-600">تاریخ ایجاد </span>
           <span className="text-black font-bold ">
             {convertDateNumbersToFAEN(
@@ -80,7 +82,7 @@ const DonationItem = ({
           </span>
         </div>
 
-        <div className="w-fit p-2 cursor-pointer  flex items-center    gap-2">
+        <div className="w-fit p-2 cursor-pointer  flex items-center  text-nowrap  gap-2">
           <span className="text-gray-600">وضعیت</span>
           <span
             className={`font-bold  ${
