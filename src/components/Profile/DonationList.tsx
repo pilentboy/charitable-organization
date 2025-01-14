@@ -29,26 +29,22 @@ const DonationList = () => {
     handleDonationList();
   }, []);
 
-
-
   if (loading) return <h1>درحال دریافت اطلاعات</h1>;
 
-  return (
-    <div className="w-full min-h-screen flex flex-col gap-5">
-      {donationsList.length > 0 ? (
-        donationsList.map((donations: any) => (
-          <div
-            key={donations.id}
-            className="w-full lg:w-3/4 min-h-[40px] cursor-pointer border rounded-md flex-col gap-2 flex mx-auto justify-between p-2"
-          >
-            <DonationItem donationInfo={donations} />
-          </div>
-        ))
-      ) : (
-        <h1>موردی یافت نشد</h1>
-      )}
-    </div>
-  );
+  if (donationsList.length > 0) {
+    {
+      donationsList.map((donations: any) => (
+        <div
+          key={donations.id}
+          className="w-full lg:w-3/4 min-h-[40px] cursor-pointer border rounded-md flex-col gap-2 flex mx-auto justify-between p-2"
+        >
+          <DonationItem donationInfo={donations} />
+        </div>
+      ));
+    }
+  } else {
+    return <h1>موردی یافت نشد</h1>;
+  }
 };
 
 export default DonationList;
