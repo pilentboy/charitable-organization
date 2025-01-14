@@ -63,7 +63,6 @@ const Register = () => {
   }, []);
 
   const handleRegister = async (data: FormData) => {
-    console.log("wait for register", data);
     setLoading(true);
     try {
       await axios.post("https://nazronline.ir/api/user/register/", {
@@ -77,7 +76,7 @@ const Register = () => {
         city: data.city?.value,
         address: data.address,
       });
-
+      alert("ثبت نام شما با موفقیت انجام شد");
       navigate("/login");
     } catch (error: any) {
       if (error.response && error.response.status === 400) {
@@ -101,7 +100,6 @@ const Register = () => {
           message: "مشکل در ارتباط با سرور.",
         });
       }
-      console.log(error, "خطای ثبت نام");
     }
     setLoading(false);
   };
