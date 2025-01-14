@@ -173,7 +173,6 @@ const Home = () => {
         const response = await axios(
           "https://nazronline.ir/api/sacrifices/messaging-apps/"
         );
-        console.log(response);
         setSelectedSocialMedia("خیر تمایلی ندارم"); // Default selection
         setSocialMediaOptions(response.data); // Store social media options
       } catch (error) {
@@ -261,7 +260,6 @@ const Home = () => {
             },
           }
         );
-        console.log(response);
 
         // reset some state values after a successfull submiting
         setDisplayMessageBox(false);
@@ -397,7 +395,6 @@ const Home = () => {
                         options={offeringTypeOptionsData}
                         onChange={(e: any) => {
                           setselectedOfferingType(e);
-                          console.log(e);
                         }}
                         value={selectedOfferingType}
                         components={{

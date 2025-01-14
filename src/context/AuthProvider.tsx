@@ -67,11 +67,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     updateAccessToken();
   }, []); // Empty dependency array ensures this runs only once
 
-  // Optional: Log profile information when it changes
-  useEffect(() => {
-    console.log(profileInfo);
-  }, [profileInfo]);
-
+ 
   return (
     <authContext.Provider
       value={{

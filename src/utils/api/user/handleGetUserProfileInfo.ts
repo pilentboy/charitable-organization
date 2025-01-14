@@ -13,8 +13,6 @@ const handleGetUserProfileInfo = async (accessToken: any) => {
     );
     // Making a GET request to the user profile info endpoint with authorization header
 
-    console.log(res, "user profile info");
-    // Logging the response with a custom message
 
     return res;
     // Returning the response

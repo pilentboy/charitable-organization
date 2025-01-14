@@ -11,7 +11,6 @@ const Quotes = () => {
           "https://nazronline.ir/api/content/quotes/"
         );
         setQuitesContent(response.data);
-        console.log(response.data);
       } catch (error: any) {
         console.log(error);
         return error.message || "مشکلی پیش آمد";

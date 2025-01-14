@@ -32,7 +32,6 @@ const ModalItem = ({
           [fieldName]: data.editInput,
         };
 
-        console.log(updatedField);
 
         const response = await axios.patch(
           "https://nazronline.ir/api/user/profile/personal-info/",
@@ -45,7 +44,6 @@ const ModalItem = ({
         );
 
         setDisplay(false);
-        console.log(response);
         const updatedPersoalInfo = await handleGetUserProfileInfo(accessToken);
         setPorfileInfo(updatedPersoalInfo?.data);
       } catch (error: any) {

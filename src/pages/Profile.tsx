@@ -30,7 +30,6 @@ const Profile = () => {
   ); // State to track which section to display: 'profile' or 'donations'.
 
   useEffect(() => {
-    console.log(profileInfo);
     document.title = "حساب کاربری"; // Set the document title to "حساب کاربری" (User Account) when the component is mounted.
   }, []); // Empty dependency array means this effect runs once when the component is mounted.
 

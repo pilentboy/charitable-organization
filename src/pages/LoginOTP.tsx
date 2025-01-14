@@ -18,15 +18,12 @@ const LoginOTP = () => {
   const handleSendOTP = async (data: any) => {
     setLoading(true); // Set loading state to true when sending OTP.
     try {
-      console.log(data); // Log the data for debugging.
       const response = await axios.post(
         "https://nazronline.ir/api/user/login/phone/", // API endpoint for sending OTP.
         data // Sending phone number data to the backend.
       );
-      console.log(response, "login otp response"); // Log the response for debugging.
       setOTPSent(true); // Mark OTP as sent and switch to OTP verification form.
     } catch (error: any) {
-      console.log(error); // Log the error for debugging.
       // Handle error responses from the server.
       if (error.response && error.response.status === 400) {
         const serverErrors =
@@ -51,10 +48,7 @@ const LoginOTP = () => {
   // Function to verify OTP and log in
   const handleVerifyOTP = async (data: any) => {
     setLoading(true); // Set loading state to true when verifying OTP.
-    console.log({
-      ...data,
-      phone_number: phoneForm.getValues("phone_number"), // Include phone number in the request.
-    });
+ 
     try {
       const response = await axios.post(
         "https://nazronline.ir/api/user/login/phone/", // API endpoint for OTP verification.
@@ -63,7 +57,6 @@ const LoginOTP = () => {
           phone_number: phoneForm.getValues("phone_number"), // Include the phone number in the data.
         }
       );
-      console.log(response, "log in successfuly"); // Log the successful login response.
       // Save the access and refresh tokens to localStorage.
       localStorage.setItem("accessToken", response.data.access);
       localStorage.setItem("refreshToken", response.data.refresh);
@@ -93,9 +86,8 @@ const LoginOTP = () => {
   };
 
   useEffect(() => {
-    console.log(OTPSent); // Log OTP sent status for debugging.
     document.title = "ورود"; // Set the document title to "ورود" (Login) when the component mounts or when OTP status changes.
-  }, [OTPSent]); // Effect will run whenever the OTP sent status changes.
+  }, []); 
 
   return (
     <section className="h-[90vh] sm:h-fulk  xl:h-[80vh] flex justify-center items-center">

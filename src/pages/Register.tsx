@@ -112,7 +112,6 @@ const Register = () => {
       stringBirthdate ? convertDateToFAEN(stringBirthdate, "english") : "",
       "jYYYY/jMM/jDD"
     ).format("YYYY-MM-DD");
-    console.log(gregorianDate);
     if (birthdate) {
       setFormatedBirthDate(gregorianDate);
     }

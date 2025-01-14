@@ -11,7 +11,6 @@ const Slider = () => {
   useEffect(() => {
     const getData = async () => {
       const req = await handleGetHomeSliderContent();
-      console.log(req.data, "اسلایدر");
       setSliderContents(req.data);
     };
     getData();
@@ -33,7 +32,6 @@ const Slider = () => {
         className="w-full  rounded-2xl h-[200px] sm:h-[300px] lg:h-[480px] "
       >
         {sliderContents.map((slider: any) => {
-          console.log(slider.media);
           return (
             <SwiperSlide key={slider.id} className="relative">
               <img

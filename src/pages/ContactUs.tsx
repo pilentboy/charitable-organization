@@ -8,7 +8,6 @@ const ContactUs = () => {
     // Using useEffect to perform side effects when the component mounts.
     const getData = async () => {
       const req = await handleGetContactUs(); // Fetching the "Contact Us" data from the API asynchronously.
-      console.log(req.data); // Logging the response data to the console for debugging purposes.
       setContactUs(req.data); // Storing the fetched data into the contactUs state variable.
     };
     getData(); // Invoking the getData function to fetch the data when the component mounts.

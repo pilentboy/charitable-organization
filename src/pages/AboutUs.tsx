@@ -8,7 +8,6 @@ const AboutUs = () => {
     // Using useEffect to fetch the data when the component mounts.
     const getData = async () => {
       const req = await handleGetAboutUs(); // Calling the API function to get the "About Us" content.
-      console.log(req.data); // Logging the response data for debugging purposes.
       setAboutUs(req.data); // Setting the fetched data into state.
     };
     getData(); // Invoking the getData function to fetch the data.

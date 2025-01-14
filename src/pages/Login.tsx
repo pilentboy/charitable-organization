@@ -20,7 +20,6 @@ const Login = () => {
 
   const onSubmit = async (data: any) => {
     // Function that runs when the form is submitted.
-    console.log("wait for login response..."); // Log for debugging.
     setLoading(true); // Set loading state to true when the login request starts.
 
     try {
