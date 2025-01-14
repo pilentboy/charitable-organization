@@ -63,13 +63,13 @@ const DonationItem = ({
         }`}
         onClick={() => setDisplayInfo((e) => !e)}
       >
-        {!displayInfo && (
+        {/* {!displayInfo && (
           <DonationInfoBox
             title={"نوع قربانی"}
             value={sacrifice_type_name}
             boldValue={true}
           />
-        )}
+        )} */}
         <div className="w-fit p-2 cursor-pointer  flex items-center text-nowrap justify-between  gap-2">
           <span className="text-gray-600">تاریخ ایجاد </span>
           <span className="text-black font-bold ">
