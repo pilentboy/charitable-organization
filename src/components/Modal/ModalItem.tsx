@@ -40,7 +40,6 @@ const ModalItem = ({
     if (birthdate) {
       setFormatedBirthDate(gregorianDate);
     }
-    console.log(gregorianDate);
   }, [watch("birth_date")]);
 
   const onSubmit = async (data: any) => {
@@ -56,7 +55,6 @@ const ModalItem = ({
           [fieldName]: detectFiledType,
         };
 
-        console.log(updatedField);
 
         await axios.patch(
           "https://nazronline.ir/api/user/profile/personal-info/",
