@@ -62,7 +62,7 @@ const Profile = () => {
             "persian"
           )}
         />
-        <UserInfoBox title={"آدرس"} value={address} fieldName="address" editable />
+        <UserInfoBox title={"آدرس"} value={address} fieldName="address" editable lgInfo/>
       </div>
     );
   };
