@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
-import DatePicker, { DateObject } from "react-multi-date-picker";
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
+import { DateObject } from "react-multi-date-picker";
 import Select from "react-select";
 import { provinces, ProvinceType } from "../data/provinces";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
@@ -10,6 +8,7 @@ import { Link, useNavigate } from "react-router";
 import moment from "jalali-moment";
 import axios from "axios";
 import convertDateToFAEN from "../utils/Date&NumberConvertors/convertDateNumbersToFAEN";
+import CustomDatePicker from "../components/Custom/CustomDatePicker";
 
 type FormData = {
   username: string;
@@ -211,17 +210,7 @@ const Register = () => {
                   control={control}
                   name="birth_date"
                   render={({ field: { onChange, value } }) => (
-                    <DatePicker
-                      id="birth_date"
-                      className="purple"
-                      calendar={persian}
-                      locale={persian_fa}
-                      calendarPosition="bottom-right"
-                      inputClass="border border-gray-300 w-full bg-gray-100 outline-none rounded-2xl h-12 p-2 duration-200 focus:border-gray-800 placeholder:text-sm"
-                      placeholder="تاریخ تولد"
-                      value={value || null}
-                      onChange={onChange}
-                    />
+                    <CustomDatePicker value={value} onChange={onChange} />
                   )}
                 />
               </div>
