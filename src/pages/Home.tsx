@@ -4,7 +4,6 @@ import Select, { components } from "react-select";
 import { BiSolidDownArrow } from "react-icons/bi";
 import { TiTick } from "react-icons/ti";
 import useAuth from "../context/AuthProvider";
-import handleGetQuotes from "../utils/api/content/handleGetQuotes";
 import SocialMediaRadioBTN from "../components/Home/SocialMediaRadioBTN";
 import axios from "axios";
 import Dedications from "../components/Home/Dedications";
@@ -196,14 +195,10 @@ const Home = () => {
     handleGetSocialMedias();
   }, []);
 
-  // Fetch quotes (dummy implementation for now)
-  const getQuotes = async () => {
-    await handleGetQuotes(apiKey);
-  };
+
 
   // Initialize offering radio options and set the document title
   useEffect(() => {
-    getQuotes();
     setselectedofferingRadio(offeringRadioOptinos[0]?.title); // Default selection
     document.title = "نذر آنلاین"; // Set page title
   }, []);

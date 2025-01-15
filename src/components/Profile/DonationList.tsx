@@ -2,12 +2,14 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import useAuth from "../../context/AuthProvider";
 import DonationItem from "./DonationItem";
+import useApiKey from "../../hooks/useApiKey";
 
 const DonationList = () => {
   const { accessToken } = useAuth();
   const [donationsList, setDonationsList] = useState<any>([]);
   const [loading, setLoading] = useState<boolean>(true);
-
+  const apiKey = useApiKey();
+  
   useEffect(() => {
     const handleDonationList = async () => {
       setLoading(true);
@@ -17,9 +19,12 @@ const DonationList = () => {
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+              "X-API-KEY": apiKey,
             },
           }
         );
+
         setDonationsList(resposne.data);
       } catch (error) {
         console.log(error);

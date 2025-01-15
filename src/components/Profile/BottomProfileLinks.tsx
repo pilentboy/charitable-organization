@@ -5,6 +5,7 @@ import useAuth from "../../context/AuthProvider"; // Custom hook to manage authe
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router"; // React Router hook to handle navigation
 import axios from "axios";
+import useApiKey from "../../hooks/useApiKey";
 
 const BottomProfileLinks = ({
   setDisplay,
@@ -20,7 +21,7 @@ const BottomProfileLinks = ({
   // State to manage the loading status during the logout process
   const [loading, setLoading] = useState<boolean>(false);
   const navigate = useNavigate(); // Hook to navigate between pages
-
+  const apiKey = useApiKey();
   // Destructure the required state and functions from the AuthProvider context
   const { setLoggedIn, setAccessToken, setPorfileInfo, accessToken } =
     useAuth();
@@ -36,6 +37,8 @@ const BottomProfileLinks = ({
         {
           headers: {
             Authorization: `Bearer ${accessToken})}`, // Send the access token in the request header
+            "Content-Type": "application/json",
+            "X-API-KEY": apiKey,
           },
         }
       );

@@ -1,14 +1,21 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import useApiKey from "../../hooks/useApiKey";
 
 const Quotes = () => {
   const [quitesContent, setQuitesContent] = useState<any>();
-
+  const apiKey = useApiKey();
   useEffect(() => {
     const handleGetQuotes = async () => {
       try {
         const response = await axios.get(
-          "https://nazronline.ir/api/content/quotes/"
+          "https://nazronline.ir/api/content/quotes/",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "X-API-KEY": apiKey,
+            },
+          }
         );
         setQuitesContent(response.data);
       } catch (error: any) {
