@@ -10,6 +10,7 @@ const UserInfoBox = ({
   fieldName,
   editable,
   editType,
+  doubleSelects,
 }: {
   title: string; // Title prop: The label for the information displayed (e.g., "Name").
   value: string; // Value prop: The actual information to be displayed (e.g., "John Doe").
@@ -17,6 +18,7 @@ const UserInfoBox = ({
   fieldName?: string;
   editable?: true;
   editType?: "text" | "date" | "select";
+  doubleSelects?: boolean;
 }) => {
   const [display, setDisplay] = useState<boolean>(false);
 
@@ -53,6 +55,7 @@ const UserInfoBox = ({
             fieldName={fieldName}
             setDisplay={setDisplay}
             editType={editType}
+            doubleSelects={doubleSelects}
           />
         </ModalContainer>
       )}

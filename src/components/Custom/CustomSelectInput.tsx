@@ -7,11 +7,13 @@ const CustomSelectInput = ({
   inputID,
   placeholder,
   dependOn,
+  width,
 }: {
   field: any;
   inputID: string;
   dependOn?: any;
   placeholder?: string;
+  width?: string;
 }) => {
   const [provinces, setProvincesx] = useState<any>();
 
@@ -34,6 +36,7 @@ const CustomSelectInput = ({
       options={!dependOn ? provinces : dependOn}
       getOptionLabel={(option: any) => option.label}
       getOptionValue={(option: any) => option.value}
+      className={`${width && width}`}
       styles={{
         control: (provided) => ({
           ...provided,

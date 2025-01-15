@@ -9,26 +9,29 @@ import convertDateToFAEN from "../../utils/Date&NumberConvertors/convertDateNumb
 import moment from "jalali-moment";
 import CustomDatePicker from "../Custom/CustomDatePicker";
 import useApiKey from "../../hooks/useApiKey";
+import CustomSelectInput from "../Custom/CustomSelectInput";
+import citiesData from "../../data/cities.json";
 
 const ModalItem = ({
   title,
   fieldName,
   setDisplay,
   editType,
+  doubleSelects,
 }: {
   title: string;
   fieldName: string | undefined;
   setDisplay: any;
   editType?: "text" | "date" | "select";
+  doubleSelects?: boolean;
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
   const [formatedBirthDate, setFormatedBirthDate] = useState<string>("");
-  const [locationValue, setLocationValue] = useState<string>("");
 
   const { accessToken, setPorfileInfo } = useAuth();
 
-  const { register, handleSubmit, control, watch } = useForm();
+  const { register, handleSubmit, control, watch, setValue } = useForm();
   const apiKey = useApiKey();
 
   useEffect(() => {
@@ -44,20 +47,53 @@ const ModalItem = ({
     }
   }, [watch("birth_date")]);
 
+  const province = watch("province");
+
+  // only works when using two selects | for example when editinig province because when a user wants to change the province, the city must be edited too.
+  useEffect(() => {
+    if (province) {
+      const provinceInfo = citiesData.filter(
+        (cities: any) => cities.id === province.id
+      );
+      const provinceCities = provinceInfo[0].cities;
+
+      const cities = provinceCities.map((city: any) => ({
+        value: city.name,
+        label: city.name,
+        id: city.id,
+      }));
+      setValue("city", null);
+      setValue("cities", cities);
+    }
+  }, [province, setValue]);
+
   const onSubmit = async (data: any) => {
     setLoading(true);
     setError(null);
 
     if (fieldName) {
+      console.log(data);
       try {
-        const detectFiledType =
-          editType === "date" ? formatedBirthDate : data.editInput;
+        const detectFiledType = doubleSelects
+          ? data
+          : editType === "date"
+          ? formatedBirthDate
+          : editType === "select"
+          ? data.provinceOnly.value
+          : data.editInput;
 
-        const updatedField = {
-          [fieldName]: detectFiledType,
-        };
+        let updatedField = {};
 
-        await axios.patch(
+        if (doubleSelects) {
+          updatedField = {
+            province: detectFiledType.province.value,
+            city: detectFiledType.city.value,
+          };
+        } else {
+          updatedField = { [fieldName]: detectFiledType };
+        }
+
+        await axios.put(
           "https://nazronline.ir/api/user/profile/personal-info/",
           updatedField,
           {
@@ -89,7 +125,11 @@ const ModalItem = ({
   };
 
   return (
-    <div className="flex flex-col items-center justify-between p-2  w-[90vw] sm:w-80 h-48 rounded-md bg-white">
+    <div
+      className={`flex flex-col items-center justify-between p-2  w-[90vw] sm:w-80  rounded-md bg-white ${
+        doubleSelects ? "h-60" : "h-48"
+      }`}
+    >
       <div className="w-full flex items-center justify-between">
         <CiEdit />
         <span className="text-sm">ویرایش اطلاعات</span>
@@ -106,8 +146,47 @@ const ModalItem = ({
 
           {error && <span className="text-red-500 text-sm">{error}</span>}
 
-          {editType === "select" ? (
-            <span>select</span>
+          {doubleSelects ? (
+            <>
+              <Controller
+                control={control}
+                name="province"
+                render={({ field }) => (
+                  <CustomSelectInput
+                    field={field}
+                    inputID="province"
+                    placeholder={title}
+                    width="w-5/6"
+                  />
+                )}
+              />
+              <Controller
+                control={control}
+                name="city"
+                render={({ field }) => (
+                  <CustomSelectInput
+                    field={field}
+                    inputID="city"
+                    placeholder="شهر"
+                    dependOn={watch("cities") || []}
+                    width="w-5/6"
+                  />
+                )}
+              />
+            </>
+          ) : editType === "select" ? (
+            <Controller
+              control={control}
+              name="provinceOnly"
+              render={({ field }) => (
+                <CustomSelectInput
+                  field={field}
+                  inputID="provinceOnly"
+                  placeholder={title}
+                  width="w-5/6"
+                />
+              )}
+            />
           ) : editType === "date" ? (
             <Controller
               control={control}
