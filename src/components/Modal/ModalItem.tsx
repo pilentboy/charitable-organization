@@ -11,6 +11,7 @@ import CustomDatePicker from "../Custom/CustomDatePicker";
 import useApiKey from "../../hooks/useApiKey";
 import CustomSelectInput from "../Custom/CustomSelectInput";
 import citiesData from "../../data/cities.json";
+import provincesData from "../../data/provinces.json";
 
 const ModalItem = ({
   title,
@@ -27,7 +28,7 @@ const ModalItem = ({
   const [error, setError] = useState<string | null>(null);
   const [formatedBirthDate, setFormatedBirthDate] = useState<string>("");
 
-  const { accessToken, setPorfileInfo } = useAuth();
+  const { accessToken, setPorfileInfo, profileInfo } = useAuth();
 
   const { register, handleSubmit, control, watch, setValue } = useForm();
   const apiKey = useApiKey();
@@ -45,11 +46,11 @@ const ModalItem = ({
     }
   }, [watch("birth_date")]);
 
-  const province = watch("province");
+  const province = watch("province"); // use only when editing province
 
   // only works when using two selects | for example when editinig province because when a user wants to change the province, the city must be edited too.
   useEffect(() => {
-    if (province) {
+    if (province && editType === "double_selectes") {
       const provinceInfo = citiesData.filter(
         (cities: any) => cities.id === province.id
       );
@@ -65,6 +66,25 @@ const ModalItem = ({
     }
   }, [province, setValue]);
 
+  // only works when editing city
+  useEffect(() => {
+    if (editType === "select") {
+      const provinceInfo = citiesData.filter(
+        (cities: any) => cities.name === profileInfo.province
+      );
+
+      const provinceCities = provinceInfo[0].cities;
+      console.log(provinceCities);
+      const cities = provinceCities.map((city: any) => ({
+        value: city.name,
+        label: city.name,
+        id: city.id,
+      }));
+      setValue("city", null);
+      setValue("cities", cities);
+    }
+  }, []);
+
   const onSubmit = async (data: any) => {
     setLoading(true);
     setError(null);
@@ -72,13 +92,14 @@ const ModalItem = ({
     if (fieldName) {
       console.log(data);
       try {
-        const detectFiledType = editType === "double_selectes"
-          ? data
-          : editType === "date"
-          ? formatedBirthDate
-          : editType === "select"
-          ? data.provinceOnly.value
-          : data.editInput;
+        const detectFiledType =
+          editType === "double_selectes"
+            ? data
+            : editType === "date"
+            ? formatedBirthDate
+            : editType === "select"
+            ? data.city.value
+            : data.editInput;
 
         let updatedField = {};
 
@@ -175,12 +196,13 @@ const ModalItem = ({
           ) : editType === "select" ? (
             <Controller
               control={control}
-              name="provinceOnly"
+              name="city"
               render={({ field }) => (
                 <CustomSelectInput
                   field={field}
-                  inputID="provinceOnly"
+                  inputID="city"
                   placeholder={title}
+                  dependOn={watch("cities") || []}
                   width="w-5/6"
                 />
               )}
