@@ -9,12 +9,14 @@ const UserInfoBox = ({
   lgInfo,
   fieldName,
   editable,
+  editType,
 }: {
   title: string; // Title prop: The label for the information displayed (e.g., "Name").
   value: string; // Value prop: The actual information to be displayed (e.g., "John Doe").
   lgInfo?: boolean; // Optional prop to adjust the size of the box for large info sections.
   fieldName?: string;
   editable?: true;
+  editType?: "text" | "date" | "select";
 }) => {
   const [display, setDisplay] = useState<boolean>(false);
 
@@ -50,6 +52,7 @@ const UserInfoBox = ({
             title={title}
             fieldName={fieldName}
             setDisplay={setDisplay}
+            editType={editType}
           />
         </ModalContainer>
       )}

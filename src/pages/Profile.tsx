@@ -22,7 +22,6 @@ const Profile = () => {
       province,
       date_joined,
     },
-  
   } = useAuth(); // Using useAuth to access the authenticated user's profile data.
 
   const [profileDisplay, setProfileDisplay] = useState<"profile" | "donations">(
@@ -38,21 +37,46 @@ const Profile = () => {
     return (
       <div className="w-full sm:w-3/4 h-fit flex flex-wrap gap-2 md:gap-0 items-center justify-center md:justify-between">
         {/* Displaying various pieces of user information like first name, last name, username, etc. */}
-        <UserInfoBox title={"نام"} value={first_name} fieldName="first_name" editable />
-        <UserInfoBox title={"نام خانوادگی"} value={last_name} editable fieldName="last_name" />
+        <UserInfoBox
+          title={"نام"}
+          value={first_name}
+          fieldName="first_name"
+          editable
+        />
+        <UserInfoBox
+          title={"نام خانوادگی"}
+          value={last_name}
+          editable
+          fieldName="last_name"
+        />
         <UserInfoBox title={"نام کاربری"} value={username} />
         <UserInfoBox
           title={"شماره تلفن"}
           value={convertDateToFAEN(phone_number, "persian")}
         />
-        <UserInfoBox title={"شهر"} value={city} editable fieldName="city"/>
-        <UserInfoBox title={"استان"} value={province} fieldName="province" editable />
+        <UserInfoBox
+          title={"شهر"}
+          value={city}
+          editable
+          editType="select"
+          fieldName="city"
+        />
+        <UserInfoBox
+          title={"استان"}
+          value={province}
+          fieldName="province"
+          editable
+          editType="select"
+        />
         <UserInfoBox
           title={"تاریخ تولد"}
           value={convertDateToFAEN(
             convertDateYearToPersian(birth_date),
             "persian"
           )}
+          fieldName="birth_date"
+          editable
+          editType="date"
         />
         {/* Formatting the join date to Persian and displaying it. */}
         <UserInfoBox
@@ -62,7 +86,13 @@ const Profile = () => {
             "persian"
           )}
         />
-        <UserInfoBox title={"آدرس"} value={address} fieldName="address" editable lgInfo/>
+        <UserInfoBox
+          title={"آدرس"}
+          value={address}
+          fieldName="address"
+          editable
+          lgInfo
+        />
       </div>
     );
   };

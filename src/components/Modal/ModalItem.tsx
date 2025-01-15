@@ -10,10 +10,12 @@ const ModalItem = ({
   title,
   fieldName,
   setDisplay,
+  editType,
 }: {
   title: string;
   fieldName: string | undefined;
   setDisplay: any;
+  editType?: "text" | "date" | "select";
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -32,8 +34,7 @@ const ModalItem = ({
           [fieldName]: data.editInput,
         };
 
-
-         await axios.patch(
+        await axios.patch(
           "https://nazronline.ir/api/user/profile/personal-info/",
           updatedField,
           {
@@ -78,11 +79,17 @@ const ModalItem = ({
 
           {error && <span className="text-red-500 text-sm">{error}</span>}
 
-          <input
-            id="editInput"
-            {...register("editInput", { required: "این فیلد الزامی است" })}
-            className="w-full h-9 rounded-md text-gray-800 border-gray-300 border outline-none p-2 placeholder:text-sm"
-          />
+          {editType === "select" ? (
+            <span>select</span>
+          ) : editType === "date" ? (
+            <span>date</span>
+          ) : (
+            <input
+              id="editInput"
+              {...register("editInput", { required: "این فیلد الزامی است" })}
+              className="w-full h-9 rounded-md text-gray-800 border-gray-300 border outline-none p-2 placeholder:text-sm"
+            />
+          )}
 
           <button
             type="submit"
