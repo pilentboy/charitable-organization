@@ -11,7 +11,6 @@ import CustomDatePicker from "../Custom/CustomDatePicker";
 import useApiKey from "../../hooks/useApiKey";
 import CustomSelectInput from "../Custom/CustomSelectInput";
 import citiesData from "../../data/cities.json";
-import provincesData from "../../data/provinces.json";
 
 const ModalItem = ({
   title,
