@@ -73,7 +73,6 @@ const ModalItem = ({
       );
 
       const provinceCities = provinceInfo[0].cities;
-      console.log(provinceCities);
       const cities = provinceCities.map((city: any) => ({
         value: city.name,
         label: city.name,
@@ -89,7 +88,6 @@ const ModalItem = ({
     setError(null);
 
     if (fieldName) {
-      console.log(data);
       try {
         const detectFiledType =
           editType === "double_selectes"
