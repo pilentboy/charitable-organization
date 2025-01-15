@@ -8,7 +8,7 @@ const handleGetUserProfileInfo = async (accessToken: any, apiKey: any) => {
       {
         headers: {
           Authorization: `Bearer ${accessToken}`,
-          "Content-Type": "application/json", 
+          "Content-Type": "application/json",
           "X-Api-Key": apiKey,
         },
       }
@@ -17,7 +17,7 @@ const handleGetUserProfileInfo = async (accessToken: any, apiKey: any) => {
 
     return res;
     // Returning the response
-  } catch (error) {
+  } catch (error: any) {
     console.log(error);
     // Logging any errors that occur during the request
   }

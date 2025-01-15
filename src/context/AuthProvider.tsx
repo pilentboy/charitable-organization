@@ -60,6 +60,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
           // Fetch the user profile information using the new access token
           const response = await handleGetUserProfileInfo(access, apiKey);
+
           setPorfileInfo(response?.data); // Set profile information in state
           setLoggedIn(true); // Mark the user as logged in
           setAccessToken(access); // Store the access token in state
