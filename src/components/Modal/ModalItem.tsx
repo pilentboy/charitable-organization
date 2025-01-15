@@ -1,10 +1,13 @@
 import { CiEdit } from "react-icons/ci";
 import { IoMdClose } from "react-icons/io";
 import axios from "axios";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
+import { useEffect, useState } from "react";
+import { useForm, Controller } from "react-hook-form";
 import useAuth from "../../context/AuthProvider";
 import handleGetUserProfileInfo from "../../utils/api/user/handleGetUserProfileInfo";
+import convertDateToFAEN from "../../utils/Date&NumberConvertors/convertDateNumbersToFAEN";
+import moment from "jalali-moment";
+import CustomDatePicker from "../Custom/CustomDatePicker";
 
 const ModalItem = ({
   title,
@@ -19,10 +22,26 @@ const ModalItem = ({
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
+  const [formatedBirthDate, setFormatedBirthDate] = useState<string>("");
+  const [locationValue, setLocationValue] = useState<string>("");
 
   const { accessToken, setPorfileInfo } = useAuth();
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, control, watch } = useForm();
+
+  useEffect(() => {
+    // convert date picker calender to Christian calendar and also cahnge numbers to English because the api only accepts english numbers in this format: yyyy-mm-dd
+    const birthdate = watch("birth_date");
+    const stringBirthdate = birthdate?.toString();
+    const gregorianDate = moment(
+      stringBirthdate ? convertDateToFAEN(stringBirthdate, "english") : "",
+      "jYYYY/jMM/jDD"
+    ).format("YYYY-MM-DD");
+    if (birthdate) {
+      setFormatedBirthDate(gregorianDate);
+    }
+    console.log(gregorianDate);
+  }, [watch("birth_date")]);
 
   const onSubmit = async (data: any) => {
     setLoading(true);
@@ -30,9 +49,14 @@ const ModalItem = ({
 
     if (fieldName) {
       try {
+        const detectFiledType =
+          editType === "date" ? formatedBirthDate : data.editInput;
+
         const updatedField = {
-          [fieldName]: data.editInput,
+          [fieldName]: detectFiledType,
         };
+
+        console.log(updatedField);
 
         await axios.patch(
           "https://nazronline.ir/api/user/profile/personal-info/",
@@ -48,7 +72,6 @@ const ModalItem = ({
         const updatedPersoalInfo = await handleGetUserProfileInfo(accessToken);
         setPorfileInfo(updatedPersoalInfo?.data);
       } catch (error: any) {
-        console.error(error);
         setError(
           error.response?.data?.[fieldName] ||
             "خطایی در ویرایش اطلاعات رخ داده است."
@@ -82,7 +105,13 @@ const ModalItem = ({
           {editType === "select" ? (
             <span>select</span>
           ) : editType === "date" ? (
-            <span>date</span>
+            <Controller
+              control={control}
+              name="birth_date"
+              render={({ field: { onChange, value } }) => (
+                <CustomDatePicker value={value} onChange={onChange} />
+              )}
+            />
           ) : (
             <input
               id="editInput"
