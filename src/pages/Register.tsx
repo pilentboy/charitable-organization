@@ -9,6 +9,7 @@ import moment from "jalali-moment";
 import axios from "axios";
 import convertDateToFAEN from "../utils/Date&NumberConvertors/convertDateNumbersToFAEN";
 import CustomDatePicker from "../components/Custom/CustomDatePicker";
+import CustomSelectInput from "../components/Custom/CustomSelectInput";
 
 type FormData = {
   username: string;
@@ -224,29 +225,10 @@ const Register = () => {
                   control={control}
                   name="province"
                   render={({ field }) => (
-                    <Select
-                      required
-                      {...field}
-                      inputId="province"
-                      placeholder="انتخاب استان"
-                      options={provinces}
-                      getOptionLabel={(option) => option.label}
-                      getOptionValue={(option) => option.value}
-                      styles={{
-                        control: (provided) => ({
-                          ...provided,
-                          width: "100%",
-                          height: "48px",
-                          borderColor: "#d1d5db",
-                          borderRadius: "16px",
-                          padding: "0 10px",
-                          backgroundColor: "#f3f4f6",
-                        }),
-                        menu: (provided) => ({
-                          ...provided,
-                          width: "100%",
-                        }),
-                      }}
+                    <CustomSelectInput
+                      field={field}
+                      inputID="province"
+                      placeholder="استان"
                     />
                   )}
                 />
@@ -261,30 +243,11 @@ const Register = () => {
                   control={control}
                   name="city"
                   render={({ field }) => (
-                    <Select
-                      required
-                      {...field}
-                      inputId="city"
-                      placeholder="انتخاب شهر"
-                      options={watch("cities") || []}
-                      isDisabled={!province}
-                      getOptionLabel={(option) => option.label}
-                      getOptionValue={(option) => option.value}
-                      styles={{
-                        control: (provided) => ({
-                          ...provided,
-                          width: "100%",
-                          height: "48px",
-                          borderColor: "#d1d5db",
-                          borderRadius: "16px",
-                          padding: "0 10px",
-                          backgroundColor: "#f3f4f6",
-                        }),
-                        menu: (provided) => ({
-                          ...provided,
-                          width: "100%",
-                        }),
-                      }}
+                    <CustomSelectInput
+                      field={field}
+                      inputID="city"
+                      placeholder="شهر"
+                      dependOn={watch("cities") || []}
                     />
                   )}
                 />
