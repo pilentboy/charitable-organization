@@ -1,5 +1,6 @@
 import Select from "react-select";
-import { provinces, ProvinceType } from "../../data/provinces";
+import provincesData from "../../data/provinces.json";
+import { useEffect, useState } from "react";
 
 const CustomSelectInput = ({
   field,
@@ -12,6 +13,18 @@ const CustomSelectInput = ({
   dependOn?: any;
   placeholder?: string;
 }) => {
+  const [provinces, setProvincesx] = useState<any>();
+
+  useEffect(() => {
+    setProvincesx(
+      provincesData.provinces.map((province: any) => ({
+        value: province.name,
+        id: province.id,
+        label: province.name,
+      }))
+    );
+  }, []);
+
   return (
     <Select
       required
@@ -19,8 +32,8 @@ const CustomSelectInput = ({
       inputId={inputID}
       placeholder={placeholder}
       options={!dependOn ? provinces : dependOn}
-      getOptionLabel={(option: ProvinceType) => option.label}
-      getOptionValue={(option: ProvinceType) => option.value}
+      getOptionLabel={(option: any) => option.label}
+      getOptionValue={(option: any) => option.value}
       styles={{
         control: (provided) => ({
           ...provided,

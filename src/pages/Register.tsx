@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { DateObject } from "react-multi-date-picker";
-import Select from "react-select";
-import { provinces, ProvinceType } from "../data/provinces";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 import { Link, useNavigate } from "react-router";
 import moment from "jalali-moment";
@@ -10,8 +8,8 @@ import axios from "axios";
 import convertDateToFAEN from "../utils/Date&NumberConvertors/convertDateNumbersToFAEN";
 import CustomDatePicker from "../components/Custom/CustomDatePicker";
 import CustomSelectInput from "../components/Custom/CustomSelectInput";
-import useAuth from "../context/AuthProvider";
 import useApiKey from "../hooks/useApiKey";
+import citiesData from "../data/cities.json";
 
 type FormData = {
   username: string;
@@ -20,7 +18,7 @@ type FormData = {
   password: string;
   phone_number: string;
   birth_date: DateObject | null;
-  province: ProvinceType | null;
+  province: any | null;
   city: { value: string; label: string } | null;
   cities: { value: string; label: string }[];
   address: string;
@@ -52,9 +50,15 @@ const Register = () => {
 
   useEffect(() => {
     if (province) {
-      const cities = province.cities.map((city) => ({
-        value: city,
-        label: city,
+      const provinceInfo = citiesData.filter(
+        (cities) => cities.id === province.id
+      );
+      const provinceCities = provinceInfo[0].cities;
+
+      const cities = provinceCities.map((city: any) => ({
+        value: city.name,
+        label: city.name,
+        id: city.id,
       }));
       setValue("city", null);
       setValue("cities", cities);
@@ -231,7 +235,7 @@ const Register = () => {
               <div className="flex flex-col gap-2 w-full md:w-[170px]">
                 <label htmlFor="province">استان</label>
                 {errors.province && (
-                  <p className="text-red-500">{errors.province.message}</p>
+                  <p className="text-red-500">{errors.province.message?.toString()}</p>
                 )}
                 <Controller
                   control={control}
