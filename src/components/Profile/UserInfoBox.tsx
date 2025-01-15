@@ -17,7 +17,7 @@ const UserInfoBox = ({
   lgInfo?: boolean; // Optional prop to adjust the size of the box for large info sections.
   fieldName?: string;
   editable?: true;
-  editType?: "text" | "date" | "select";
+  editType?: "text" | "date" | "select" | "double_selectes";
   doubleSelects?: boolean;
 }) => {
   const [display, setDisplay] = useState<boolean>(false);
@@ -55,7 +55,6 @@ const UserInfoBox = ({
             fieldName={fieldName}
             setDisplay={setDisplay}
             editType={editType}
-            doubleSelects={doubleSelects}
           />
         </ModalContainer>
       )}

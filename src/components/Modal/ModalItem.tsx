@@ -17,13 +17,11 @@ const ModalItem = ({
   fieldName,
   setDisplay,
   editType,
-  doubleSelects,
 }: {
   title: string;
   fieldName: string | undefined;
   setDisplay: any;
-  editType?: "text" | "date" | "select";
-  doubleSelects?: boolean;
+  editType?: "text" | "date" | "select" | "double_selectes";
 }) => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -74,7 +72,7 @@ const ModalItem = ({
     if (fieldName) {
       console.log(data);
       try {
-        const detectFiledType = doubleSelects
+        const detectFiledType = editType === "double_selectes"
           ? data
           : editType === "date"
           ? formatedBirthDate
@@ -84,7 +82,7 @@ const ModalItem = ({
 
         let updatedField = {};
 
-        if (doubleSelects) {
+        if (editType === "double_selectes") {
           updatedField = {
             province: detectFiledType.province.value,
             city: detectFiledType.city.value,
@@ -127,7 +125,7 @@ const ModalItem = ({
   return (
     <div
       className={`flex flex-col items-center justify-between p-2  w-[90vw] sm:w-80  rounded-md bg-white ${
-        doubleSelects ? "h-60" : "h-48"
+        editType === "double_selectes" ? "h-60" : "h-48"
       }`}
     >
       <div className="w-full flex items-center justify-between">
@@ -146,7 +144,7 @@ const ModalItem = ({
 
           {error && <span className="text-red-500 text-sm">{error}</span>}
 
-          {doubleSelects ? (
+          {editType === "double_selectes" ? (
             <>
               <Controller
                 control={control}

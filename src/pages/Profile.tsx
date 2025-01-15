@@ -66,8 +66,7 @@ const Profile = () => {
           value={province}
           fieldName="province"
           editable
-          editType="select"
-          doubleSelects={true}
+          editType="double_selectes"
         />
         <UserInfoBox
           title={"تاریخ تولد"}
