@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import axios from "axios";
 import handleGetUserProfileInfo from "./../utils/api/user/handleGetUserProfileInfo";
+import useApiKey from "../hooks/useApiKey";
 
 // Creating the authContext with default values
 const authContext = createContext<{
@@ -32,6 +33,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [accessToken, setAccessToken] = useState<string | boolean>(false); // Store the access token (if available)
   const [profileInfo, setPorfileInfo] = useState<any>(); // Store the user's profile information
   const [loading, setLoading] = useState<boolean>(false); // Track loading state when fetching data
+  const apiKey = useApiKey();
 
   // Function to update access token and fetch user profile information
   const updateAccessToken = async () => {
@@ -41,7 +43,13 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         // Send a POST request to refresh the access token using the refresh token
         const response = await axios.post(
           "https://nazronline.ir/api/user/refresh/",
-          { refresh: refreshToken }
+          { refresh: refreshToken },
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "X-Api-Key": apiKey,
+            },
+          }
         );
 
         const { access } = response.data; // Extract the new access token from the response
@@ -51,7 +59,7 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           localStorage.setItem("accessToken", access);
 
           // Fetch the user profile information using the new access token
-          const response = await handleGetUserProfileInfo(access);
+          const response = await handleGetUserProfileInfo(access, apiKey);
           setPorfileInfo(response?.data); // Set profile information in state
           setLoggedIn(true); // Mark the user as logged in
           setAccessToken(access); // Store the access token in state
@@ -67,7 +75,6 @@ const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     updateAccessToken();
   }, []); // Empty dependency array ensures this runs only once
 
- 
   return (
     <authContext.Provider
       value={{

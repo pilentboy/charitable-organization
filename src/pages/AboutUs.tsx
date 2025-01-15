@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react"; // Importing React hooks: useEffect for side effects and useState for managing state.
 import handleGetAboutUs from "../utils/api/content/handleGetAboutUs"; // Importing the function to fetch "About Us" data from the API.
+import useApiKey from "../hooks/useApiKey";
 
 const AboutUs = () => {
   const [aboutUs, setAboutUs] = useState<any>(); // Declaring state for holding the fetched "About Us" data. Initially, it's undefined.
+  const apiKey = useApiKey();
 
   useEffect(() => {
     // Using useEffect to fetch the data when the component mounts.
     const getData = async () => {
-      const req = await handleGetAboutUs(); // Calling the API function to get the "About Us" content.
+      const req = await handleGetAboutUs(apiKey); // Calling the API function to get the "About Us" content.
       setAboutUs(req.data); // Setting the fetched data into state.
     };
     getData(); // Invoking the getData function to fetch the data.

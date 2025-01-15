@@ -1,9 +1,10 @@
 import axios from "axios";
 
-const handleGetQuotes = async () => {
+const handleGetQuotes = async (apiKey: any) => {
   try {
     const response = await axios.get(
-      "https://nazronlinetest.liara.run/content/quotes/"
+      "https://nazronlinetest.liara.run/content/quotes/",
+      { headers: { "Content-Type": "application/json", "X-API-KEY": apiKey } }
     );
     return response;
   } catch (error: any) {

@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router"; // Importing Link for navigati
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importing eye icons for showing and hiding OTP input.
 import axios from "axios"; // Importing axios for making HTTP requests.
 import useAuth from "../context/AuthProvider"; // Importing custom hook to handle authentication context like updating the access token.
+import useApiKey from "../hooks/useApiKey";
 
 const LoginOTP = () => {
   const { updateAccessToken } = useAuth(); // Destructuring updateAccessToken from the authentication context to manage token updates.
@@ -13,14 +14,20 @@ const LoginOTP = () => {
   const [OTPSent, setOTPSent] = useState<boolean>(false); // State to track if OTP has been sent or not.
   const [otpType, setOTPType] = useState<string>("password"); // State to toggle OTP input type between password (hidden) and text (visible).
   const [loading, setLoading] = useState<boolean>(false); // State to track if a request is being processed (loading state).
-
+  const apiKey = useApiKey();
   // Function to send OTP to the user's phone
   const handleSendOTP = async (data: any) => {
     setLoading(true); // Set loading state to true when sending OTP.
     try {
       await axios.post(
         "https://nazronline.ir/api/user/login/phone/", // API endpoint for sending OTP.
-        data // Sending phone number data to the backend.
+        data, // Sending phone number data to the backend.
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": apiKey,
+          },
+        }
       );
       setOTPSent(true); // Mark OTP as sent and switch to OTP verification form.
     } catch (error: any) {
@@ -48,13 +55,19 @@ const LoginOTP = () => {
   // Function to verify OTP and log in
   const handleVerifyOTP = async (data: any) => {
     setLoading(true); // Set loading state to true when verifying OTP.
- 
+
     try {
       const response = await axios.post(
         "https://nazronline.ir/api/user/login/phone/", // API endpoint for OTP verification.
         {
           ...data,
           phone_number: phoneForm.getValues("phone_number"), // Include the phone number in the data.
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": apiKey,
+          },
         }
       );
       // Save the access and refresh tokens to localStorage.
@@ -87,7 +100,7 @@ const LoginOTP = () => {
 
   useEffect(() => {
     document.title = "ورود"; // Set the document title to "ورود" (Login) when the component mounts or when OTP status changes.
-  }, []); 
+  }, []);
 
   return (
     <section className="h-[90vh] sm:h-fulk  xl:h-[80vh] flex justify-center items-center">

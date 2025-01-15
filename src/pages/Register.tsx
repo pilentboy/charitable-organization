@@ -10,6 +10,8 @@ import axios from "axios";
 import convertDateToFAEN from "../utils/Date&NumberConvertors/convertDateNumbersToFAEN";
 import CustomDatePicker from "../components/Custom/CustomDatePicker";
 import CustomSelectInput from "../components/Custom/CustomSelectInput";
+import useAuth from "../context/AuthProvider";
+import useApiKey from "../hooks/useApiKey";
 
 type FormData = {
   username: string;
@@ -29,6 +31,7 @@ const Register = () => {
   const [formatedBirthDate, setFormatedBirthDate] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
+  const apiKey = useApiKey();
 
   const {
     register,
@@ -65,17 +68,26 @@ const Register = () => {
   const handleRegister = async (data: FormData) => {
     setLoading(true);
     try {
-      await axios.post("https://nazronline.ir/api/user/register/", {
-        username: data.username,
-        password: data.password,
-        first_name: data.first_name,
-        last_name: data.last_name,
-        phone_number: data.phone_number,
-        birth_date: formatedBirthDate,
-        province: data.province?.value,
-        city: data.city?.value,
-        address: data.address,
-      });
+      await axios.post(
+        "https://nazronline.ir/api/user/register/",
+        {
+          username: data.username,
+          password: data.password,
+          first_name: data.first_name,
+          last_name: data.last_name,
+          phone_number: data.phone_number,
+          birth_date: formatedBirthDate,
+          province: data.province?.value,
+          city: data.city?.value,
+          address: data.address,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": apiKey,
+          },
+        }
+      );
       alert("ثبت نام شما با موفقیت انجام شد");
       navigate("/login");
     } catch (error: any) {

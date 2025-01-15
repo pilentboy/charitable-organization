@@ -12,9 +12,11 @@ import Quotes from "../components/Home/Quotes";
 import convertDateNumbersToFAEN from "../utils/Date&NumberConvertors/convertDateNumbersToFAEN";
 import addCommasToNumber from "./../utils/Date&NumberConvertors/addCommasToNumber";
 import removeCommasFromPersianNumber from "../utils/Date&NumberConvertors/removeCommasFromPersianNumber";
+import useApiKey from "../hooks/useApiKey";
 
 const Home = () => {
   const { loggedIn, accessToken } = useAuth(); // Get user authentication status
+  const apiKey = useApiKey();
 
   // Selected offering form input states
   const [selectedofferingRadio, setselectedofferingRadio] = useState<any>(); // Selected radio button value for offerings
@@ -82,7 +84,13 @@ const Home = () => {
   useEffect(() => {
     const handleGettingOfferingFormData = async () => {
       const response = await axios(
-        "https://nazronline.ir/api/sacrifices/types/"
+        "https://nazronline.ir/api/sacrifices/types/",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": apiKey,
+          },
+        }
       );
       setOfferingFormData(response.data); // Store form data
 
@@ -171,7 +179,13 @@ const Home = () => {
     const handleGetSocialMedias = async () => {
       try {
         const response = await axios(
-          "https://nazronline.ir/api/sacrifices/messaging-apps/"
+          "https://nazronline.ir/api/sacrifices/messaging-apps/",
+          {
+            headers: {
+              "Content-Type": "application/json",
+              "X-API-KEY": apiKey,
+            },
+          }
         );
         setSelectedSocialMedia("خیر تمایلی ندارم"); // Default selection
         setSocialMediaOptions(response.data); // Store social media options
@@ -184,7 +198,7 @@ const Home = () => {
 
   // Fetch quotes (dummy implementation for now)
   const getQuotes = async () => {
-    await handleGetQuotes();
+    await handleGetQuotes(apiKey);
   };
 
   // Initialize offering radio options and set the document title
@@ -257,6 +271,8 @@ const Home = () => {
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json", 
+              "X-API-KEY":apiKey
             },
           }
         );

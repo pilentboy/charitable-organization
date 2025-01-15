@@ -8,6 +8,7 @@ import handleGetUserProfileInfo from "../../utils/api/user/handleGetUserProfileI
 import convertDateToFAEN from "../../utils/Date&NumberConvertors/convertDateNumbersToFAEN";
 import moment from "jalali-moment";
 import CustomDatePicker from "../Custom/CustomDatePicker";
+import useApiKey from "../../hooks/useApiKey";
 
 const ModalItem = ({
   title,
@@ -28,6 +29,7 @@ const ModalItem = ({
   const { accessToken, setPorfileInfo } = useAuth();
 
   const { register, handleSubmit, control, watch } = useForm();
+  const apiKey = useApiKey();
 
   useEffect(() => {
     // convert date picker calender to Christian calendar and also cahnge numbers to English because the api only accepts english numbers in this format: yyyy-mm-dd
@@ -55,19 +57,23 @@ const ModalItem = ({
           [fieldName]: detectFiledType,
         };
 
-
         await axios.patch(
           "https://nazronline.ir/api/user/profile/personal-info/",
           updatedField,
           {
             headers: {
               Authorization: `Bearer ${accessToken}`,
+              "Content-Type": "application/json",
+              "X-API-KEY": apiKey,
             },
           }
         );
 
         setDisplay(false);
-        const updatedPersoalInfo = await handleGetUserProfileInfo(accessToken);
+        const updatedPersoalInfo = await handleGetUserProfileInfo(
+          accessToken,
+          apiKey
+        );
         setPorfileInfo(updatedPersoalInfo?.data);
       } catch (error: any) {
         setError(

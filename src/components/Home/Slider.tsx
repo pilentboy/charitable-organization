@@ -4,13 +4,14 @@ import "swiper/css";
 import "swiper/css/pagination";
 import handleGetHomeSliderContent from "../../utils/api/content/handleGetHomeSliderContent";
 import { useEffect, useState } from "react";
+import useApiKey from "../../hooks/useApiKey";
 
 const Slider = () => {
   const [sliderContents, setSliderContents] = useState<any>();
-
+  const apiKey=useApiKey()
   useEffect(() => {
     const getData = async () => {
-      const req = await handleGetHomeSliderContent();
+      const req = await handleGetHomeSliderContent(apiKey);
       setSliderContents(req.data);
     };
     getData();

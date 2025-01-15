@@ -1,8 +1,11 @@
 import axios from "axios";
-const handleGetHomeSliderContent = async () => {
+const handleGetHomeSliderContent = async (apiKey:any) => {
+
   try {
     const response = await axios.get(
-      "https://nazronline.ir/api/content/slider/"
+      "https://nazronline.ir/api/content/slider/",
+      { headers: { "Content-Type": "application/json", "X-API-KEY": apiKey } }
+
     );
     return response;
   } catch (error: any) {
