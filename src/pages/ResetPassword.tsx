@@ -3,14 +3,14 @@ import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import axios from "axios";
-import useApiKey from "../hooks/useApiKey";
+// import useApiKey from "../hooks/useApiKey";
 
 const ResetPassword = () => {
   // Setting up multiple forms for different steps: phone input, OTP verification, and password reset.
   const phoneForm = useForm();
   const otpForm = useForm();
   const resetPasswordForm = useForm();
-  const apiKey = useApiKey();
+  // const apiKey = useApiKey();
   // States to track different stages of the password reset process.
   const [OTPSent, setOTPSent] = useState<boolean>(false);
   const [otpConfirmed, setOTPConfirmed] = useState<boolean>(false);
@@ -28,7 +28,7 @@ const ResetPassword = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-API-KEY": apiKey,
+            "X-API-KEY": "7dabe1b7-454b-4801-9890-38270b6121f2",
           },
         }
       );
@@ -67,7 +67,12 @@ const ResetPassword = () => {
       await axios.post(
         "https://nazronline.ir/api/user/password-reset/verify/",
         { phone_number: phoneForm.getValues("phone_number"), otp: data.otp },
-        { headers: { "Content-Type": "application/json", "X-API-KEY": apiKey } }
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": "7dabe1b7-454b-4801-9890-38270b6121f2",
+          },
+        }
       );
       setOTPConfirmed(true); // Mark OTP as confirmed after a successful verification.
       setOTPSent(false); // Reset OTP sent state.
@@ -109,7 +114,12 @@ const ResetPassword = () => {
           phone_number: phoneForm.getValues("phone_number"),
           otp: otpForm.getValues("otp"),
         },
-        { headers: { "Content-Type": "application/json", "X-API-KEY": apiKey } }
+        {
+          headers: {
+            "Content-Type": "application/json",
+            "X-API-KEY": "7dabe1b7-454b-4801-9890-38270b6121f2",
+          },
+        }
       );
       alert(response.data.message); // Show server response message.
       navigate("/login"); // Navigate to login page after successful reset.
