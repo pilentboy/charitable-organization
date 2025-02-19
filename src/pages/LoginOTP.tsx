@@ -4,17 +4,19 @@ import { Link, useNavigate } from "react-router"; // Importing Link for navigati
 import { FaEye, FaEyeSlash } from "react-icons/fa"; // Importing eye icons for showing and hiding OTP input.
 import axios from "axios"; // Importing axios for making HTTP requests.
 import useAuth from "../context/AuthProvider"; // Importing custom hook to handle authentication context like updating the access token.
+import useApiKey from "../hooks/useApiKey";
 // import useApiKey from "../hooks/useApiKey";
 
 const LoginOTP = () => {
   const { updateAccessToken } = useAuth(); // Destructuring updateAccessToken from the authentication context to manage token updates.
+  const apiKey = useApiKey();
   const navigate = useNavigate(); // Using useNavigate to programmatically navigate to other pages after login.
   const phoneForm = useForm(); // Creating a form instance for phone number input.
   const otpForm = useForm(); // Creating a form instance for OTP input.
   const [OTPSent, setOTPSent] = useState<boolean>(false); // State to track if OTP has been sent or not.
   const [otpType, setOTPType] = useState<string>("password"); // State to toggle OTP input type between password (hidden) and text (visible).
   const [loading, setLoading] = useState<boolean>(false); // State to track if a request is being processed (loading state).
-  // const apiKey = useApiKey();
+
   // Function to send OTP to the user's phone
   const handleSendOTP = async (data: any) => {
     setLoading(true); // Set loading state to true when sending OTP.
@@ -25,7 +27,7 @@ const LoginOTP = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-API-KEY": "7dabe1b7-454b-4801-9890-38270b6121f2",
+            "X-API-KEY": apiKey,
           },
         }
       );
@@ -66,7 +68,7 @@ const LoginOTP = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-API-KEY": "7dabe1b7-454b-4801-9890-38270b6121f2",
+            "X-API-KEY": apiKey,
           },
         }
       );
