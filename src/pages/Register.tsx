@@ -8,8 +8,8 @@ import axios from "axios";
 import convertDateToFAEN from "../utils/Date&NumberConvertors/convertDateNumbersToFAEN";
 import CustomDatePicker from "../components/Custom/CustomDatePicker";
 import CustomSelectInput from "../components/Custom/CustomSelectInput";
-// import useApiKey from "../hooks/useApiKey";
 import citiesData from "../data/cities.json";
+import useApiKey from "../hooks/useApiKey";
 
 type FormData = {
   username: string;
@@ -29,7 +29,7 @@ const Register = () => {
   const [formatedBirthDate, setFormatedBirthDate] = useState<string>("");
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  // const apiKey = useApiKey();
+  const apiKey = useApiKey();
 
   const {
     register,
@@ -88,7 +88,7 @@ const Register = () => {
         {
           headers: {
             "Content-Type": "application/json",
-            "X-API-KEY": "7dabe1b7-454b-4801-9890-38270b6121f2",
+            "X-API-KEY": apiKey,
           },
         }
       );
@@ -235,7 +235,9 @@ const Register = () => {
               <div className="flex flex-col gap-2 w-full md:w-[170px]">
                 <label htmlFor="province">استان</label>
                 {errors.province && (
-                  <p className="text-red-500">{errors.province.message?.toString()}</p>
+                  <p className="text-red-500">
+                    {errors.province.message?.toString()}
+                  </p>
                 )}
                 <Controller
                   control={control}
