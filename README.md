@@ -99,5 +99,5 @@ The project consists of the following main pages:
 - TypeScript is fully integrated for type safety.
 - The project uses Jalali/Persian date handling extensively.
 
-This document provides a high-level overview of the project structure and setup. Let me know if you need additional details!
+
 
